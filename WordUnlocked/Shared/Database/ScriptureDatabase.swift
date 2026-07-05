@@ -1,0 +1,422 @@
+import Foundation
+import SQLite3
+
+final class ScriptureDatabase {
+    static let shared = ScriptureDatabase()
+
+    private let databaseURL: URL
+    private var database: OpaquePointer?
+    private let lock = NSLock()
+    private let currentDataVersion = 4
+
+    private init() {
+        databaseURL = AppGroupSettings.databaseURL
+        openDatabase()
+        // Provision only from the main app. The widget extension has a tight
+        // (~30MB) memory budget; it reads the shared App Group database the app
+        // has already populated, falling back to a built-in verse if the app
+        // hasn't run yet.
+        if !Self.isAppExtension {
+            provisionDatabaseIfNeeded()
+        }
+        createSchema()
+        #if DEBUG
+        if !Self.isAppExtension {
+            seedRVTestingIfNeeded()
+        }
+        #endif
+    }
+
+    private static let isAppExtension: Bool = Bundle.main.bundleURL.pathExtension == "appex"
+
+    deinit {
+        if let database {
+            sqlite3_close(database)
+        }
+    }
+
+    func translations() -> [SharedTranslationRecord] {
+        lock.lock()
+        defer { lock.unlock() }
+
+        let sql = """
+        SELECT id, code, display_name, publisher, copyright_notice, license_status, attribution, offline_available, enabled
+        FROM translations
+        ORDER BY id;
+        """
+
+        var records: [SharedTranslationRecord] = []
+        query(sql) { statement in
+            records.append(
+                SharedTranslationRecord(
+                    id: intColumn(statement, 0),
+                    code: stringColumn(statement, 1),
+                    displayName: stringColumn(statement, 2),
+                    publisher: stringColumn(statement, 3),
+                    copyrightNotice: stringColumn(statement, 4),
+                    licenseStatus: stringColumn(statement, 5),
+                    attribution: stringColumn(statement, 6),
+                    offlineAvailable: boolColumn(statement, 7),
+                    enabled: boolColumn(statement, 8)
+                )
+            )
+        }
+        return records
+    }
+
+    func books() -> [SharedBookRecord] {
+        lock.lock()
+        defer { lock.unlock() }
+
+        var records: [SharedBookRecord] = []
+        query("SELECT id, name, abbreviation, testament, chapter_count FROM books ORDER BY id;") { statement in
+            records.append(
+                SharedBookRecord(
+                    id: intColumn(statement, 0),
+                    name: stringColumn(statement, 1),
+                    abbreviation: stringColumn(statement, 2),
+                    testament: stringColumn(statement, 3),
+                    chapterCount: intColumn(statement, 4)
+                )
+            )
+        }
+        return records
+    }
+
+    func topics() -> [SharedTopicRecord] {
+        lock.lock()
+        defer { lock.unlock() }
+
+        var records: [SharedTopicRecord] = []
+        query("SELECT id, slug, name, symbol_name, summary FROM topics ORDER BY name;") { statement in
+            records.append(
+                SharedTopicRecord(
+                    id: intColumn(statement, 0),
+                    slug: stringColumn(statement, 1),
+                    name: stringColumn(statement, 2),
+                    symbolName: stringColumn(statement, 3),
+                    summary: stringColumn(statement, 4)
+                )
+            )
+        }
+        return records
+    }
+
+    func allVerses(translationCode: String) -> [SharedVerseRecord] {
+        lock.lock()
+        defer { lock.unlock() }
+
+        return queryVerses(
+            """
+            SELECT id, translation_id, translation_code, book_id, book_name, chapter, verse, verse_ref, text, char_count, word_count, fit_category, excerpt, segment_count
+            FROM verses
+            WHERE translation_code = \(quoted(translationCode))
+            ORDER BY id;
+            """
+        )
+    }
+
+    func hasVerses(translationCode: String) -> Bool {
+        lock.lock(); defer { lock.unlock() }
+        return scalarInt("SELECT COUNT(*) FROM verses WHERE translation_code = \(quoted(translationCode)) LIMIT 1;") > 0
+    }
+
+    func verse(id: Int) -> SharedVerseRecord? {
+        lock.lock()
+        defer { lock.unlock() }
+
+        return queryVerses(
+            """
+            SELECT id, translation_id, translation_code, book_id, book_name, chapter, verse, verse_ref, text, char_count, word_count, fit_category, excerpt, segment_count
+            FROM verses
+            WHERE id = \(id)
+            LIMIT 1;
+            """
+        ).first
+    }
+
+    func verse(id: Int, translationCode: String) -> SharedVerseRecord? {
+        lock.lock(); defer { lock.unlock() }
+        return queryVerses("""
+            SELECT id, translation_id, translation_code, book_id, book_name, chapter, verse, verse_ref, text, char_count, word_count, fit_category, excerpt, segment_count
+            FROM verses WHERE id = \(id) AND translation_code = \(quoted(translationCode)) LIMIT 1;
+            """).first
+    }
+
+    func verse(verseRef: String, translationCode: String) -> SharedVerseRecord? {
+        lock.lock(); defer { lock.unlock() }
+        return queryVerses("""
+            SELECT id, translation_id, translation_code, book_id, book_name, chapter, verse, verse_ref, text, char_count, word_count, fit_category, excerpt, segment_count
+            FROM verses WHERE verse_ref = \(quoted(verseRef)) AND translation_code = \(quoted(translationCode)) LIMIT 1;
+            """).first
+    }
+
+    func verses(topicSlug: String, translationCode: String) -> [SharedVerseRecord] {
+        lock.lock()
+        defer { lock.unlock() }
+
+        return queryVerses(
+            """
+            SELECT v.id, v.translation_id, v.translation_code, v.book_id, v.book_name, v.chapter, v.verse, v.verse_ref, v.text, v.char_count, v.word_count, v.fit_category, v.excerpt, v.segment_count
+            FROM verses v
+            INNER JOIN topic_verses tv ON tv.verse_id = v.id
+            WHERE tv.topic_slug = \(quoted(topicSlug)) AND v.translation_code = \(quoted(translationCode))
+            ORDER BY v.id;
+            """
+        )
+    }
+
+    func verses(bookId: Int, chapter: Int, translationCode: String) -> [SharedVerseRecord] {
+        lock.lock()
+        defer { lock.unlock() }
+
+        return queryVerses(
+            """
+            SELECT id, translation_id, translation_code, book_id, book_name, chapter, verse, verse_ref, text, char_count, word_count, fit_category, excerpt, segment_count
+            FROM verses
+            WHERE book_id = \(bookId) AND chapter = \(chapter) AND translation_code = \(quoted(translationCode))
+            ORDER BY verse;
+            """
+        )
+    }
+
+    private func openDatabase() {
+        let directory = databaseURL.deletingLastPathComponent()
+        try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        if sqlite3_open(databaseURL.path, &database) != SQLITE_OK {
+            database = nil
+        }
+        // Wait for a cross-process lock (widget may hold a read lock) instead of
+        // failing writes immediately with SQLITE_BUSY.
+        sqlite3_busy_timeout(database, 5000)
+    }
+
+    private func createSchema() {
+        execute(
+            """
+            CREATE TABLE IF NOT EXISTS translations (
+                id INTEGER PRIMARY KEY,
+                code TEXT NOT NULL UNIQUE,
+                display_name TEXT NOT NULL,
+                publisher TEXT NOT NULL,
+                copyright_notice TEXT NOT NULL,
+                license_status TEXT NOT NULL,
+                attribution TEXT NOT NULL,
+                offline_available INTEGER NOT NULL,
+                enabled INTEGER NOT NULL
+            );
+
+            CREATE TABLE IF NOT EXISTS books (
+                id INTEGER PRIMARY KEY,
+                name TEXT NOT NULL,
+                abbreviation TEXT NOT NULL,
+                testament TEXT NOT NULL,
+                chapter_count INTEGER NOT NULL
+            );
+
+            CREATE TABLE IF NOT EXISTS topics (
+                id INTEGER PRIMARY KEY,
+                slug TEXT NOT NULL UNIQUE,
+                name TEXT NOT NULL,
+                symbol_name TEXT NOT NULL,
+                summary TEXT NOT NULL
+            );
+
+            CREATE TABLE IF NOT EXISTS verses (
+                id INTEGER PRIMARY KEY,
+                translation_id INTEGER NOT NULL,
+                translation_code TEXT NOT NULL,
+                book_id INTEGER NOT NULL,
+                book_name TEXT NOT NULL,
+                chapter INTEGER NOT NULL,
+                verse INTEGER NOT NULL,
+                verse_ref TEXT NOT NULL,
+                text TEXT NOT NULL,
+                char_count INTEGER NOT NULL,
+                word_count INTEGER NOT NULL,
+                fit_category TEXT NOT NULL,
+                excerpt TEXT NOT NULL,
+                segment_count INTEGER NOT NULL
+            );
+
+            CREATE TABLE IF NOT EXISTS topic_verses (
+                topic_slug TEXT NOT NULL,
+                verse_id INTEGER NOT NULL,
+                PRIMARY KEY (topic_slug, verse_id)
+            );
+
+            CREATE INDEX IF NOT EXISTS idx_verses_translation ON verses(translation_code);
+            CREATE INDEX IF NOT EXISTS idx_verses_book_chapter ON verses(translation_code, book_id, chapter);
+            CREATE INDEX IF NOT EXISTS idx_topic_verses_verse ON topic_verses(verse_id);
+            """
+        )
+    }
+
+    /// Copies the pre-built database bundled with the app into the App Group
+    /// container on first launch, or after a data-version bump. This replaces
+    /// runtime JSON seeding: no multi-MB parse, no ~155k inserts, no main-thread
+    /// hang. Favorites live in UserDefaults (not this database), so replacing
+    /// the file is safe. If the bundled database is missing the existing
+    /// database is kept, and callers fall back to a built-in verse.
+    private func provisionDatabaseIfNeeded() {
+        guard scalarInt("PRAGMA user_version;") < currentDataVersion else { return }
+        guard let bundled = Bundle.main.url(forResource: "wordunlocked_seed", withExtension: "sqlite3") else {
+            return
+        }
+        if let database {
+            sqlite3_close(database)
+            self.database = nil
+        }
+        let fileManager = FileManager.default
+        for suffix in ["", "-wal", "-shm", "-journal"] {
+            try? fileManager.removeItem(atPath: databaseURL.path + suffix)
+        }
+        do {
+            try fileManager.copyItem(at: bundled, to: databaseURL)
+        } catch {
+            #if DEBUG
+            NSLog("ScriptureDatabase provisioning failed: \(error)")
+            #endif
+        }
+        openDatabase()
+    }
+
+    #if DEBUG
+    private func seedRVTestingIfNeeded() {
+        guard !hasVerses(translationCode: "RV") else { return }
+        let rows = loadSeedRows(named: "seed_verses_rv_testing")
+        guard !rows.isEmpty else { return }
+        lock.lock(); defer { lock.unlock() }
+        rows.forEach { row in
+            let bookId = intValue(row, "book_id")
+            execute(
+                """
+                INSERT OR IGNORE INTO verses
+                    (id, translation_id, translation_code, book_id, book_name, chapter, verse, verse_ref, text, char_count, word_count, fit_category, excerpt, segment_count)
+                VALUES
+                    (\(intValue(row, "id")), \(intValue(row, "translation_id")), \(quoted("RV")),
+                     \(bookId), \(quoted(stringValue(row, "book_name"))), \(intValue(row, "chapter")),
+                     \(intValue(row, "verse")), \(quoted(stringValue(row, "verse_ref"))), \(quoted(stringValue(row, "text"))),
+                     \(intValue(row, "char_count")), \(intValue(row, "word_count")), \(quoted(stringValue(row, "fit_category"))),
+                     \(quoted(stringValue(row, "excerpt"))), \(intValue(row, "segment_count")));
+                """
+            )
+        }
+    }
+
+    private func loadSeedRows(named resourceName: String) -> [[String: Any]] {
+        guard let url = Bundle.main.url(forResource: resourceName, withExtension: "json"),
+              let data = try? Data(contentsOf: url),
+              let object = try? JSONSerialization.jsonObject(with: data),
+              let rows = object as? [[String: Any]] else {
+            return []
+        }
+        return rows
+    }
+
+    private func intValue(_ row: [String: Any], _ key: String) -> Int {
+        if let value = row[key] as? Int {
+            return value
+        }
+        if let value = row[key] as? NSNumber {
+            return value.intValue
+        }
+        if let value = row[key] as? String, let intValue = Int(value) {
+            return intValue
+        }
+        return 0
+    }
+
+    private func stringValue(_ row: [String: Any], _ key: String) -> String {
+        if let value = row[key] as? String {
+            return value
+        }
+        if let value = row[key] as? NSNumber {
+            return value.stringValue
+        }
+        return ""
+    }
+    #endif
+
+    private func queryVerses(_ sql: String) -> [SharedVerseRecord] {
+        var records: [SharedVerseRecord] = []
+        query(sql) { statement in
+            records.append(
+                SharedVerseRecord(
+                    id: intColumn(statement, 0),
+                    translationId: intColumn(statement, 1),
+                    translationCode: stringColumn(statement, 2),
+                    bookId: intColumn(statement, 3),
+                    bookName: stringColumn(statement, 4),
+                    chapter: intColumn(statement, 5),
+                    verse: intColumn(statement, 6),
+                    verseRef: stringColumn(statement, 7),
+                    text: stringColumn(statement, 8),
+                    charCount: intColumn(statement, 9),
+                    wordCount: intColumn(statement, 10),
+                    fitCategory: stringColumn(statement, 11),
+                    excerpt: stringColumn(statement, 12),
+                    segmentCount: intColumn(statement, 13)
+                )
+            )
+        }
+        return records
+    }
+
+    private func execute(_ sql: String) {
+        guard let database else { return }
+        let result = sqlite3_exec(database, sql, nil, nil, nil)
+        #if DEBUG
+        if result != SQLITE_OK {
+            let msg = String(cString: sqlite3_errmsg(database))
+            NSLog("ScriptureDatabase execute failed (\(result)): \(msg) :: \(sql.prefix(80))")
+        }
+        #endif
+    }
+
+    private func scalarInt(_ sql: String) -> Int {
+        guard let database else { return 0 }
+        var statement: OpaquePointer?
+        defer {
+            if statement != nil {
+                sqlite3_finalize(statement)
+            }
+        }
+
+        guard sqlite3_prepare_v2(database, sql, -1, &statement, nil) == SQLITE_OK else { return 0 }
+        guard sqlite3_step(statement) == SQLITE_ROW else { return 0 }
+        return intColumn(statement, 0)
+    }
+
+    private func query(_ sql: String, row: (OpaquePointer?) -> Void) {
+        guard let database else { return }
+        var statement: OpaquePointer?
+        defer {
+            if statement != nil {
+                sqlite3_finalize(statement)
+            }
+        }
+
+        guard sqlite3_prepare_v2(database, sql, -1, &statement, nil) == SQLITE_OK else { return }
+        while sqlite3_step(statement) == SQLITE_ROW {
+            row(statement)
+        }
+    }
+
+    private func quoted(_ value: String) -> String {
+        "'\(value.replacingOccurrences(of: "'", with: "''"))'"
+    }
+
+    private func intColumn(_ statement: OpaquePointer?, _ index: Int32) -> Int {
+        Int(sqlite3_column_int(statement, index))
+    }
+
+    private func boolColumn(_ statement: OpaquePointer?, _ index: Int32) -> Bool {
+        sqlite3_column_int(statement, index) != 0
+    }
+
+    private func stringColumn(_ statement: OpaquePointer?, _ index: Int32) -> String {
+        guard let text = sqlite3_column_text(statement, index) else { return "" }
+        return String(cString: UnsafeRawPointer(text).assumingMemoryBound(to: CChar.self))
+    }
+}

@@ -1,0 +1,530 @@
+[
+  {
+    "id": 1,
+    "osis_code": "Gen",
+    "display_name": "Genesis",
+    "short_name": "Gen",
+    "testament": "OT",
+    "book_order": 1
+  },
+  {
+    "id": 2,
+    "osis_code": "Exod",
+    "display_name": "Exodus",
+    "short_name": "Exod",
+    "testament": "OT",
+    "book_order": 2
+  },
+  {
+    "id": 3,
+    "osis_code": "Lev",
+    "display_name": "Leviticus",
+    "short_name": "Lev",
+    "testament": "OT",
+    "book_order": 3
+  },
+  {
+    "id": 4,
+    "osis_code": "Num",
+    "display_name": "Numbers",
+    "short_name": "Num",
+    "testament": "OT",
+    "book_order": 4
+  },
+  {
+    "id": 5,
+    "osis_code": "Deut",
+    "display_name": "Deuteronomy",
+    "short_name": "Deut",
+    "testament": "OT",
+    "book_order": 5
+  },
+  {
+    "id": 6,
+    "osis_code": "Josh",
+    "display_name": "Joshua",
+    "short_name": "Josh",
+    "testament": "OT",
+    "book_order": 6
+  },
+  {
+    "id": 7,
+    "osis_code": "Judg",
+    "display_name": "Judges",
+    "short_name": "Judg",
+    "testament": "OT",
+    "book_order": 7
+  },
+  {
+    "id": 8,
+    "osis_code": "Ruth",
+    "display_name": "Ruth",
+    "short_name": "Ruth",
+    "testament": "OT",
+    "book_order": 8
+  },
+  {
+    "id": 9,
+    "osis_code": "1Sam",
+    "display_name": "1 Samuel",
+    "short_name": "1Sam",
+    "testament": "OT",
+    "book_order": 9
+  },
+  {
+    "id": 10,
+    "osis_code": "2Sam",
+    "display_name": "2 Samuel",
+    "short_name": "2Sam",
+    "testament": "OT",
+    "book_order": 10
+  },
+  {
+    "id": 11,
+    "osis_code": "1Kgs",
+    "display_name": "1 Kings",
+    "short_name": "1Kgs",
+    "testament": "OT",
+    "book_order": 11
+  },
+  {
+    "id": 12,
+    "osis_code": "2Kgs",
+    "display_name": "2 Kings",
+    "short_name": "2Kgs",
+    "testament": "OT",
+    "book_order": 12
+  },
+  {
+    "id": 13,
+    "osis_code": "1Chr",
+    "display_name": "1 Chronicles",
+    "short_name": "1Chr",
+    "testament": "OT",
+    "book_order": 13
+  },
+  {
+    "id": 14,
+    "osis_code": "2Chr",
+    "display_name": "2 Chronicles",
+    "short_name": "2Chr",
+    "testament": "OT",
+    "book_order": 14
+  },
+  {
+    "id": 15,
+    "osis_code": "Ezra",
+    "display_name": "Ezra",
+    "short_name": "Ezra",
+    "testament": "OT",
+    "book_order": 15
+  },
+  {
+    "id": 16,
+    "osis_code": "Neh",
+    "display_name": "Nehemiah",
+    "short_name": "Neh",
+    "testament": "OT",
+    "book_order": 16
+  },
+  {
+    "id": 17,
+    "osis_code": "Esth",
+    "display_name": "Esther",
+    "short_name": "Esth",
+    "testament": "OT",
+    "book_order": 17
+  },
+  {
+    "id": 18,
+    "osis_code": "Job",
+    "display_name": "Job",
+    "short_name": "Job",
+    "testament": "OT",
+    "book_order": 18
+  },
+  {
+    "id": 19,
+    "osis_code": "Ps",
+    "display_name": "Psalms",
+    "short_name": "Ps",
+    "testament": "OT",
+    "book_order": 19
+  },
+  {
+    "id": 20,
+    "osis_code": "Prov",
+    "display_name": "Proverbs",
+    "short_name": "Prov",
+    "testament": "OT",
+    "book_order": 20
+  },
+  {
+    "id": 21,
+    "osis_code": "Eccl",
+    "display_name": "Ecclesiastes",
+    "short_name": "Eccl",
+    "testament": "OT",
+    "book_order": 21
+  },
+  {
+    "id": 22,
+    "osis_code": "Song",
+    "display_name": "Song of Solomon",
+    "short_name": "Song",
+    "testament": "OT",
+    "book_order": 22
+  },
+  {
+    "id": 23,
+    "osis_code": "Isa",
+    "display_name": "Isaiah",
+    "short_name": "Isa",
+    "testament": "OT",
+    "book_order": 23
+  },
+  {
+    "id": 24,
+    "osis_code": "Jer",
+    "display_name": "Jeremiah",
+    "short_name": "Jer",
+    "testament": "OT",
+    "book_order": 24
+  },
+  {
+    "id": 25,
+    "osis_code": "Lam",
+    "display_name": "Lamentations",
+    "short_name": "Lam",
+    "testament": "OT",
+    "book_order": 25
+  },
+  {
+    "id": 26,
+    "osis_code": "Ezek",
+    "display_name": "Ezekiel",
+    "short_name": "Ezek",
+    "testament": "OT",
+    "book_order": 26
+  },
+  {
+    "id": 27,
+    "osis_code": "Dan",
+    "display_name": "Daniel",
+    "short_name": "Dan",
+    "testament": "OT",
+    "book_order": 27
+  },
+  {
+    "id": 28,
+    "osis_code": "Hos",
+    "display_name": "Hosea",
+    "short_name": "Hos",
+    "testament": "OT",
+    "book_order": 28
+  },
+  {
+    "id": 29,
+    "osis_code": "Joel",
+    "display_name": "Joel",
+    "short_name": "Joel",
+    "testament": "OT",
+    "book_order": 29
+  },
+  {
+    "id": 30,
+    "osis_code": "Amos",
+    "display_name": "Amos",
+    "short_name": "Amos",
+    "testament": "OT",
+    "book_order": 30
+  },
+  {
+    "id": 31,
+    "osis_code": "Obad",
+    "display_name": "Obadiah",
+    "short_name": "Obad",
+    "testament": "OT",
+    "book_order": 31
+  },
+  {
+    "id": 32,
+    "osis_code": "Jonah",
+    "display_name": "Jonah",
+    "short_name": "Jonah",
+    "testament": "OT",
+    "book_order": 32
+  },
+  {
+    "id": 33,
+    "osis_code": "Mic",
+    "display_name": "Micah",
+    "short_name": "Mic",
+    "testament": "OT",
+    "book_order": 33
+  },
+  {
+    "id": 34,
+    "osis_code": "Nah",
+    "display_name": "Nahum",
+    "short_name": "Nah",
+    "testament": "OT",
+    "book_order": 34
+  },
+  {
+    "id": 35,
+    "osis_code": "Hab",
+    "display_name": "Habakkuk",
+    "short_name": "Hab",
+    "testament": "OT",
+    "book_order": 35
+  },
+  {
+    "id": 36,
+    "osis_code": "Zeph",
+    "display_name": "Zephaniah",
+    "short_name": "Zeph",
+    "testament": "OT",
+    "book_order": 36
+  },
+  {
+    "id": 37,
+    "osis_code": "Hag",
+    "display_name": "Haggai",
+    "short_name": "Hag",
+    "testament": "OT",
+    "book_order": 37
+  },
+  {
+    "id": 38,
+    "osis_code": "Zech",
+    "display_name": "Zechariah",
+    "short_name": "Zech",
+    "testament": "OT",
+    "book_order": 38
+  },
+  {
+    "id": 39,
+    "osis_code": "Mal",
+    "display_name": "Malachi",
+    "short_name": "Mal",
+    "testament": "OT",
+    "book_order": 39
+  },
+  {
+    "id": 40,
+    "osis_code": "Matt",
+    "display_name": "Matthew",
+    "short_name": "Matt",
+    "testament": "NT",
+    "book_order": 40
+  },
+  {
+    "id": 41,
+    "osis_code": "Mark",
+    "display_name": "Mark",
+    "short_name": "Mark",
+    "testament": "NT",
+    "book_order": 41
+  },
+  {
+    "id": 42,
+    "osis_code": "Luke",
+    "display_name": "Luke",
+    "short_name": "Luke",
+    "testament": "NT",
+    "book_order": 42
+  },
+  {
+    "id": 43,
+    "osis_code": "John",
+    "display_name": "John",
+    "short_name": "John",
+    "testament": "NT",
+    "book_order": 43
+  },
+  {
+    "id": 44,
+    "osis_code": "Acts",
+    "display_name": "Acts",
+    "short_name": "Acts",
+    "testament": "NT",
+    "book_order": 44
+  },
+  {
+    "id": 45,
+    "osis_code": "Rom",
+    "display_name": "Romans",
+    "short_name": "Rom",
+    "testament": "NT",
+    "book_order": 45
+  },
+  {
+    "id": 46,
+    "osis_code": "1Cor",
+    "display_name": "1 Corinthians",
+    "short_name": "1Cor",
+    "testament": "NT",
+    "book_order": 46
+  },
+  {
+    "id": 47,
+    "osis_code": "2Cor",
+    "display_name": "2 Corinthians",
+    "short_name": "2Cor",
+    "testament": "NT",
+    "book_order": 47
+  },
+  {
+    "id": 48,
+    "osis_code": "Gal",
+    "display_name": "Galatians",
+    "short_name": "Gal",
+    "testament": "NT",
+    "book_order": 48
+  },
+  {
+    "id": 49,
+    "osis_code": "Eph",
+    "display_name": "Ephesians",
+    "short_name": "Eph",
+    "testament": "NT",
+    "book_order": 49
+  },
+  {
+    "id": 50,
+    "osis_code": "Phil",
+    "display_name": "Philippians",
+    "short_name": "Phil",
+    "testament": "NT",
+    "book_order": 50
+  },
+  {
+    "id": 51,
+    "osis_code": "Col",
+    "display_name": "Colossians",
+    "short_name": "Col",
+    "testament": "NT",
+    "book_order": 51
+  },
+  {
+    "id": 52,
+    "osis_code": "1Thess",
+    "display_name": "1 Thessalonians",
+    "short_name": "1Thess",
+    "testament": "NT",
+    "book_order": 52
+  },
+  {
+    "id": 53,
+    "osis_code": "2Thess",
+    "display_name": "2 Thessalonians",
+    "short_name": "2Thess",
+    "testament": "NT",
+    "book_order": 53
+  },
+  {
+    "id": 54,
+    "osis_code": "1Tim",
+    "display_name": "1 Timothy",
+    "short_name": "1Tim",
+    "testament": "NT",
+    "book_order": 54
+  },
+  {
+    "id": 55,
+    "osis_code": "2Tim",
+    "display_name": "2 Timothy",
+    "short_name": "2Tim",
+    "testament": "NT",
+    "book_order": 55
+  },
+  {
+    "id": 56,
+    "osis_code": "Titus",
+    "display_name": "Titus",
+    "short_name": "Titus",
+    "testament": "NT",
+    "book_order": 56
+  },
+  {
+    "id": 57,
+    "osis_code": "Phlm",
+    "display_name": "Philemon",
+    "short_name": "Phlm",
+    "testament": "NT",
+    "book_order": 57
+  },
+  {
+    "id": 58,
+    "osis_code": "Heb",
+    "display_name": "Hebrews",
+    "short_name": "Heb",
+    "testament": "NT",
+    "book_order": 58
+  },
+  {
+    "id": 59,
+    "osis_code": "Jas",
+    "display_name": "James",
+    "short_name": "Jas",
+    "testament": "NT",
+    "book_order": 59
+  },
+  {
+    "id": 60,
+    "osis_code": "1Pet",
+    "display_name": "1 Peter",
+    "short_name": "1Pet",
+    "testament": "NT",
+    "book_order": 60
+  },
+  {
+    "id": 61,
+    "osis_code": "2Pet",
+    "display_name": "2 Peter",
+    "short_name": "2Pet",
+    "testament": "NT",
+    "book_order": 61
+  },
+  {
+    "id": 62,
+    "osis_code": "1John",
+    "display_name": "1 John",
+    "short_name": "1John",
+    "testament": "NT",
+    "book_order": 62
+  },
+  {
+    "id": 63,
+    "osis_code": "2John",
+    "display_name": "2 John",
+    "short_name": "2John",
+    "testament": "NT",
+    "book_order": 63
+  },
+  {
+    "id": 64,
+    "osis_code": "3John",
+    "display_name": "3 John",
+    "short_name": "3John",
+    "testament": "NT",
+    "book_order": 64
+  },
+  {
+    "id": 65,
+    "osis_code": "Jude",
+    "display_name": "Jude",
+    "short_name": "Jude",
+    "testament": "NT",
+    "book_order": 65
+  },
+  {
+    "id": 66,
+    "osis_code": "Rev",
+    "display_name": "Revelation",
+    "short_name": "Rev",
+    "testament": "NT",
+    "book_order": 66
+  }
+]

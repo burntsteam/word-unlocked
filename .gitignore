@@ -1,0 +1,40 @@
+# ─── Secrets — NEVER COMMIT ─────────────────────────────────
+WordUnlocked/Config/Secrets.xcconfig
+WordUnlocked/Resources/seed_verses_rv_testing.json
+
+# ─── Xcode build artifacts ──────────────────────────────────
+build/
+DerivedData/
+*.xcuserstate
+*.xcscmblueprint
+xcuserdata/
+*.xcworkspace/xcuserdata/
+
+# ─── Archives & exports ─────────────────────────────────────
+*.xcarchive
+*.ipa
+*.dSYM
+*.dSYM.zip
+
+# ─── Swift Package Manager ──────────────────────────────────
+.swiftpm/
+
+# ─── CocoaPods (not currently used) ─────────────────────────
+Pods/
+*.xcworkspace
+
+# ─── Fastlane ───────────────────────────────────────────────
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# ─── macOS ──────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# ─── OMC / Claude Code ──────────────────────────────────────
+.omc/
+.omx/

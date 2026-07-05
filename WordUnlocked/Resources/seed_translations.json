@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "code": "KJV",
+    "display_name": "King James Version",
+    "publisher": "Public Domain",
+    "copyright_notice": "Public Domain",
+    "license_status": "public_domain",
+    "attribution": "King James Version (KJV), 1611. Public Domain.",
+    "offline_available": true,
+    "enabled": true
+  },
+  {
+    "id": 2,
+    "code": "WEB",
+    "display_name": "World English Bible",
+    "publisher": "Public Domain",
+    "copyright_notice": "Public Domain",
+    "license_status": "public_domain",
+    "attribution": "World English Bible (WEB). Dedicated to the public domain.",
+    "offline_available": true,
+    "enabled": true
+  },
+  {
+    "id": 3,
+    "code": "BSB",
+    "display_name": "Berean Standard Bible",
+    "publisher": "Public Domain",
+    "copyright_notice": "Public Domain",
+    "license_status": "public_domain",
+    "attribution": "The Holy Bible, Berean Standard Bible, BSB. Produced in cooperation with Bible Hub, Discovery Bible, unfoldingWord, and the Berean Bible Translation Committee. This text has been dedicated to the public domain.",
+    "offline_available": true,
+    "enabled": true
+  },
+  {
+    "id": 4,
+    "code": "ASV",
+    "display_name": "American Standard Version",
+    "publisher": "Public Domain",
+    "copyright_notice": "Public Domain",
+    "license_status": "public_domain",
+    "attribution": "American Standard Version (ASV), 1901. Public Domain.",
+    "offline_available": true,
+    "enabled": true
+  },
+  {
+    "id": 5,
+    "code": "LSV",
+    "display_name": "Literal Standard Version",
+    "publisher": "Covenant Press",
+    "copyright_notice": "© 2020 Covenant Press and the Covenant Christian Coalition.",
+    "license_status": "cc_by_sa",
+    "attribution": "The Holy Bible, Literal Standard Version (LSV), © 2020 Covenant Press and the Covenant Christian Coalition. Licensed under Creative Commons Attribution-ShareAlike (CC BY-SA).",
+    "offline_available": true,
+    "enabled": true
+  }
+]

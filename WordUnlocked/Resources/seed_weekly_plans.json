@@ -1,0 +1,782 @@
+[
+  {
+    "id": 1,
+    "name": "Week of Strength",
+    "slug": "strength-week",
+    "description": "Seven verses on finding strength in God.",
+    "topic_id": 3,
+    "duration_days": 7,
+    "enabled": true,
+    "days": [
+      {
+        "day_number": 1,
+        "verse_id": 137
+      },
+      {
+        "day_number": 2,
+        "verse_id": 288
+      },
+      {
+        "day_number": 3,
+        "verse_id": 65
+      },
+      {
+        "day_number": 4,
+        "verse_id": 17
+      },
+      {
+        "day_number": 5,
+        "verse_id": 265
+      },
+      {
+        "day_number": 6,
+        "verse_id": 278
+      },
+      {
+        "day_number": 7,
+        "verse_id": 42
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Week of Anxiety Relief",
+    "slug": "anxiety-relief-week",
+    "description": "Seven verses to still anxious hearts.",
+    "topic_id": 1,
+    "duration_days": 7,
+    "enabled": true,
+    "days": [
+      {
+        "day_number": 1,
+        "verse_id": 284
+      },
+      {
+        "day_number": 2,
+        "verse_id": 285
+      },
+      {
+        "day_number": 3,
+        "verse_id": 182
+      },
+      {
+        "day_number": 4,
+        "verse_id": 332
+      },
+      {
+        "day_number": 5,
+        "verse_id": 68
+      },
+      {
+        "day_number": 6,
+        "verse_id": 224
+      },
+      {
+        "day_number": 7,
+        "verse_id": 185
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Week of Faith",
+    "slug": "faith-week",
+    "description": "Seven verses to deepen trust in God.",
+    "topic_id": 5,
+    "duration_days": 7,
+    "enabled": true,
+    "days": [
+      {
+        "day_number": 1,
+        "verse_id": 314
+      },
+      {
+        "day_number": 2,
+        "verse_id": 247
+      },
+      {
+        "day_number": 3,
+        "verse_id": 271
+      },
+      {
+        "day_number": 4,
+        "verse_id": 266
+      },
+      {
+        "day_number": 5,
+        "verse_id": 263
+      },
+      {
+        "day_number": 6,
+        "verse_id": 161
+      },
+      {
+        "day_number": 7,
+        "verse_id": 201
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Week of Hope",
+    "slug": "hope-week",
+    "description": "Seven verses that anchor the soul in hope.",
+    "topic_id": 13,
+    "duration_days": 7,
+    "enabled": true,
+    "days": [
+      {
+        "day_number": 1,
+        "verse_id": 147
+      },
+      {
+        "day_number": 2,
+        "verse_id": 243
+      },
+      {
+        "day_number": 3,
+        "verse_id": 314
+      },
+      {
+        "day_number": 4,
+        "verse_id": 149
+      },
+      {
+        "day_number": 5,
+        "verse_id": 252
+      },
+      {
+        "day_number": 6,
+        "verse_id": 96
+      },
+      {
+        "day_number": 7,
+        "verse_id": 64
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Week of Peace",
+    "slug": "peace-week",
+    "description": "Seven verses on the peace that surpasses understanding.",
+    "topic_id": 14,
+    "duration_days": 7,
+    "enabled": true,
+    "days": [
+      {
+        "day_number": 1,
+        "verse_id": 224
+      },
+      {
+        "day_number": 2,
+        "verse_id": 285
+      },
+      {
+        "day_number": 3,
+        "verse_id": 132
+      },
+      {
+        "day_number": 4,
+        "verse_id": 45
+      },
+      {
+        "day_number": 5,
+        "verse_id": 292
+      },
+      {
+        "day_number": 6,
+        "verse_id": 230
+      },
+      {
+        "day_number": 7,
+        "verse_id": 66
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Week of Gratitude",
+    "slug": "gratitude-week",
+    "description": "Seven verses on a thankful heart.",
+    "topic_id": 7,
+    "duration_days": 7,
+    "enabled": true,
+    "days": [
+      {
+        "day_number": 1,
+        "verse_id": 300
+      },
+      {
+        "day_number": 2,
+        "verse_id": 83
+      },
+      {
+        "day_number": 3,
+        "verse_id": 283
+      },
+      {
+        "day_number": 4,
+        "verse_id": 292
+      },
+      {
+        "day_number": 5,
+        "verse_id": 59
+      },
+      {
+        "day_number": 6,
+        "verse_id": 81
+      },
+      {
+        "day_number": 7,
+        "verse_id": 26
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Week of Forgiveness",
+    "slug": "forgiveness-week",
+    "description": "Seven verses on releasing offenses and receiving mercy.",
+    "topic_id": 8,
+    "duration_days": 7,
+    "enabled": true,
+    "days": [
+      {
+        "day_number": 1,
+        "verse_id": 274
+      },
+      {
+        "day_number": 2,
+        "verse_id": 335
+      },
+      {
+        "day_number": 3,
+        "verse_id": 291
+      },
+      {
+        "day_number": 4,
+        "verse_id": 181
+      },
+      {
+        "day_number": 5,
+        "verse_id": 209
+      },
+      {
+        "day_number": 6,
+        "verse_id": 202
+      },
+      {
+        "day_number": 7,
+        "verse_id": 88
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Week of Prayer",
+    "slug": "prayer-week",
+    "description": "Seven verses on communicating with God.",
+    "topic_id": 12,
+    "duration_days": 7,
+    "enabled": true,
+    "days": [
+      {
+        "day_number": 1,
+        "verse_id": 284
+      },
+      {
+        "day_number": 2,
+        "verse_id": 176
+      },
+      {
+        "day_number": 3,
+        "verse_id": 299
+      },
+      {
+        "day_number": 4,
+        "verse_id": 201
+      },
+      {
+        "day_number": 5,
+        "verse_id": 328
+      },
+      {
+        "day_number": 6,
+        "verse_id": 40
+      },
+      {
+        "day_number": 7,
+        "verse_id": 229
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Week of Courage",
+    "slug": "courage-week",
+    "description": "Seven verses to act boldly in faith.",
+    "topic_id": 21,
+    "duration_days": 7,
+    "enabled": true,
+    "days": [
+      {
+        "day_number": 1,
+        "verse_id": 17
+      },
+      {
+        "day_number": 2,
+        "verse_id": 52
+      },
+      {
+        "day_number": 3,
+        "verse_id": 137
+      },
+      {
+        "day_number": 4,
+        "verse_id": 304
+      },
+      {
+        "day_number": 5,
+        "verse_id": 261
+      },
+      {
+        "day_number": 6,
+        "verse_id": 55
+      },
+      {
+        "day_number": 7,
+        "verse_id": 15
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Week of Wisdom",
+    "slug": "wisdom-week",
+    "description": "Seven verses on seeking divine understanding.",
+    "topic_id": 6,
+    "duration_days": 7,
+    "enabled": true,
+    "days": [
+      {
+        "day_number": 1,
+        "verse_id": 108
+      },
+      {
+        "day_number": 2,
+        "verse_id": 109
+      },
+      {
+        "day_number": 3,
+        "verse_id": 110
+      },
+      {
+        "day_number": 4,
+        "verse_id": 323
+      },
+      {
+        "day_number": 5,
+        "verse_id": 250
+      },
+      {
+        "day_number": 6,
+        "verse_id": 293
+      },
+      {
+        "day_number": 7,
+        "verse_id": 90
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "name": "Week of Joy",
+    "slug": "joy-week",
+    "description": "Seven verses on rejoicing in the Lord.",
+    "topic_id": 23,
+    "duration_days": 7,
+    "enabled": true,
+    "days": [
+      {
+        "day_number": 1,
+        "verse_id": 283
+      },
+      {
+        "day_number": 2,
+        "verse_id": 298
+      },
+      {
+        "day_number": 3,
+        "verse_id": 41
+      },
+      {
+        "day_number": 4,
+        "verse_id": 91
+      },
+      {
+        "day_number": 5,
+        "verse_id": 31
+      },
+      {
+        "day_number": 6,
+        "verse_id": 226
+      },
+      {
+        "day_number": 7,
+        "verse_id": 320
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "name": "Week of Love",
+    "slug": "love-week",
+    "description": "Seven verses on the love of God and neighbour.",
+    "topic_id": 26,
+    "duration_days": 7,
+    "enabled": true,
+    "days": [
+      {
+        "day_number": 1,
+        "verse_id": 212
+      },
+      {
+        "day_number": 2,
+        "verse_id": 255
+      },
+      {
+        "day_number": 3,
+        "verse_id": 337
+      },
+      {
+        "day_number": 4,
+        "verse_id": 240
+      },
+      {
+        "day_number": 5,
+        "verse_id": 227
+      },
+      {
+        "day_number": 6,
+        "verse_id": 192
+      },
+      {
+        "day_number": 7,
+        "verse_id": 339
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "name": "Week of Endurance",
+    "slug": "endurance-week",
+    "description": "Seven verses for pressing on through trials.",
+    "topic_id": 22,
+    "duration_days": 7,
+    "enabled": true,
+    "days": [
+      {
+        "day_number": 1,
+        "verse_id": 316
+      },
+      {
+        "day_number": 2,
+        "verse_id": 317
+      },
+      {
+        "day_number": 3,
+        "verse_id": 321
+      },
+      {
+        "day_number": 4,
+        "verse_id": 237
+      },
+      {
+        "day_number": 5,
+        "verse_id": 308
+      },
+      {
+        "day_number": 6,
+        "verse_id": 270
+      },
+      {
+        "day_number": 7,
+        "verse_id": 288
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "name": "Week of Rest",
+    "slug": "rest-week",
+    "description": "Seven verses on sabbath rest in God.",
+    "topic_id": 24,
+    "duration_days": 7,
+    "enabled": true,
+    "days": [
+      {
+        "day_number": 1,
+        "verse_id": 188
+      },
+      {
+        "day_number": 2,
+        "verse_id": 189
+      },
+      {
+        "day_number": 3,
+        "verse_id": 45
+      },
+      {
+        "day_number": 4,
+        "verse_id": 66
+      },
+      {
+        "day_number": 5,
+        "verse_id": 136
+      },
+      {
+        "day_number": 6,
+        "verse_id": 39
+      },
+      {
+        "day_number": 7,
+        "verse_id": 78
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "name": "Week of Discipline",
+    "slug": "discipline-week",
+    "description": "Seven verses on holy habits and self-control.",
+    "topic_id": 4,
+    "duration_days": 7,
+    "enabled": true,
+    "days": [
+      {
+        "day_number": 1,
+        "verse_id": 316
+      },
+      {
+        "day_number": 2,
+        "verse_id": 318
+      },
+      {
+        "day_number": 3,
+        "verse_id": 253
+      },
+      {
+        "day_number": 4,
+        "verse_id": 110
+      },
+      {
+        "day_number": 5,
+        "verse_id": 268
+      },
+      {
+        "day_number": 6,
+        "verse_id": 287
+      },
+      {
+        "day_number": 7,
+        "verse_id": 116
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "name": "Week of Humility",
+    "slug": "humility-week",
+    "description": "Seven verses on choosing lowliness as Christ did.",
+    "topic_id": 20,
+    "duration_days": 7,
+    "enabled": true,
+    "days": [
+      {
+        "day_number": 1,
+        "verse_id": 281
+      },
+      {
+        "day_number": 2,
+        "verse_id": 327
+      },
+      {
+        "day_number": 3,
+        "verse_id": 111
+      },
+      {
+        "day_number": 4,
+        "verse_id": 169
+      },
+      {
+        "day_number": 5,
+        "verse_id": 159
+      },
+      {
+        "day_number": 6,
+        "verse_id": 331
+      },
+      {
+        "day_number": 7,
+        "verse_id": 121
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "name": "Week of Purpose",
+    "slug": "purpose-week",
+    "description": "Seven verses on walking in God's calling.",
+    "topic_id": 11,
+    "duration_days": 7,
+    "enabled": true,
+    "days": [
+      {
+        "day_number": 1,
+        "verse_id": 147
+      },
+      {
+        "day_number": 2,
+        "verse_id": 243
+      },
+      {
+        "day_number": 3,
+        "verse_id": 273
+      },
+      {
+        "day_number": 4,
+        "verse_id": 280
+      },
+      {
+        "day_number": 5,
+        "verse_id": 225
+      },
+      {
+        "day_number": 6,
+        "verse_id": 61
+      },
+      {
+        "day_number": 7,
+        "verse_id": 114
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "name": "Week of Family",
+    "slug": "family-week",
+    "description": "Seven verses on nurturing family in God's ways.",
+    "topic_id": 17,
+    "duration_days": 7,
+    "enabled": true,
+    "days": [
+      {
+        "day_number": 1,
+        "verse_id": 122
+      },
+      {
+        "day_number": 2,
+        "verse_id": 276
+      },
+      {
+        "day_number": 3,
+        "verse_id": 277
+      },
+      {
+        "day_number": 4,
+        "verse_id": 18
+      },
+      {
+        "day_number": 5,
+        "verse_id": 98
+      },
+      {
+        "day_number": 6,
+        "verse_id": 295
+      },
+      {
+        "day_number": 7,
+        "verse_id": 13
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "name": "Week of Overcoming Temptation",
+    "slug": "temptation-week",
+    "description": "Seven verses for resisting sin and fleeing to God.",
+    "topic_id": 18,
+    "duration_days": 7,
+    "enabled": true,
+    "days": [
+      {
+        "day_number": 1,
+        "verse_id": 254
+      },
+      {
+        "day_number": 2,
+        "verse_id": 326
+      },
+      {
+        "day_number": 3,
+        "verse_id": 197
+      },
+      {
+        "day_number": 4,
+        "verse_id": 312
+      },
+      {
+        "day_number": 5,
+        "verse_id": 267
+      },
+      {
+        "day_number": 6,
+        "verse_id": 93
+      },
+      {
+        "day_number": 7,
+        "verse_id": 313
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "name": "Week of Obedience",
+    "slug": "obedience-week",
+    "description": "Seven verses on following God from a heart of love.",
+    "topic_id": 25,
+    "duration_days": 7,
+    "enabled": true,
+    "days": [
+      {
+        "day_number": 1,
+        "verse_id": 223
+      },
+      {
+        "day_number": 2,
+        "verse_id": 21
+      },
+      {
+        "day_number": 3,
+        "verse_id": 233
+      },
+      {
+        "day_number": 4,
+        "verse_id": 249
+      },
+      {
+        "day_number": 5,
+        "verse_id": 14
+      },
+      {
+        "day_number": 6,
+        "verse_id": 325
+      },
+      {
+        "day_number": 7,
+        "verse_id": 208
+      }
+    ]
+  }
+]

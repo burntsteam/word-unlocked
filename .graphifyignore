@@ -1,0 +1,15 @@
+node_modules/
+dist/
+build/
+.next/
+.nuxt/
+coverage/
+tmp/
+.env
+.env.*
+*.log
+*.lock
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+graphify-out/cost.json

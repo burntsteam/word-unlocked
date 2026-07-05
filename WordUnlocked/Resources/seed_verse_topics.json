@@ -1,0 +1,1922 @@
+[
+  {
+    "verse_id": 284,
+    "topic_id": 1,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 285,
+    "topic_id": 1,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 182,
+    "topic_id": 1,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 183,
+    "topic_id": 1,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 184,
+    "topic_id": 1,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 185,
+    "topic_id": 1,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 332,
+    "topic_id": 1,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 68,
+    "topic_id": 1,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 137,
+    "topic_id": 1,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 224,
+    "topic_id": 1,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 44,
+    "topic_id": 1,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 45,
+    "topic_id": 1,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 149,
+    "topic_id": 1,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 65,
+    "topic_id": 1,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 39,
+    "topic_id": 1,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 137,
+    "topic_id": 2,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 304,
+    "topic_id": 2,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 17,
+    "topic_id": 2,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 52,
+    "topic_id": 2,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 65,
+    "topic_id": 2,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 224,
+    "topic_id": 2,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 78,
+    "topic_id": 2,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 79,
+    "topic_id": 2,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 25,
+    "topic_id": 2,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 69,
+    "topic_id": 2,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 138,
+    "topic_id": 2,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 319,
+    "topic_id": 2,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 57,
+    "topic_id": 2,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 183,
+    "topic_id": 2,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 136,
+    "topic_id": 3,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 288,
+    "topic_id": 3,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 17,
+    "topic_id": 3,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 65,
+    "topic_id": 3,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 278,
+    "topic_id": 3,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 265,
+    "topic_id": 3,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 42,
+    "topic_id": 3,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 137,
+    "topic_id": 3,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 54,
+    "topic_id": 3,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 73,
+    "topic_id": 3,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 162,
+    "topic_id": 3,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 31,
+    "topic_id": 3,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 52,
+    "topic_id": 3,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 134,
+    "topic_id": 3,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 316,
+    "topic_id": 4,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 317,
+    "topic_id": 4,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 253,
+    "topic_id": 4,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 304,
+    "topic_id": 4,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 110,
+    "topic_id": 4,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 268,
+    "topic_id": 4,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 269,
+    "topic_id": 4,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 287,
+    "topic_id": 4,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 318,
+    "topic_id": 4,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 116,
+    "topic_id": 4,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 305,
+    "topic_id": 4,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 93,
+    "topic_id": 4,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 314,
+    "topic_id": 5,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 247,
+    "topic_id": 5,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 271,
+    "topic_id": 5,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 272,
+    "topic_id": 5,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 266,
+    "topic_id": 5,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 263,
+    "topic_id": 5,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 161,
+    "topic_id": 5,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 201,
+    "topic_id": 5,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 315,
+    "topic_id": 5,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 340,
+    "topic_id": 5,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 234,
+    "topic_id": 5,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 191,
+    "topic_id": 5,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 200,
+    "topic_id": 5,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 108,
+    "topic_id": 6,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 109,
+    "topic_id": 6,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 110,
+    "topic_id": 6,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 115,
+    "topic_id": 6,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 323,
+    "topic_id": 6,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 250,
+    "topic_id": 6,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 90,
+    "topic_id": 6,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 107,
+    "topic_id": 6,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 293,
+    "topic_id": 6,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 324,
+    "topic_id": 6,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 120,
+    "topic_id": 6,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 127,
+    "topic_id": 6,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 300,
+    "topic_id": 7,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 83,
+    "topic_id": 7,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 283,
+    "topic_id": 7,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 292,
+    "topic_id": 7,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 59,
+    "topic_id": 7,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 81,
+    "topic_id": 7,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 82,
+    "topic_id": 7,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 89,
+    "topic_id": 7,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 284,
+    "topic_id": 7,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 26,
+    "topic_id": 7,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 294,
+    "topic_id": 7,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 91,
+    "topic_id": 7,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 274,
+    "topic_id": 8,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 335,
+    "topic_id": 8,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 291,
+    "topic_id": 8,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 181,
+    "topic_id": 8,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 209,
+    "topic_id": 8,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 202,
+    "topic_id": 8,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 88,
+    "topic_id": 8,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 76,
+    "topic_id": 8,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 124,
+    "topic_id": 8,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 319,
+    "topic_id": 8,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 179,
+    "topic_id": 8,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 338,
+    "topic_id": 8,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 219,
+    "topic_id": 9,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 149,
+    "topic_id": 9,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 150,
+    "topic_id": 9,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 345,
+    "topic_id": 9,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 47,
+    "topic_id": 9,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 138,
+    "topic_id": 9,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 106,
+    "topic_id": 9,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 60,
+    "topic_id": 9,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 168,
+    "topic_id": 9,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 220,
+    "topic_id": 9,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 262,
+    "topic_id": 9,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 73,
+    "topic_id": 9,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 316,
+    "topic_id": 10,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 321,
+    "topic_id": 10,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 322,
+    "topic_id": 10,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 243,
+    "topic_id": 10,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 151,
+    "topic_id": 10,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 53,
+    "topic_id": 10,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 63,
+    "topic_id": 10,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 237,
+    "topic_id": 10,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 238,
+    "topic_id": 10,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 239,
+    "topic_id": 10,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 270,
+    "topic_id": 10,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 298,
+    "topic_id": 10,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 147,
+    "topic_id": 11,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 243,
+    "topic_id": 11,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 273,
+    "topic_id": 11,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 280,
+    "topic_id": 11,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 225,
+    "topic_id": 11,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 61,
+    "topic_id": 11,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 114,
+    "topic_id": 11,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 148,
+    "topic_id": 11,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 130,
+    "topic_id": 11,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 100,
+    "topic_id": 11,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 115,
+    "topic_id": 11,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 198,
+    "topic_id": 11,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 284,
+    "topic_id": 12,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 176,
+    "topic_id": 12,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 177,
+    "topic_id": 12,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 178,
+    "topic_id": 12,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 299,
+    "topic_id": 12,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 201,
+    "topic_id": 12,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 328,
+    "topic_id": 12,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 40,
+    "topic_id": 12,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 229,
+    "topic_id": 12,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 148,
+    "topic_id": 12,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 186,
+    "topic_id": 12,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 187,
+    "topic_id": 12,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 147,
+    "topic_id": 13,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 243,
+    "topic_id": 13,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 314,
+    "topic_id": 13,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 149,
+    "topic_id": 13,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 150,
+    "topic_id": 13,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 252,
+    "topic_id": 13,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 96,
+    "topic_id": 13,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 64,
+    "topic_id": 13,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 55,
+    "topic_id": 13,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 329,
+    "topic_id": 13,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 239,
+    "topic_id": 13,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 146,
+    "topic_id": 13,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 224,
+    "topic_id": 14,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 285,
+    "topic_id": 14,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 132,
+    "topic_id": 14,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 45,
+    "topic_id": 14,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 292,
+    "topic_id": 14,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 230,
+    "topic_id": 14,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 66,
+    "topic_id": 14,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 95,
+    "topic_id": 14,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 39,
+    "topic_id": 14,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 236,
+    "topic_id": 14,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 188,
+    "topic_id": 14,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 286,
+    "topic_id": 14,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 17,
+    "topic_id": 15,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 114,
+    "topic_id": 15,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 159,
+    "topic_id": 15,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 27,
+    "topic_id": 15,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 31,
+    "topic_id": 15,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 115,
+    "topic_id": 15,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 192,
+    "topic_id": 15,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 198,
+    "topic_id": 15,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 330,
+    "topic_id": 15,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 28,
+    "topic_id": 15,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 130,
+    "topic_id": 15,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 125,
+    "topic_id": 15,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 3,
+    "topic_id": 16,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 275,
+    "topic_id": 16,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 255,
+    "topic_id": 16,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 258,
+    "topic_id": 16,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 119,
+    "topic_id": 16,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 20,
+    "topic_id": 16,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 291,
+    "topic_id": 16,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 259,
+    "topic_id": 16,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 274,
+    "topic_id": 16,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 129,
+    "topic_id": 16,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 126,
+    "topic_id": 16,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 336,
+    "topic_id": 16,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 122,
+    "topic_id": 17,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 276,
+    "topic_id": 17,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 277,
+    "topic_id": 17,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 18,
+    "topic_id": 17,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 98,
+    "topic_id": 17,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 295,
+    "topic_id": 17,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 296,
+    "topic_id": 17,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 12,
+    "topic_id": 17,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 13,
+    "topic_id": 17,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 74,
+    "topic_id": 17,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 117,
+    "topic_id": 17,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 302,
+    "topic_id": 17,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 254,
+    "topic_id": 18,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 326,
+    "topic_id": 18,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 197,
+    "topic_id": 18,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 312,
+    "topic_id": 18,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 267,
+    "topic_id": 18,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 93,
+    "topic_id": 18,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 313,
+    "topic_id": 18,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 340,
+    "topic_id": 18,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 304,
+    "topic_id": 18,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 110,
+    "topic_id": 18,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 57,
+    "topic_id": 18,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 325,
+    "topic_id": 18,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 297,
+    "topic_id": 19,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 114,
+    "topic_id": 19,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 301,
+    "topic_id": 19,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 128,
+    "topic_id": 19,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 175,
+    "topic_id": 19,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 122,
+    "topic_id": 19,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 31,
+    "topic_id": 19,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 270,
+    "topic_id": 19,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 294,
+    "topic_id": 19,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 115,
+    "topic_id": 19,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 303,
+    "topic_id": 19,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 305,
+    "topic_id": 19,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 281,
+    "topic_id": 20,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 282,
+    "topic_id": 20,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 327,
+    "topic_id": 20,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 111,
+    "topic_id": 20,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 169,
+    "topic_id": 20,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 159,
+    "topic_id": 20,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 331,
+    "topic_id": 20,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 121,
+    "topic_id": 20,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 195,
+    "topic_id": 20,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 249,
+    "topic_id": 20,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 207,
+    "topic_id": 20,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 50,
+    "topic_id": 20,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 17,
+    "topic_id": 21,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 52,
+    "topic_id": 21,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 137,
+    "topic_id": 21,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 304,
+    "topic_id": 21,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 261,
+    "topic_id": 21,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 55,
+    "topic_id": 21,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 15,
+    "topic_id": 21,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 25,
+    "topic_id": 21,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 65,
+    "topic_id": 21,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 233,
+    "topic_id": 21,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 164,
+    "topic_id": 21,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 69,
+    "topic_id": 21,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 316,
+    "topic_id": 22,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 317,
+    "topic_id": 22,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 320,
+    "topic_id": 22,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 321,
+    "topic_id": 22,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 237,
+    "topic_id": 22,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 308,
+    "topic_id": 22,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 270,
+    "topic_id": 22,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 244,
+    "topic_id": 22,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 288,
+    "topic_id": 22,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 253,
+    "topic_id": 22,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 63,
+    "topic_id": 22,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 53,
+    "topic_id": 22,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 283,
+    "topic_id": 23,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 298,
+    "topic_id": 23,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 41,
+    "topic_id": 23,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 91,
+    "topic_id": 23,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 31,
+    "topic_id": 23,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 226,
+    "topic_id": 23,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 320,
+    "topic_id": 23,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 252,
+    "topic_id": 23,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 229,
+    "topic_id": 23,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 81,
+    "topic_id": 23,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 251,
+    "topic_id": 23,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 40,
+    "topic_id": 23,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 188,
+    "topic_id": 24,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 189,
+    "topic_id": 24,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 190,
+    "topic_id": 24,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 45,
+    "topic_id": 24,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 66,
+    "topic_id": 24,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 39,
+    "topic_id": 24,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 78,
+    "topic_id": 24,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 136,
+    "topic_id": 24,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 319,
+    "topic_id": 24,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 285,
+    "topic_id": 24,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 70,
+    "topic_id": 24,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 62,
+    "topic_id": 24,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 223,
+    "topic_id": 25,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 21,
+    "topic_id": 25,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 233,
+    "topic_id": 25,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 249,
+    "topic_id": 25,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 14,
+    "topic_id": 25,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 325,
+    "topic_id": 25,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 208,
+    "topic_id": 25,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 12,
+    "topic_id": 25,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 16,
+    "topic_id": 25,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 192,
+    "topic_id": 25,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 306,
+    "topic_id": 25,
+    "strength_score": 3,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 92,
+    "topic_id": 25,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 212,
+    "topic_id": 26,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 255,
+    "topic_id": 26,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 260,
+    "topic_id": 26,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 336,
+    "topic_id": 26,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 337,
+    "topic_id": 26,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 240,
+    "topic_id": 26,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 227,
+    "topic_id": 26,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 192,
+    "topic_id": 26,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 194,
+    "topic_id": 26,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 339,
+    "topic_id": 26,
+    "strength_score": 5,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 213,
+    "topic_id": 26,
+    "strength_score": 4,
+    "curated_by": "manual"
+  },
+  {
+    "verse_id": 258,
+    "topic_id": 26,
+    "strength_score": 4,
+    "curated_by": "manual"
+  }
+]

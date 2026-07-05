@@ -1,0 +1,184 @@
+[
+  {
+    "id": 1,
+    "name": "Anxiety",
+    "slug": "anxiety",
+    "description": "Finding peace when worry overwhelms the heart.",
+    "sort_order": 1
+  },
+  {
+    "id": 2,
+    "name": "Fear",
+    "slug": "fear",
+    "description": "Overcoming fear through trust in God.",
+    "sort_order": 2
+  },
+  {
+    "id": 3,
+    "name": "Strength",
+    "slug": "strength",
+    "description": "Drawing on God as the source of all strength.",
+    "sort_order": 3
+  },
+  {
+    "id": 4,
+    "name": "Discipline",
+    "slug": "discipline",
+    "description": "Growing in self-control and holy habits.",
+    "sort_order": 4
+  },
+  {
+    "id": 5,
+    "name": "Faith",
+    "slug": "faith",
+    "description": "Trusting God beyond what the eyes can see.",
+    "sort_order": 5
+  },
+  {
+    "id": 6,
+    "name": "Wisdom",
+    "slug": "wisdom",
+    "description": "Seeking understanding and discernment from God.",
+    "sort_order": 6
+  },
+  {
+    "id": 7,
+    "name": "Gratitude",
+    "slug": "gratitude",
+    "description": "Cultivating a thankful heart in all circumstances.",
+    "sort_order": 7
+  },
+  {
+    "id": 8,
+    "name": "Forgiveness",
+    "slug": "forgiveness",
+    "description": "Releasing offenses and receiving God's mercy.",
+    "sort_order": 8
+  },
+  {
+    "id": 9,
+    "name": "Grief",
+    "slug": "grief",
+    "description": "Finding comfort and hope in seasons of loss.",
+    "sort_order": 9
+  },
+  {
+    "id": 10,
+    "name": "Patience",
+    "slug": "patience",
+    "description": "Waiting on God with steadfast endurance.",
+    "sort_order": 10
+  },
+  {
+    "id": 11,
+    "name": "Purpose",
+    "slug": "purpose",
+    "description": "Discovering and walking in God's calling.",
+    "sort_order": 11
+  },
+  {
+    "id": 12,
+    "name": "Prayer",
+    "slug": "prayer",
+    "description": "Communicating with God in faith and persistence.",
+    "sort_order": 12
+  },
+  {
+    "id": 13,
+    "name": "Hope",
+    "slug": "hope",
+    "description": "Anchoring the soul in the promises of God.",
+    "sort_order": 13
+  },
+  {
+    "id": 14,
+    "name": "Peace",
+    "slug": "peace",
+    "description": "Experiencing God's peace that surpasses understanding.",
+    "sort_order": 14
+  },
+  {
+    "id": 15,
+    "name": "Leadership",
+    "slug": "leadership",
+    "description": "Serving others with godly wisdom and humility.",
+    "sort_order": 15
+  },
+  {
+    "id": 16,
+    "name": "Marriage",
+    "slug": "marriage",
+    "description": "Building a covenant relationship on God's Word.",
+    "sort_order": 16
+  },
+  {
+    "id": 17,
+    "name": "Family",
+    "slug": "family",
+    "description": "Raising and nurturing family in the ways of God.",
+    "sort_order": 17
+  },
+  {
+    "id": 18,
+    "name": "Temptation",
+    "slug": "temptation",
+    "description": "Resisting sin and fleeing to God for help.",
+    "sort_order": 18
+  },
+  {
+    "id": 19,
+    "name": "Work",
+    "slug": "work",
+    "description": "Honouring God through diligent and faithful labour.",
+    "sort_order": 19
+  },
+  {
+    "id": 20,
+    "name": "Humility",
+    "slug": "humility",
+    "description": "Choosing lowliness of mind as Christ did.",
+    "sort_order": 20
+  },
+  {
+    "id": 21,
+    "name": "Courage",
+    "slug": "courage",
+    "description": "Acting boldly in faith despite danger or fear.",
+    "sort_order": 21
+  },
+  {
+    "id": 22,
+    "name": "Endurance",
+    "slug": "endurance",
+    "description": "Pressing on through trials toward the prize.",
+    "sort_order": 22
+  },
+  {
+    "id": 23,
+    "name": "Joy",
+    "slug": "joy",
+    "description": "Rejoicing in the Lord as a strength and choice.",
+    "sort_order": 23
+  },
+  {
+    "id": 24,
+    "name": "Rest",
+    "slug": "rest",
+    "description": "Finding renewal and sabbath rest in God.",
+    "sort_order": 24
+  },
+  {
+    "id": 25,
+    "name": "Obedience",
+    "slug": "obedience",
+    "description": "Following God's commands from a heart of love.",
+    "sort_order": 25
+  },
+  {
+    "id": 26,
+    "name": "Love",
+    "slug": "love",
+    "description": "Reflecting God's love toward Him and others.",
+    "sort_order": 26
+  }
+]

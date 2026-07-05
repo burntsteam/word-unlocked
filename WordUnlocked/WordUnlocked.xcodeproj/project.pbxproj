@@ -1,0 +1,867 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		000000000000000000000801 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000701 /* Assets.xcassets */; };
+		000000000000000000000802 /* WordUnlockedWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 000000000000000000000302 /* WordUnlockedWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		000000000000000000000803 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 000000000000000000000704 /* libsqlite3.tbd */; };
+		000000000000000000000804 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 000000000000000000000704 /* libsqlite3.tbd */; };
+		BFAA000001000000000000001 /* WordUnlockedApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000001 /* WordUnlockedApp.swift */; };
+		BFAA000001000000000000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000002 /* ContentView.swift */; };
+		BFAA000001000000000000003 /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000003 /* TodayView.swift */; };
+		BFAA000001000000000000004 /* ModesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000004 /* ModesView.swift */; };
+		BFAA000001000000000000005 /* TranslationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000005 /* TranslationsView.swift */; };
+		BFAA000001000000000000006 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000006 /* FavoritesView.swift */; };
+		BFAA000001000000000000007 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000007 /* SettingsView.swift */; };
+		BFAA000001000000000000051 /* WallpaperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000051 /* WallpaperView.swift */; };
+		BFAA000001000000000000052 /* LockScreenWidgetGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000052 /* LockScreenWidgetGuideView.swift */; };
+		BFAA000001000000000000008 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000008 /* OnboardingView.swift */; };
+		BFAA000001000000000000009 /* OnboardingWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000009 /* OnboardingWelcomeView.swift */; };
+		BFAA00000100000000000000A /* OnboardingTranslationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000000A /* OnboardingTranslationView.swift */; };
+		BFAA00000100000000000000B /* OnboardingModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000000B /* OnboardingModeView.swift */; };
+		BFAA00000100000000000000C /* OnboardingThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000000C /* OnboardingThemeView.swift */; };
+		BFAA00000100000000000000D /* OnboardingWidgetInstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000000D /* OnboardingWidgetInstructionsView.swift */; };
+		BFAA00000100000000000000E /* OnboardingCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000000E /* OnboardingCompleteView.swift */; };
+		BFAA00000100000000000000F /* DailyVerseModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000000F /* DailyVerseModeView.swift */; };
+		BFAA000001000000000000010 /* WeeklyThemeModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000010 /* WeeklyThemeModeView.swift */; };
+		BFAA000001000000000000011 /* TopicModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000011 /* TopicModeView.swift */; };
+		BFAA000001000000000000012 /* ChapterModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000012 /* ChapterModeView.swift */; };
+		BFAA000001000000000000013 /* MemorizationModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000013 /* MemorizationModeView.swift */; };
+		BFAA000001000000000000014 /* FavoritesModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000014 /* FavoritesModeView.swift */; };
+		BFAA000001000000000000015 /* Verse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000015 /* Verse.swift */; };
+		BFAA000001000000000000016 /* Translation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000016 /* Translation.swift */; };
+		BFAA000001000000000000017 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000017 /* Book.swift */; };
+		BFAA000001000000000000018 /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000018 /* Topic.swift */; };
+		BFAA000001000000000000019 /* WeeklyPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000019 /* WeeklyPlan.swift */; };
+		BFAA00000100000000000001A /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000001A /* Favorite.swift */; };
+		BFAA00000100000000000001B /* MemorizationPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000001B /* MemorizationPlan.swift */; };
+		BFAA00000100000000000001C /* VerseSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000001C /* VerseSegment.swift */; };
+		BFAA00000100000000000001D /* WidgetSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000001D /* WidgetSettings.swift */; };
+		BFAA00000100000000000001E /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000001E /* DatabaseService.swift */; };
+		BFAA00000100000000000001F /* VerseSelectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000001F /* VerseSelectionService.swift */; };
+		BFAA000001000000000000020 /* LongVerseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000020 /* LongVerseService.swift */; };
+		BFAA000001000000000000021 /* MemorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000021 /* MemorizationService.swift */; };
+		BFAA000001000000000000022 /* ThemeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000022 /* ThemeService.swift */; };
+		BFAA000001000000000000023 /* TranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000023 /* TranslationService.swift */; };
+		BFAA000001000000000000024 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000024 /* SettingsStore.swift */; };
+		BFAA000001000000000000025 /* AppGroupSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000025 /* AppGroupSettings.swift */; };
+		BFAA000001000000000000026 /* WidgetTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000026 /* WidgetTheme.swift */; };
+		BFAA000001000000000000027 /* ThemeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000027 /* ThemeColors.swift */; };
+		BFAA000001000000000000029 /* ../Shared/Database/ScriptureDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000029 /* ../Shared/Database/ScriptureDatabase.swift */; };
+		BFAA00000100000000000002A /* ../Shared/Models/SharedModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000002A /* ../Shared/Models/SharedModels.swift */; };
+		BFAA00000100000000000002C /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000002C /* SearchView.swift */; };
+		BFAA000002000000000000001 /* WidgetEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000002000000000000001 /* WidgetEntry.swift */; };
+		BFAA000002000000000000002 /* WidgetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000002000000000000002 /* WidgetProvider.swift */; };
+		BFAA000002000000000000003 /* InlineWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000002000000000000003 /* InlineWidgetView.swift */; };
+		BFAA000002000000000000004 /* CircularWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000002000000000000004 /* CircularWidgetView.swift */; };
+		BFAA000002000000000000005 /* RectangularWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000002000000000000005 /* RectangularWidgetView.swift */; };
+		BFAA000002000000000000006 /* WidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000002000000000000006 /* WidgetEntryView.swift */; };
+		BFAA000002000000000000007 /* WordUnlockedWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000002000000000000007 /* WordUnlockedWidget.swift */; };
+		BFAA000002000000000000008 /* WordUnlockedWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000002000000000000008 /* WordUnlockedWidgetBundle.swift */; };
+		BFAA000002000000000000009 /* WidgetTimelineService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000002B /* WidgetTimelineService.swift */; };
+		BFAA00000200000000000000A /* WidgetSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000001D /* WidgetSettings.swift */; };
+		BFAA00000200000000000000B /* Verse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000015 /* Verse.swift */; };
+		BFAA00000200000000000000C /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000001A /* Favorite.swift */; };
+		BFAA00000200000000000000D /* LongVerseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000020 /* LongVerseService.swift */; };
+		BFAA00000200000000000000E /* AppGroupSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000025 /* AppGroupSettings.swift */; };
+		BFAA00000200000000000000F /* WidgetTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000026 /* WidgetTheme.swift */; };
+		BFAA000002000000000000010 /* ThemeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000027 /* ThemeColors.swift */; };
+		BFAA000002000000000000011 /* ../Shared/Database/ScriptureDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000029 /* ../Shared/Database/ScriptureDatabase.swift */; };
+		BFAA000002000000000000012 /* ../Shared/Models/SharedModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000002A /* ../Shared/Models/SharedModels.swift */; };
+		BFAARES00000000000000001 /* seed_books.json in Resources */ = {isa = PBXBuildFile; fileRef = AARES000000000000000001 /* seed_books.json */; };
+		BFAARES00000000000000002 /* seed_topics.json in Resources */ = {isa = PBXBuildFile; fileRef = AARES000000000000000002 /* seed_topics.json */; };
+		BFAARES00000000000000003 /* seed_translations.json in Resources */ = {isa = PBXBuildFile; fileRef = AARES000000000000000003 /* seed_translations.json */; };
+		BFAARES00000000000000004 /* seed_verse_topics.json in Resources */ = {isa = PBXBuildFile; fileRef = AARES000000000000000004 /* seed_verse_topics.json */; };
+		BFAARES00000000000000006 /* seed_weekly_plans.json in Resources */ = {isa = PBXBuildFile; fileRef = AARES000000000000000006 /* seed_weekly_plans.json */; };
+		BFAARES00000000000000011 /* wordunlocked_seed.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = AARES000000000000000011 /* wordunlocked_seed.sqlite3 */; };
+		RC00000000000000000000006 /* RVBibleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = RC00000000000000000000005 /* RVBibleService.swift */; };
+		BFAA000001000000000000053 /* ESVBibleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000053 /* ESVBibleService.swift */; };
+		RC0000000000000000000000C /* HomeScreenWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenWidgetView.swift; sourceTree = "<group>"; };
+		RC0000000000000000000000D /* HomeScreenWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = RC0000000000000000000000C /* HomeScreenWidgetView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		000000000000000000000401 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 000000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 000000000000000000000102;
+			remoteInfo = WordUnlockedWidget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		000000000000000000000205 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				000000000000000000000802 /* WordUnlockedWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		000000000000000000000301 /* WordUnlocked.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordUnlocked.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		000000000000000000000302 /* WordUnlockedWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WordUnlockedWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		000000000000000000000701 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		000000000000000000000702 /* WordUnlocked.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WordUnlocked.entitlements; sourceTree = "<group>"; };
+		000000000000000000000703 /* WordUnlockedWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WordUnlockedWidget.entitlements; sourceTree = "<group>"; };
+		000000000000000000000704 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		AA000001000000000000001 /* WordUnlockedApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordUnlockedApp.swift; sourceTree = "<group>"; };
+		AA000001000000000000002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		AA000001000000000000003 /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
+		AA000001000000000000004 /* ModesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModesView.swift; sourceTree = "<group>"; };
+		AA000001000000000000005 /* TranslationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationsView.swift; sourceTree = "<group>"; };
+		AA000001000000000000006 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
+		AA000001000000000000007 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		AA000001000000000000051 /* WallpaperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallpaperView.swift; sourceTree = "<group>"; };
+		AA000001000000000000052 /* LockScreenWidgetGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenWidgetGuideView.swift; sourceTree = "<group>"; };
+		AA000001000000000000008 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		AA000001000000000000009 /* OnboardingWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeView.swift; sourceTree = "<group>"; };
+		AA00000100000000000000A /* OnboardingTranslationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTranslationView.swift; sourceTree = "<group>"; };
+		AA00000100000000000000B /* OnboardingModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingModeView.swift; sourceTree = "<group>"; };
+		AA00000100000000000000C /* OnboardingThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingThemeView.swift; sourceTree = "<group>"; };
+		AA00000100000000000000D /* OnboardingWidgetInstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWidgetInstructionsView.swift; sourceTree = "<group>"; };
+		AA00000100000000000000E /* OnboardingCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCompleteView.swift; sourceTree = "<group>"; };
+		AA00000100000000000000F /* DailyVerseModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyVerseModeView.swift; sourceTree = "<group>"; };
+		AA000001000000000000010 /* WeeklyThemeModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyThemeModeView.swift; sourceTree = "<group>"; };
+		AA000001000000000000011 /* TopicModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicModeView.swift; sourceTree = "<group>"; };
+		AA000001000000000000012 /* ChapterModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterModeView.swift; sourceTree = "<group>"; };
+		AA000001000000000000013 /* MemorizationModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorizationModeView.swift; sourceTree = "<group>"; };
+		AA000001000000000000014 /* FavoritesModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesModeView.swift; sourceTree = "<group>"; };
+		AA000001000000000000015 /* Verse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verse.swift; sourceTree = "<group>"; };
+		AA000001000000000000016 /* Translation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translation.swift; sourceTree = "<group>"; };
+		AA000001000000000000017 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		AA000001000000000000018 /* Topic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
+		AA000001000000000000019 /* WeeklyPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyPlan.swift; sourceTree = "<group>"; };
+		AA00000100000000000001A /* Favorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
+		AA00000100000000000001B /* MemorizationPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorizationPlan.swift; sourceTree = "<group>"; };
+		AA00000100000000000001C /* VerseSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseSegment.swift; sourceTree = "<group>"; };
+		AA00000100000000000001D /* WidgetSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSettings.swift; sourceTree = "<group>"; };
+		AA00000100000000000001E /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
+		AA00000100000000000001F /* VerseSelectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseSelectionService.swift; sourceTree = "<group>"; };
+		AA000001000000000000020 /* LongVerseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongVerseService.swift; sourceTree = "<group>"; };
+		AA000001000000000000021 /* MemorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorizationService.swift; sourceTree = "<group>"; };
+		AA000001000000000000022 /* ThemeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeService.swift; sourceTree = "<group>"; };
+		AA000001000000000000023 /* TranslationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationService.swift; sourceTree = "<group>"; };
+		AA000001000000000000024 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
+		AA000001000000000000025 /* AppGroupSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroupSettings.swift; sourceTree = "<group>"; };
+		AA000001000000000000026 /* WidgetTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetTheme.swift; sourceTree = "<group>"; };
+		AA000001000000000000027 /* ThemeColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColors.swift; sourceTree = "<group>"; };
+		AA000001000000000000028 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA000001000000000000029 /* ../Shared/Database/ScriptureDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../Shared/Database/ScriptureDatabase.swift; sourceTree = "<group>"; };
+		AA00000100000000000002A /* ../Shared/Models/SharedModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../Shared/Models/SharedModels.swift; sourceTree = "<group>"; };
+		AA00000100000000000002B /* WidgetTimelineService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetTimelineService.swift; sourceTree = "<group>"; };
+		AA00000100000000000002C /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		AA000002000000000000001 /* WidgetEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetEntry.swift; sourceTree = "<group>"; };
+		AA000002000000000000002 /* WidgetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetProvider.swift; sourceTree = "<group>"; };
+		AA000002000000000000003 /* InlineWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineWidgetView.swift; sourceTree = "<group>"; };
+		AA000002000000000000004 /* CircularWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularWidgetView.swift; sourceTree = "<group>"; };
+		AA000002000000000000005 /* RectangularWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularWidgetView.swift; sourceTree = "<group>"; };
+		AA000002000000000000006 /* WidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetEntryView.swift; sourceTree = "<group>"; };
+		AA000002000000000000007 /* WordUnlockedWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordUnlockedWidget.swift; sourceTree = "<group>"; };
+		AA000002000000000000008 /* WordUnlockedWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordUnlockedWidgetBundle.swift; sourceTree = "<group>"; };
+		AA000002000000000000009 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AARES000000000000000001 /* seed_books.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = seed_books.json; sourceTree = "<group>"; };
+		AARES000000000000000002 /* seed_topics.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = seed_topics.json; sourceTree = "<group>"; };
+		AARES000000000000000003 /* seed_translations.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = seed_translations.json; sourceTree = "<group>"; };
+		AARES000000000000000004 /* seed_verse_topics.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = seed_verse_topics.json; sourceTree = "<group>"; };
+		AARES000000000000000006 /* seed_weekly_plans.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = seed_weekly_plans.json; sourceTree = "<group>"; };
+		AARES000000000000000011 /* wordunlocked_seed.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = wordunlocked_seed.sqlite3; sourceTree = "<group>"; };
+		RC00000000000000000000004 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = Config/Secrets.xcconfig; sourceTree = "<group>"; };
+		RC00000000000000000000005 /* RVBibleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVBibleService.swift; sourceTree = "<group>"; };
+		AA000001000000000000053 /* ESVBibleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESVBibleService.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		000000000000000000000202 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000803 /* libsqlite3.tbd in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000212 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000804 /* libsqlite3.tbd in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		000000000000000000000002 = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000004 /* WordUnlocked */,
+				000000000000000000000005 /* WordUnlockedWidget */,
+				000000000000000000000010 /* Frameworks */,
+				000000000000000000000003 /* Products */,
+				RC00000000000000000000004 /* Secrets.xcconfig */,
+			);
+			sourceTree = "<group>";
+		};
+		000000000000000000000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000301 /* WordUnlocked.app */,
+				000000000000000000000302 /* WordUnlockedWidget.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		000000000000000000000004 /* WordUnlocked */ = {
+			isa = PBXGroup;
+			children = (
+				AA000001000000000000001 /* WordUnlockedApp.swift */,
+				AA000001000000000000002 /* ContentView.swift */,
+				000000000000000000000006 /* Tabs */,
+				000000000000000000000007 /* Onboarding */,
+				000000000000000000000008 /* Modes */,
+				000000000000000000000009 /* Models */,
+				00000000000000000000000A /* Services */,
+				00000000000000000000000F /* Widget */,
+				00000000000000000000000B /* Settings */,
+				00000000000000000000000C /* Theme */,
+				00000000000000000000000D /* Shared */,
+				00000000000000000000000E /* Supporting Files */,
+				AARES00000000000000000F0 /* Resources */,
+			);
+			path = WordUnlocked;
+			sourceTree = "<group>";
+		};
+		000000000000000000000005 /* WordUnlockedWidget */ = {
+			isa = PBXGroup;
+			children = (
+				AA000002000000000000001 /* WidgetEntry.swift */,
+				AA000002000000000000002 /* WidgetProvider.swift */,
+				AA000002000000000000003 /* InlineWidgetView.swift */,
+				AA000002000000000000004 /* CircularWidgetView.swift */,
+				AA000002000000000000005 /* RectangularWidgetView.swift */,
+				RC0000000000000000000000C /* HomeScreenWidgetView.swift */,
+				AA000002000000000000006 /* WidgetEntryView.swift */,
+				AA000002000000000000007 /* WordUnlockedWidget.swift */,
+				AA000002000000000000008 /* WordUnlockedWidgetBundle.swift */,
+				AA000002000000000000009 /* Info.plist */,
+				000000000000000000000703 /* WordUnlockedWidget.entitlements */,
+			);
+			path = WordUnlockedWidget;
+			sourceTree = "<group>";
+		};
+		000000000000000000000006 /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				AA000001000000000000003 /* TodayView.swift */,
+				AA000001000000000000004 /* ModesView.swift */,
+				AA000001000000000000005 /* TranslationsView.swift */,
+				AA00000100000000000002C /* SearchView.swift */,
+				AA000001000000000000006 /* FavoritesView.swift */,
+				AA000001000000000000007 /* SettingsView.swift */,
+				AA000001000000000000051 /* WallpaperView.swift */,
+				AA000001000000000000052 /* LockScreenWidgetGuideView.swift */,
+			);
+			path = Tabs;
+			sourceTree = "<group>";
+		};
+		000000000000000000000007 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				AA000001000000000000008 /* OnboardingView.swift */,
+				AA000001000000000000009 /* OnboardingWelcomeView.swift */,
+				AA00000100000000000000A /* OnboardingTranslationView.swift */,
+				AA00000100000000000000B /* OnboardingModeView.swift */,
+				AA00000100000000000000C /* OnboardingThemeView.swift */,
+				AA00000100000000000000D /* OnboardingWidgetInstructionsView.swift */,
+				AA00000100000000000000E /* OnboardingCompleteView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		000000000000000000000008 /* Modes */ = {
+			isa = PBXGroup;
+			children = (
+				AA00000100000000000000F /* DailyVerseModeView.swift */,
+				AA000001000000000000010 /* WeeklyThemeModeView.swift */,
+				AA000001000000000000011 /* TopicModeView.swift */,
+				AA000001000000000000012 /* ChapterModeView.swift */,
+				AA000001000000000000013 /* MemorizationModeView.swift */,
+				AA000001000000000000014 /* FavoritesModeView.swift */,
+			);
+			path = Modes;
+			sourceTree = "<group>";
+		};
+		000000000000000000000009 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AA000001000000000000015 /* Verse.swift */,
+				AA000001000000000000016 /* Translation.swift */,
+				AA000001000000000000017 /* Book.swift */,
+				AA000001000000000000018 /* Topic.swift */,
+				AA000001000000000000019 /* WeeklyPlan.swift */,
+				AA00000100000000000001A /* Favorite.swift */,
+				AA00000100000000000001B /* MemorizationPlan.swift */,
+				AA00000100000000000001C /* VerseSegment.swift */,
+				AA00000100000000000001D /* WidgetSettings.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		00000000000000000000000A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				AA00000100000000000001E /* DatabaseService.swift */,
+				AA00000100000000000001F /* VerseSelectionService.swift */,
+				AA000001000000000000020 /* LongVerseService.swift */,
+				AA000001000000000000021 /* MemorizationService.swift */,
+				AA000001000000000000022 /* ThemeService.swift */,
+				AA000001000000000000023 /* TranslationService.swift */,
+				RC00000000000000000000005 /* RVBibleService.swift */,
+				AA000001000000000000053 /* ESVBibleService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		00000000000000000000000B /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				AA000001000000000000024 /* SettingsStore.swift */,
+				AA000001000000000000025 /* AppGroupSettings.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		00000000000000000000000C /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				AA000001000000000000026 /* WidgetTheme.swift */,
+				AA000001000000000000027 /* ThemeColors.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		00000000000000000000000D /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				AA000001000000000000029 /* ../Shared/Database/ScriptureDatabase.swift */,
+				AA00000100000000000002A /* ../Shared/Models/SharedModels.swift */,
+			);
+			name = Shared;
+			sourceTree = "<group>";
+		};
+		00000000000000000000000E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AA000001000000000000028 /* Info.plist */,
+				000000000000000000000701 /* Assets.xcassets */,
+				000000000000000000000702 /* WordUnlocked.entitlements */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		00000000000000000000000F /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				AA00000100000000000002B /* WidgetTimelineService.swift */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
+		000000000000000000000010 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000704 /* libsqlite3.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AARES00000000000000000F0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AARES000000000000000001 /* seed_books.json */,
+				AARES000000000000000002 /* seed_topics.json */,
+				AARES000000000000000003 /* seed_translations.json */,
+				AARES000000000000000004 /* seed_verse_topics.json */,
+				AARES000000000000000006 /* seed_weekly_plans.json */,
+				AARES000000000000000011 /* wordunlocked_seed.sqlite3 */,
+			);
+			name = Resources;
+			path = ../Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		000000000000000000000101 /* WordUnlocked */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 000000000000000000000502 /* Build configuration list for PBXNativeTarget "WordUnlocked" */;
+			buildPhases = (
+				000000000000000000000201 /* Sources */,
+				000000000000000000000202 /* Frameworks */,
+				000000000000000000000203 /* Resources */,
+				000000000000000000000205 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				000000000000000000000402 /* PBXTargetDependency */,
+			);
+			name = WordUnlocked;
+			productName = WordUnlocked;
+			productReference = 000000000000000000000301 /* WordUnlocked.app */;
+			productType = "com.apple.product-type.application";
+		};
+		000000000000000000000102 /* WordUnlockedWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 000000000000000000000503 /* Build configuration list for PBXNativeTarget "WordUnlockedWidget" */;
+			buildPhases = (
+				000000000000000000000211 /* Sources */,
+				000000000000000000000212 /* Frameworks */,
+				000000000000000000000213 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WordUnlockedWidget;
+			productName = WordUnlockedWidget;
+			productReference = 000000000000000000000302 /* WordUnlockedWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		000000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 2650;
+				TargetAttributes = {
+					000000000000000000000101 = {
+						CreatedOnToolsVersion = 15.0;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					000000000000000000000102 = {
+						CreatedOnToolsVersion = 15.0;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = 000000000000000000000501 /* Build configuration list for PBXProject "WordUnlocked" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 000000000000000000000002;
+			productRefGroup = 000000000000000000000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				000000000000000000000101 /* WordUnlocked */,
+				000000000000000000000102 /* WordUnlockedWidget */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		000000000000000000000203 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000801 /* Assets.xcassets in Resources */,
+				BFAARES00000000000000001 /* seed_books.json in Resources */,
+				BFAARES00000000000000002 /* seed_topics.json in Resources */,
+				BFAARES00000000000000003 /* seed_translations.json in Resources */,
+				BFAARES00000000000000004 /* seed_verse_topics.json in Resources */,
+				BFAARES00000000000000006 /* seed_weekly_plans.json in Resources */,
+				BFAARES00000000000000011 /* wordunlocked_seed.sqlite3 in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000213 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		000000000000000000000201 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFAA000001000000000000001 /* WordUnlockedApp.swift in Sources */,
+				BFAA000001000000000000002 /* ContentView.swift in Sources */,
+				BFAA000001000000000000003 /* TodayView.swift in Sources */,
+				BFAA000001000000000000004 /* ModesView.swift in Sources */,
+				BFAA000001000000000000005 /* TranslationsView.swift in Sources */,
+				BFAA00000100000000000002C /* SearchView.swift in Sources */,
+				BFAA000001000000000000006 /* FavoritesView.swift in Sources */,
+				BFAA000001000000000000007 /* SettingsView.swift in Sources */,
+				BFAA000001000000000000051 /* WallpaperView.swift in Sources */,
+				BFAA000001000000000000052 /* LockScreenWidgetGuideView.swift in Sources */,
+				BFAA000001000000000000008 /* OnboardingView.swift in Sources */,
+				BFAA000001000000000000009 /* OnboardingWelcomeView.swift in Sources */,
+				BFAA00000100000000000000A /* OnboardingTranslationView.swift in Sources */,
+				BFAA00000100000000000000B /* OnboardingModeView.swift in Sources */,
+				BFAA00000100000000000000C /* OnboardingThemeView.swift in Sources */,
+				BFAA00000100000000000000D /* OnboardingWidgetInstructionsView.swift in Sources */,
+				BFAA00000100000000000000E /* OnboardingCompleteView.swift in Sources */,
+				BFAA00000100000000000000F /* DailyVerseModeView.swift in Sources */,
+				BFAA000001000000000000010 /* WeeklyThemeModeView.swift in Sources */,
+				BFAA000001000000000000011 /* TopicModeView.swift in Sources */,
+				BFAA000001000000000000012 /* ChapterModeView.swift in Sources */,
+				BFAA000001000000000000013 /* MemorizationModeView.swift in Sources */,
+				BFAA000001000000000000014 /* FavoritesModeView.swift in Sources */,
+				BFAA000001000000000000015 /* Verse.swift in Sources */,
+				BFAA000001000000000000016 /* Translation.swift in Sources */,
+				BFAA000001000000000000017 /* Book.swift in Sources */,
+				BFAA000001000000000000018 /* Topic.swift in Sources */,
+				BFAA000001000000000000019 /* WeeklyPlan.swift in Sources */,
+				BFAA00000100000000000001A /* Favorite.swift in Sources */,
+				BFAA00000100000000000001B /* MemorizationPlan.swift in Sources */,
+				BFAA00000100000000000001C /* VerseSegment.swift in Sources */,
+				BFAA00000100000000000001D /* WidgetSettings.swift in Sources */,
+				BFAA00000100000000000001E /* DatabaseService.swift in Sources */,
+				BFAA00000100000000000001F /* VerseSelectionService.swift in Sources */,
+				BFAA000001000000000000020 /* LongVerseService.swift in Sources */,
+				BFAA000001000000000000021 /* MemorizationService.swift in Sources */,
+				BFAA000001000000000000022 /* ThemeService.swift in Sources */,
+				BFAA000001000000000000023 /* TranslationService.swift in Sources */,
+				RC00000000000000000000006 /* RVBibleService.swift in Sources */,
+				BFAA000001000000000000053 /* ESVBibleService.swift in Sources */,
+				BFAA000001000000000000024 /* SettingsStore.swift in Sources */,
+				BFAA000001000000000000025 /* AppGroupSettings.swift in Sources */,
+				BFAA000001000000000000026 /* WidgetTheme.swift in Sources */,
+				BFAA000001000000000000027 /* ThemeColors.swift in Sources */,
+				BFAA000001000000000000029 /* ../Shared/Database/ScriptureDatabase.swift in Sources */,
+				BFAA00000100000000000002A /* ../Shared/Models/SharedModels.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000211 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFAA000002000000000000001 /* WidgetEntry.swift in Sources */,
+				BFAA000002000000000000002 /* WidgetProvider.swift in Sources */,
+				BFAA000002000000000000003 /* InlineWidgetView.swift in Sources */,
+				BFAA000002000000000000004 /* CircularWidgetView.swift in Sources */,
+				BFAA000002000000000000005 /* RectangularWidgetView.swift in Sources */,
+				RC0000000000000000000000D /* HomeScreenWidgetView.swift in Sources */,
+				BFAA000002000000000000006 /* WidgetEntryView.swift in Sources */,
+				BFAA000002000000000000007 /* WordUnlockedWidget.swift in Sources */,
+				BFAA000002000000000000008 /* WordUnlockedWidgetBundle.swift in Sources */,
+				BFAA000002000000000000009 /* WidgetTimelineService.swift in Sources */,
+				BFAA00000200000000000000A /* WidgetSettings.swift in Sources */,
+				BFAA00000200000000000000B /* Verse.swift in Sources */,
+				BFAA00000200000000000000C /* Favorite.swift in Sources */,
+				BFAA00000200000000000000D /* LongVerseService.swift in Sources */,
+				BFAA00000200000000000000E /* AppGroupSettings.swift in Sources */,
+				BFAA00000200000000000000F /* WidgetTheme.swift in Sources */,
+				BFAA000002000000000000010 /* ThemeColors.swift in Sources */,
+				BFAA000002000000000000011 /* ../Shared/Database/ScriptureDatabase.swift in Sources */,
+				BFAA000002000000000000012 /* ../Shared/Models/SharedModels.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		000000000000000000000402 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 000000000000000000000102 /* WordUnlockedWidget */;
+			targetProxy = 000000000000000000000401 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		000000000000000000000601 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		000000000000000000000602 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		000000000000000000000603 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = RC00000000000000000000004 /* Secrets.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = WordUnlocked/WordUnlocked.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = WordUnlocked/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rippre.wordunlocked;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		000000000000000000000604 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = RC00000000000000000000004 /* Secrets.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = WordUnlocked/WordUnlocked.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = WordUnlocked/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rippre.wordunlocked;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		000000000000000000000605 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = WordUnlockedWidget/WordUnlockedWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = WordUnlockedWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rippre.wordunlocked.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		000000000000000000000606 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = WordUnlockedWidget/WordUnlockedWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = WordUnlockedWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rippre.wordunlocked.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		000000000000000000000501 /* Build configuration list for PBXProject "WordUnlocked" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000601 /* Debug */,
+				000000000000000000000602 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		000000000000000000000502 /* Build configuration list for PBXNativeTarget "WordUnlocked" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000603 /* Debug */,
+				000000000000000000000604 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		000000000000000000000503 /* Build configuration list for PBXNativeTarget "WordUnlockedWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000605 /* Debug */,
+				000000000000000000000606 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 000000000000000000000001 /* Project object */;
+}
