@@ -129,3 +129,8 @@ Welcome to Word Unlocked! Keep Scripture on your Lock Screen, all day.
   the translation lists above and update counts accordingly ("Seven" → "Five",
   etc.). The app gracefully falls back to KJV if a live translation's API key
   is missing.
+
+**Future additions (not in v1.0):**
+- NIV, NKJV, NLT: These require per-publisher approval on the YouVersion Platform
+  dashboard (Thomas Nelson/HarperCollins controls NIV/NKJV, Tyndale controls NLT).
+  Request enablement once your app is live, then wire as live translations.
