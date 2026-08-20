@@ -1,3 +1,5 @@
 {
-  "project_name": "bible-widget-app"
+  "version": 1,
+  "tracked": true,
+  "defaultType": "note"
 }

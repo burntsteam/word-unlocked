@@ -1,0 +1,9 @@
+{
+  "0": "LSV import pipeline",
+  "1": "ASV import pipeline",
+  "2": "KJV import pipeline",
+  "3": "Web seed fetcher",
+  "4": "iOS app build tools",
+  "5": "BSB import pipeline",
+  "6": "ESV API fetcher"
+}

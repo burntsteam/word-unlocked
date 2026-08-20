@@ -38,3 +38,24 @@ fastlane/test_output
 # ─── OMC / Claude Code ──────────────────────────────────────
 .omc/
 .omx/
+
+# graphify: commit the small durable artifacts (community_labels.json,
+# GRAPH_REPORT.md, wiki/, memory/) — the ones that are curated or cost money to
+# regenerate. Ignore the large rebuild-on-every-commit outputs and machine-local
+# state; `graphify update` reproduces them at zero LLM cost.
+.graphify/graph.json
+.graphify/studio/
+.graphify/manifest.json
+.graphify/scope.json
+.graphify/cost.json
+.graphify/cache/
+.graphify/branch.json
+.graphify/worktree.json
+.graphify/needs_update
+.graphify/.graphify_*
+.graphify/label-instructions/
+.graphify/__pycache__/
+.graphify/obsidian/
+.graphify/.obsidian/
+.graphify/.DS_Store
+.graphify/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/
