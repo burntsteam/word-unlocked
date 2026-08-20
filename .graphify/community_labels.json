@@ -1,9 +1,94 @@
 {
-  "0": "LSV import pipeline",
-  "1": "ASV import pipeline",
-  "2": "KJV import pipeline",
-  "3": "Web seed fetcher",
-  "4": "iOS app build tools",
-  "5": "BSB import pipeline",
-  "6": "ESV API fetcher"
+  "version": 2,
+  "labels": {
+    "0": {
+      "name": "LSV import pipeline",
+      "members": [
+        "scripts_fetch_lsv_seed",
+        "scripts_fetch_lsv_seed_clean_inline",
+        "scripts_fetch_lsv_seed_derived",
+        "scripts_fetch_lsv_seed_excerpt",
+        "scripts_fetch_lsv_seed_fetch",
+        "scripts_fetch_lsv_seed_fit_category",
+        "scripts_fetch_lsv_seed_main",
+        "scripts_fetch_lsv_seed_parse_usfm",
+        "scripts_fetch_lsv_seed_segments",
+        "scripts_fetch_lsv_seed_words"
+      ]
+    },
+    "1": {
+      "name": "ASV import pipeline",
+      "members": [
+        "scripts_fetch_asv_seed",
+        "scripts_fetch_asv_seed_clean",
+        "scripts_fetch_asv_seed_derived",
+        "scripts_fetch_asv_seed_excerpt",
+        "scripts_fetch_asv_seed_fit_category",
+        "scripts_fetch_asv_seed_main",
+        "scripts_fetch_asv_seed_segments",
+        "scripts_fetch_asv_seed_words"
+      ]
+    },
+    "2": {
+      "name": "KJV import pipeline",
+      "members": [
+        "scripts_fetch_kjv_seed",
+        "scripts_fetch_kjv_seed_derived",
+        "scripts_fetch_kjv_seed_excerpt",
+        "scripts_fetch_kjv_seed_fetch_json",
+        "scripts_fetch_kjv_seed_fit_category",
+        "scripts_fetch_kjv_seed_main",
+        "scripts_fetch_kjv_seed_segments",
+        "scripts_fetch_kjv_seed_words"
+      ]
+    },
+    "3": {
+      "name": "Web seed fetcher",
+      "members": [
+        "scripts_fetch_web_seed",
+        "scripts_fetch_web_seed_clean",
+        "scripts_fetch_web_seed_derived",
+        "scripts_fetch_web_seed_excerpt",
+        "scripts_fetch_web_seed_fit_category",
+        "scripts_fetch_web_seed_main",
+        "scripts_fetch_web_seed_segments",
+        "scripts_fetch_web_seed_words"
+      ]
+    },
+    "4": {
+      "name": "iOS app build tools",
+      "members": [
+        "branch:repo:github.com/burntsteam/word-unlocked#main",
+        "commit:repo:github.com/burntsteam/word-unlocked@1524b077c20c8951ba016d670f32a07df0c6a3a9",
+        "commit:repo:github.com/burntsteam/word-unlocked@606b9f41b0f21537069c1b031d47626bcccd3c69",
+        "commit:repo:github.com/burntsteam/word-unlocked@676cef021ba7105ac9730e58f3a99e07d5ee5fff",
+        "scripts_build_prebuilt_db",
+        "scripts_build_prebuilt_db_load",
+        "scripts_build_prebuilt_db_main"
+      ]
+    },
+    "5": {
+      "name": "BSB import pipeline",
+      "members": [
+        "scripts_fetch_bsb_seed",
+        "scripts_fetch_bsb_seed_derived",
+        "scripts_fetch_bsb_seed_excerpt",
+        "scripts_fetch_bsb_seed_fit_category",
+        "scripts_fetch_bsb_seed_main",
+        "scripts_fetch_bsb_seed_segments",
+        "scripts_fetch_bsb_seed_words"
+      ]
+    },
+    "6": {
+      "name": "ESV API fetcher",
+      "members": [
+        "scripts_fetch_esv_seed",
+        "scripts_fetch_esv_seed_fetch_text",
+        "scripts_fetch_esv_seed_load_json",
+        "scripts_fetch_esv_seed_main",
+        "scripts_fetch_esv_seed_rationale_86",
+        "scripts_fetch_esv_seed_resolve_api_key"
+      ]
+    }
+  }
 }
