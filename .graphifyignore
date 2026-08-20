@@ -13,3 +13,10 @@ package-lock.json
 pnpm-lock.yaml
 yarn.lock
 graphify-out/cost.json
+
+# Generated graphify artifacts. graphify includes memory/ separately.
+# Both entries are required: graphify scopes to *committed* files, so once
+# .graphify/ is tracked its own GRAPH_REPORT.md gets ingested as corpus and
+# the graph starts indexing itself.
+graphify-out/
+.graphify/
