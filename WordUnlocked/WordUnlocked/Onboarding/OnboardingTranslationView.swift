@@ -10,17 +10,17 @@ struct OnboardingTranslationView: View {
                 OnboardingHeader(
                     systemImage: "book",
                     title: "Your Translation",
-                    subtitle: "King James Version is included offline."
+                    subtitle: "Five translations are included offline. Pick one — you can change it any time."
                 )
 
                 VStack(spacing: 12) {
-                    ForEach(translationCards) { translation in
+                    ForEach(translationCards) { card in
                         TranslationChoiceCard(
-                            translation: translation,
-                            isSelected: settingsStore.selectedTranslation == translation.code,
+                            translation: card,
+                            isSelected: settingsStore.selectedTranslation == card.code,
                             action: {
-                                if translation.isAvailable {
-                                    settingsStore.selectedTranslation = translation.code
+                                if card.isAvailable {
+                                    settingsStore.selectedTranslation = card.code
                                 }
                             }
                         )
@@ -45,9 +45,20 @@ private struct OnboardingTranslationCard: Identifiable {
     var id: String { code }
 }
 
-private let translationCards: [OnboardingTranslationCard] = [
-    OnboardingTranslationCard(code: "KJV", name: "King James Version", detail: "Available offline", isAvailable: true)
-]
+// Built from the bundled seed database rather than hardcoded, so a translation added to
+// the seed shows up during onboarding instead of silently staying invisible here.
+private var translationCards: [OnboardingTranslationCard] {
+    TranslationService.availableOffline
+        .filter(\.enabled)
+        .map { translation in
+            OnboardingTranslationCard(
+                code: translation.code,
+                name: translation.displayName,
+                detail: "Available offline",
+                isAvailable: true
+            )
+        }
+}
 
 private struct TranslationChoiceCard: View {
     let translation: OnboardingTranslationCard

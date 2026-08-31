@@ -37,9 +37,12 @@ struct OnboardingView: View {
                 .tag(5)
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-        .overlay(alignment: .bottom) {
+        // safeAreaInset rather than an overlay: the dots reserve their own layout space, so
+        // a page whose content scrolls (the translation list) stops sliding underneath them.
+        .safeAreaInset(edge: .bottom) {
             OnboardingProgressDots(currentPage: page, pageCount: pageCount)
-                .padding(.bottom, 88)
+                .padding(.top, 12)
+                .padding(.bottom, 28)
         }
     }
 }
