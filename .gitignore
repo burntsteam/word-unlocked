@@ -49,6 +49,10 @@ fastlane/test_output
 .graphify/scope.json
 .graphify/cost.json
 .graphify/cache/
+# graphify writes its AST cache relative to the directory it is invoked from, so a
+# run from a subdirectory leaves a stray .graphify/cache/ there. The rules above are
+# root-anchored and would not catch it.
+**/.graphify/cache/
 .graphify/branch.json
 .graphify/worktree.json
 .graphify/needs_update
