@@ -1,0 +1,203 @@
+<!-- ESV is hidden at runtime while ESV_API_KEY is unset (ESVBibleService.isConfigured).
+     If the key is added, restore the ESV wording removed here. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Support — Word Unlocked</title>
+<meta name="description" content="Support for Word Unlocked: how to add the Lock Screen widget, switch translations, and how offline mode works.">
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: #0D1533;
+    color: #F2F3F8;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.65;
+    -webkit-text-size-adjust: 100%;
+  }
+  a { color: #E8B44A; }
+  a:hover, a:focus { color: #f4cd7a; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+  header.site { border-bottom: 1px solid rgba(232, 180, 74, 0.18); }
+  header.site .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .brand {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #F2F3F8;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+  .brand:hover, .brand:focus { color: #F2F3F8; }
+  nav.top a {
+    color: #C9CEE3;
+    text-decoration: none;
+    margin-left: 22px;
+    font-size: 0.95rem;
+  }
+  nav.top a:hover, nav.top a:focus { color: #E8B44A; }
+  main .wrap { padding-top: 44px; padding-bottom: 40px; }
+  h1 {
+    font-size: 2rem;
+    margin: 0 0 16px;
+    color: #FFFFFF;
+  }
+  p.intro {
+    color: #D7DBEC;
+    max-width: 62ch;
+    margin: 0 0 36px;
+  }
+  h2 {
+    font-size: 1.2rem;
+    color: #F2F3F8;
+    border-bottom: 1px solid rgba(232, 180, 74, 0.18);
+    padding-bottom: 8px;
+    margin: 0 0 18px;
+  }
+  section { margin: 0 0 36px; }
+  details {
+    background: #121A3D;
+    border: 1px solid rgba(232, 180, 74, 0.14);
+    border-radius: 12px;
+    padding: 4px 20px;
+    margin-bottom: 12px;
+  }
+  details[open] { padding-bottom: 18px; }
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: #F2F3F8;
+    padding: 16px 0;
+    list-style: none;
+    position: relative;
+    padding-right: 28px;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after {
+    content: "+";
+    position: absolute;
+    right: 0;
+    top: 14px;
+    color: #E8B44A;
+    font-size: 1.2rem;
+    font-weight: 400;
+  }
+  details[open] summary::after { content: "\2212"; }
+  details p {
+    color: #B9C0DA;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+  .contact-card {
+    background: #121A3D;
+    border: 1px solid rgba(232, 180, 74, 0.14);
+    border-radius: 14px;
+    padding: 22px;
+  }
+  .contact-card p { color: #B9C0DA; margin: 0 0 10px; }
+  .contact-card a.email {
+    display: inline-block;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #E8B44A;
+  }
+  code {
+    background: rgba(232, 180, 74, 0.12);
+    color: #E8B44A;
+    padding: 1px 6px;
+    border-radius: 6px;
+    font-size: 0.9em;
+  }
+  footer {
+    border-top: 1px solid rgba(232, 180, 74, 0.18);
+    padding: 24px 0 40px;
+  }
+  footer .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #8891AF;
+  }
+  footer a { color: #8891AF; text-decoration: underline; }
+  footer a:hover, footer a:focus { color: #E8B44A; }
+  @media (max-width: 560px) {
+    h1 { font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="index.html">Word Unlocked</a>
+    <nav class="top">
+      <a href="index.html">Home</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <h1>Support</h1>
+    <p class="intro">
+      Word Unlocked puts a Bible verse on your iPhone Lock Screen. Pick a mode &mdash;
+      Daily Verse, Weekly Theme, Topic, Chapter, Memorization, or Favorites &mdash; and a
+      translation, and the widget keeps your Lock Screen updated with scripture. Five
+      translations (KJV, WEB, BSB, ASV, LSV) work fully offline; the Recovery Version
+      fetches live and then caches on your device.
+    </p>
+
+    <section>
+      <h2>Frequently Asked Questions</h2>
+
+      <details>
+        <summary>How do I add the Lock Screen widget?</summary>
+        <p>Lock your iPhone, then touch and hold the Lock Screen until "Customize" appears. Tap Customize, tap the Lock Screen, then tap the widget area below the clock. Find "Word Unlocked" in the widget list and tap it to add it, then tap Done.</p>
+      </details>
+
+      <details>
+        <summary>Why isn't my verse updating?</summary>
+        <p>iOS manages exactly when widgets refresh to save battery, so updates aren't always instant. First check Settings in the app to confirm you're in the mode and translation you expect &mdash; modes like Daily Verse, Topic, and Chapter each have their own update or rotation interval. If the Recovery Version is selected, a new verse also requires a network connection the first time it&rsquo;s fetched.</p>
+      </details>
+
+      <details>
+        <summary>How do I switch translations?</summary>
+        <p>Open the app and go to Settings, then use the Default Translation picker (or the Translations tab to browse all available translations). KJV, WEB, BSB, ASV, and LSV are available immediately since they're bundled offline. Selecting the Recovery Version fetches that verse live the first time, then caches it locally.</p>
+      </details>
+
+      <details>
+        <summary>How does offline mode work?</summary>
+        <p>King James Version, World English Bible, Berean Standard Bible, American Standard Version, and Literal Standard Version are bundled inside the app itself, so no network request is ever made when one of them is selected. The Recovery Version is the only translation that needs a connection, and only at the moment you select it or move to a verse that isn&rsquo;t already cached.</p>
+      </details>
+    </section>
+
+    <section>
+      <h2>Contact</h2>
+      <div class="contact-card">
+        <p>Didn't find what you needed? Send an email and we'll help.</p>
+        <a class="email" href="mailto:help@rippre.com">help@rippre.com</a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 Word Unlocked</span>
+    <span><a href="privacy.html">Privacy Policy</a></span>
+  </div>
+</footer>
+</body>
+</html>

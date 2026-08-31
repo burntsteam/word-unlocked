@@ -1,0 +1,201 @@
+<!-- ESV is hidden at runtime while ESV_API_KEY is unset (ESVBibleService.isConfigured).
+     If the key is added, restore the ESV wording removed here. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Word Unlocked</title>
+<meta name="description" content="Word Unlocked puts a Bible verse on your iPhone Lock Screen. Offline and private, with five bundled translations.">
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: #0D1533;
+    color: #F2F3F8;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-text-size-adjust: 100%;
+  }
+  a { color: #E8B44A; }
+  a:hover, a:focus { color: #f4cd7a; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  header.site {
+    border-bottom: 1px solid rgba(232, 180, 74, 0.18);
+  }
+  header.site .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .brand {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #F2F3F8;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+  .brand:hover, .brand:focus { color: #F2F3F8; }
+  nav.top a {
+    color: #C9CEE3;
+    text-decoration: none;
+    margin-left: 22px;
+    font-size: 0.95rem;
+  }
+  nav.top a:hover, nav.top a:focus { color: #E8B44A; }
+  main .wrap { padding-top: 56px; padding-bottom: 40px; }
+  .eyebrow {
+    display: inline-block;
+    color: #E8B44A;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+  }
+  h1 {
+    font-size: 2.4rem;
+    line-height: 1.15;
+    margin: 0 0 14px;
+    color: #FFFFFF;
+  }
+  p.tagline {
+    font-size: 1.15rem;
+    color: #D7DBEC;
+    margin: 0 0 28px;
+    max-width: 46ch;
+  }
+  p.body-copy {
+    color: #B9C0DA;
+    max-width: 60ch;
+    margin: 0 0 40px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 44px;
+  }
+  .card {
+    background: #121A3D;
+    border: 1px solid rgba(232, 180, 74, 0.14);
+    border-radius: 14px;
+    padding: 20px;
+  }
+  .card h2 {
+    font-size: 1rem;
+    margin: 0 0 8px;
+    color: #F2F3F8;
+  }
+  .card p {
+    font-size: 0.92rem;
+    color: #AEB5D1;
+    margin: 0;
+  }
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 12px 20px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .btn.primary {
+    background: #E8B44A;
+    color: #0D1533;
+  }
+  .btn.primary:hover, .btn.primary:focus { background: #f4cd7a; color: #0D1533; }
+  .btn.ghost {
+    background: transparent;
+    color: #F2F3F8;
+    border: 1px solid rgba(242, 243, 248, 0.25);
+  }
+  .btn.ghost:hover, .btn.ghost:focus { border-color: #E8B44A; color: #E8B44A; }
+  footer {
+    border-top: 1px solid rgba(232, 180, 74, 0.18);
+    padding: 24px 0 40px;
+  }
+  footer .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #8891AF;
+  }
+  footer a { color: #8891AF; text-decoration: underline; }
+  footer a:hover, footer a:focus { color: #E8B44A; }
+  @media (max-width: 560px) {
+    h1 { font-size: 1.9rem; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="index.html">Word Unlocked</a>
+    <nav class="top">
+      <a href="privacy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <p class="eyebrow">iOS &middot; Lock Screen Widget</p>
+    <h1>Word Unlocked</h1>
+    <p class="tagline">Put scripture on your Lock Screen. Offline and private.</p>
+    <p class="body-copy">
+      Word Unlocked shows a Bible verse on your iPhone Lock Screen. Choose from Daily
+      Verse, Weekly Theme, Topic, Chapter, Memorization, or Favorites modes, and pick a
+      translation &mdash; five of them work fully offline, with no account, no ads, no
+      tracking, and no analytics.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Offline by default</h2>
+        <p>King James Version, World English Bible, Berean Standard Bible, American Standard Version, and Literal Standard Version are bundled in the app and never require a network connection.</p>
+      </div>
+      <div class="card">
+        <h2>Nothing collected</h2>
+        <p>No accounts, no analytics, no ads, no tracking. Word Unlocked's App Store privacy label is "Data Not Collected."</p>
+      </div>
+      <div class="card">
+        <h2>Two optional live translations</h2>
+        <p>The Recovery Version can be fetched live when you select it, then cached on your device.</p>
+      </div>
+      <div class="card">
+        <h2>Built for the Lock Screen</h2>
+        <p>Inline, circular, and rectangular widget styles designed for iOS Lock Screen customization.</p>
+      </div>
+    </div>
+
+    <div class="cta-row">
+      <a class="btn primary" href="privacy.html">Privacy Policy</a>
+      <a class="btn ghost" href="support.html">Support</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 Word Unlocked</span>
+    <span>Contact: <a href="mailto:help@rippre.com">help@rippre.com</a></span>
+  </div>
+</footer>
+</body>
+</html>
