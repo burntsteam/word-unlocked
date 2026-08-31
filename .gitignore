@@ -54,7 +54,9 @@ fastlane/test_output
 .graphify/needs_update
 .graphify/.graphify_*
 .graphify/label-instructions/
-.graphify/__pycache__/
+.graphify/description-instructions/
+__pycache__/
+*.pyc
 .graphify/obsidian/
 .graphify/.obsidian/
 .graphify/.DS_Store
