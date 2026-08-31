@@ -88,14 +88,18 @@ struct TranslationsView: View {
                     settingsStore.selectedTranslation = "RV"
                 }
 
-                // English Standard Version — live API, ≤500-verse offline cache
-                ESVTranslationRow(
-                    isSelected: settingsStore.selectedTranslation == "ESV",
-                    cachedCount: esvService.cache.count,
-                    isFetching: esvService.isFetching,
-                    error: esvService.error
-                ) {
-                    settingsStore.selectedTranslation = "ESV"
+                // English Standard Version — live API, ≤500-verse offline cache.
+                // Hidden entirely when ESV_API_KEY is unset: without it the row can only
+                // ever show "ESV API key not configured."
+                if ESVBibleService.isConfigured {
+                    ESVTranslationRow(
+                        isSelected: settingsStore.selectedTranslation == "ESV",
+                        cachedCount: esvService.cache.count,
+                        isFetching: esvService.isFetching,
+                        error: esvService.error
+                    ) {
+                        settingsStore.selectedTranslation = "ESV"
+                    }
                 }
             }
 

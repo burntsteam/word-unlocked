@@ -20,6 +20,13 @@ final class ESVBibleService: ObservableObject {
         Bundle.main.infoDictionary?["ESVApiKey"] as? String ?? ""
     }
 
+    // ESV_API_KEY is supplied at build time via Config/Secrets.xcconfig. When it is
+    // absent every fetch dead-ends on the guard below, so the UI hides the translation
+    // rather than offering a choice that can only ever produce an error.
+    static var isConfigured: Bool {
+        !((Bundle.main.infoDictionary?["ESVApiKey"] as? String) ?? "").isEmpty
+    }
+
     private init() {
         if let data = AppGroupSettings.defaults.data(forKey: AppGroupSettings.Keys.esvVerseCache),
            let decoded = try? JSONDecoder().decode([LiveCachedVerse].self, from: data) {
