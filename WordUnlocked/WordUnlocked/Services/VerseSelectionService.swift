@@ -66,13 +66,15 @@ enum VerseSelectionService {
         )
     }
 
-    private static func pick(from verses: [Verse], date: Date, component: Calendar.Component) -> Verse? {
+    // internal, not private: pick/stableIndex are pure and are the determinism contract
+    // the widget timeline depends on, so tests need to reach them.
+    static func pick(from verses: [Verse], date: Date, component: Calendar.Component) -> Verse? {
         guard !verses.isEmpty else { return nil }
         let index = stableIndex(for: date, component: component, count: verses.count)
         return verses[index]
     }
 
-    private static func stableIndex(for date: Date, component: Calendar.Component, count: Int) -> Int {
+    static func stableIndex(for date: Date, component: Calendar.Component, count: Int) -> Int {
         let calendar = Calendar.current
         let value: Int
         switch component {

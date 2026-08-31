@@ -100,13 +100,22 @@ final class ESVBibleService: ObservableObject {
         }
     }
 
-    // Upsert into the bounded cache (most-recent last), enforcing the 500-verse cap.
-    private func store(_ verse: LiveCachedVerse) {
-        cache.removeAll { $0.fetchedRef == verse.fetchedRef }
-        cache.append(verse)
-        if cache.count > Self.maxCacheCount {
-            cache.removeFirst(cache.count - Self.maxCacheCount)
+    // The eviction rule itself: upsert by fetchedRef, most-recent last, capped at
+    // maxCacheCount. Kept pure and separate from persistence so tests can exercise it
+    // without writing to the App Group suite the widget reads.
+    static func applyingStore(_ verse: LiveCachedVerse,
+                              to cache: [LiveCachedVerse]) -> [LiveCachedVerse] {
+        var next = cache
+        next.removeAll { $0.fetchedRef == verse.fetchedRef }
+        next.append(verse)
+        if next.count > maxCacheCount {
+            next.removeFirst(next.count - maxCacheCount)
         }
+        return next
+    }
+
+    private func store(_ verse: LiveCachedVerse) {
+        cache = Self.applyingStore(verse, to: cache)
         if let data = try? JSONEncoder().encode(cache) {
             AppGroupSettings.defaults.set(data, forKey: AppGroupSettings.Keys.esvVerseCache)
         }
