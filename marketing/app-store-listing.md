@@ -1,9 +1,17 @@
 # Word Unlocked — App Store Listing
 
+> **Copy below describes the app as it currently builds: SIX translations.**
+> ESV is hidden at runtime because `ESV_API_KEY` is unset in `Config/Secrets.xcconfig`
+> (`ESVBibleService.isConfigured` gates the row). If you add the key before submitting,
+> switch every "Six" back to "Seven", re-add the ESV bullet under **Live**, restore the
+> ESV caching sentence, and use the `esv` keyword string in the Keywords section.
+> Shipping copy that advertises ESV while the app hides it is a metadata mismatch and a
+> rejection risk.
+
 Copy blocks below map to fields in App Store Connect. Character limits are noted
 so nothing gets truncated. Everything here reflects the app as built:
-5 full **offline** Bibles (KJV, WEB, BSB, ASV, LSV) plus 2 live translations (ESV, RV) that cache verses
-you've read, a Lock Screen widget, verse modes, topics, memorization, favorites, themes, and Set as
+5 full **offline** Bibles (KJV, WEB, BSB, ASV, LSV) plus 2 live translations fetched on demand —
+ESV (Crossway) and the Recovery Version (Living Stream Ministry), a Lock Screen widget, verse modes, topics, memorization, favorites, themes, and Set as
 Wallpaper — no account, no tracking, core experience works completely offline.
 
 ---
@@ -23,7 +31,7 @@ Wallpaper — no account, no tracking, core experience works completely offline.
 - `Bible verses, private & free` *(28)*
 
 ## Promotional Text  (max 170 chars — editable anytime, no review)
-`Keep a verse in front of you all day. Put Scripture on your Lock Screen, read KJV or WEB completely offline, or choose from 7 total translations — no account needed.` *(165)*
+`Keep a verse in front of you all day. Put Scripture on your Lock Screen, read KJV or WEB completely offline, or choose from 6 translations — no account needed.` *(158)*
 
 ---
 
@@ -40,7 +48,7 @@ No account. No sign-up. No internet required. Just Scripture.
 WHY YOU'LL LOVE IT
 • Lock Screen & Home Screen widgets — a verse you see without opening anything
 • A fresh verse every day, or rotate by topic, weekly theme, or chapter
-• Seven translations — five completely offline, two live with offline caching
+• Six translations — five completely offline, one live
 • KJV and WEB are built in and work 100% offline, no signal needed
 • Private by design — no accounts, no tracking, no ads
 
@@ -55,9 +63,8 @@ Read in the voice that fits you, and switch anytime:
 • Literal Standard Version (LSV) — 31,104 verses, word-for-word
 
 **Live (fetch from the web when you choose)**
-• English Standard Version (ESV)
-• Revised Version (RV)
-Both ESV and RV keep a rolling cache so the most recent verses you've read stay available offline.
+• Recovery Version (RV) — © Living Stream Ministry, used by permission
+The Recovery Version keeps your most recent verse on hand for the widget.
 
 VERSES THAT MEET THE MOMENT
 Pick the rhythm that fits your walk:
@@ -83,14 +90,23 @@ need is already on your phone.
 Add the widget today and keep a verse in front of you — wherever the day takes
 you.
 
-— Public domain and openly licensed translations included. ESV text © Crossway,
-used by permission.
+— Public domain and openly licensed translations included. LSV © Covenant Press
+(CC BY-SA). ESV text © Crossway and Recovery Version text © Living Stream
+Ministry, both used by permission.
 
 ---
 
 ## Keywords  (max 100 chars, comma-separated, no spaces after commas)
-`bible,verse,widget,lock screen,scripture,daily,devotional,christian,kjv,esv,offline,faith,prayer,jesus`
-*(~99 chars — verify in App Store Connect)*
+`verse,daily,devotional,christian,kjv,esv,offline,faith,prayer,jesus,god,psalm,gospel,study`
+*(90 chars — measured, under the 100 limit)*
+
+The previous string was **102 chars and would have been rejected**. "bible", "widget",
+"lock screen" and "scripture" were dropped because Apple already indexes the app name
+and subtitle — repeating them there wasted budget rather than adding reach.
+
+**If ESV ships without an API key, use this instead** (drops the `esv` term so the
+metadata does not advertise a dead translation):
+`verse,daily,devotional,christian,kjv,offline,faith,prayer,jesus,god,psalm,gospel,study,hope` *(91 chars)*
 
 ---
 
@@ -99,8 +115,8 @@ used by permission.
 **Version 1.0**
 Welcome to Word Unlocked! Keep Scripture on your Lock Screen, all day.
 • Lock Screen and Home Screen widgets
-• Seven translations: five fully offline (KJV, WEB, BSB, ASV, LSV) plus ESV and RV
-  via live fetch with offline caching
+• Six translations: five fully offline (KJV, WEB, BSB, ASV, LSV) plus the Recovery
+  Version via live fetch
 • Rotate verses by day, topic, weekly theme, or chapter
 • Memorization mode and Favorites
 • Set as Wallpaper
@@ -111,7 +127,7 @@ Welcome to Word Unlocked! Keep Scripture on your Lock Screen, all day.
 ## Screenshot Captions  (short lines to overlay on screenshots)
 1. `Scripture on your Lock Screen`
 2. `A new verse, every single day`
-3. `Seven translations — KJV and WEB fully offline`
+3. `Six translations — KJV and WEB fully offline`
 4. `Find a verse for how you feel`
 5. `Read by topic, theme, or chapter`
 6. `Set a verse as your wallpaper`
@@ -124,11 +140,15 @@ Welcome to Word Unlocked! Keep Scripture on your Lock Screen, all day.
 - Age rating: 4+
 - Contains no user accounts, no data collection → App Privacy: "Data Not Collected"
 - The five offline translations (KJV, WEB, BSB, ASV, LSV) are always available.
-- ESV and RV are available if their respective API keys are configured in
-  Config/Secrets.xcconfig. If either is not enabled at launch, remove it from
-  the translation lists above and update counts accordingly ("Seven" → "Five",
-  etc.). The app gracefully falls back to KJV if a live translation's API key
-  is missing.
+- ESV (api.esv.org, Crossway) and the Recovery Version (api.lsm.org, Living
+  Stream Ministry) require API keys in Config/Secrets.xcconfig. If either is not
+  enabled at launch, remove it from the translation lists above and update counts
+  accordingly ("Seven" → "Six"/"Five", etc.). The app falls back gracefully when
+  a live translation's key is missing.
+- ⚠️ AS OF 2026-08-29: `LSM_APP_ID` and `LSM_TOKEN` are set, but `ESV_API_KEY` is
+  NOT. ESV therefore ships dead — every fetch no-ops behind the empty-key guard in
+  ESVBibleService. Either add the key before submitting, or drop ESV from the
+  description, the keyword list, and the screenshot captions.
 
 **Future additions (not in v1.0):**
 - NIV, NKJV, NLT: These require per-publisher approval on the YouVersion Platform
