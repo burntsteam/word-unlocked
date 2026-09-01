@@ -1,0 +1,5 @@
+{
+ "version": 1,
+ "note": "Durable node descriptions. graphify update wipes graph.json; this survives.",
+ "descriptions": {}
+}
