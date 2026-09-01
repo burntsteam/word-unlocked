@@ -1,24 +1,24 @@
 # Graph Report - .  (2026-08-31)
 
 ## Corpus Check
-- Corpus is ~30,154 words - fits in a single context window. You may not need a graph.
+- Corpus is ~32,439 words - fits in a single context window. You may not need a graph.
 
 ## Summary
-- 492 nodes · 782 edges · 58 communities detected
+- 499 nodes · 795 edges · 58 communities detected
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
-- Edge kinds: contains: 175 · method: 165 · inherits: 155 · calls: 140 · MODIFIES: 71 · case_of: 56 · ON_BRANCH: 10 · PARENT_OF: 9 · rationale_for: 1
+- Edge kinds: contains: 177 · method: 165 · inherits: 155 · calls: 140 · MODIFIES: 74 · case_of: 56 · ON_BRANCH: 14 · PARENT_OF: 13 · rationale_for: 1
 
 
 ## Input Scope
 - Requested: auto
 - Resolved: committed (source: default-auto)
-- Included files: 72 · Candidates: 100
-- Excluded: 13 untracked · 518 ignored · 1 sensitive · 0 missing committed
+- Included files: 75 · Candidates: 104
+- Excluded: 1 untracked · 518 ignored · 1 sensitive · 0 missing committed
 - Recommendation: Use --scope all or graphify.yaml inputs.corpus for a knowledge-base folder.
 
 ## Graph Freshness
-- Built from Git commit: `1166ef5`
+- Built from Git commit: `3cc4c76`
 - Compare this hash to `git rev-parse HEAD` before trusting freshness-sensitive graph output.
 ## God Nodes (most connected - your core abstractions)
 1. `ScriptureDatabase` - 25 edges
@@ -27,28 +27,28 @@
 4. `WidgetTimelineService` - 17 edges
 5. `DatabaseService` - 15 edges
 6. `VerseSelectionService` - 11 edges
-7. `ESVBibleServiceTests` - 9 edges
-8. `VerseSelectionServiceTests` - 9 edges
-9. `VerseMode` - 9 edges
-10. `WidgetTheme` - 9 edges
+7. `VerseMode` - 9 edges
+8. `WidgetTheme` - 9 edges
+9. `ESVBibleServiceTests` - 9 edges
+10. `VerseSelectionServiceTests` - 9 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `676cef0 Initial commit: Word Unlocked — iOS scripture Lock Screen widget` --ON_BRANCH--> `main`  [EXTRACTED]
   git → git  _Bridges community 3 → community 0_
-- `OnboardingTranslationCard` --inherits--> `Identifiable`  [EXTRACTED]
-  WordUnlocked/WordUnlocked/Onboarding/OnboardingTranslationView.swift →   _Bridges community 43 → community 5_
-- `OnboardingTranslationView` --inherits--> `View`  [EXTRACTED]
-  WordUnlocked/WordUnlocked/Onboarding/OnboardingTranslationView.swift →   _Bridges community 43 → community 11_
-- `OnboardingProgressDots` --inherits--> `View`  [EXTRACTED]
-  WordUnlocked/WordUnlocked/Onboarding/OnboardingView.swift →   _Bridges community 50 → community 11_
 - `Testament` --inherits--> `Codable`  [EXTRACTED]
   WordUnlocked/WordUnlocked/Models/Book.swift →   _Bridges community 10 → community 5_
+- `Difficulty` --inherits--> `Codable`  [EXTRACTED]
+  WordUnlocked/WordUnlocked/Models/MemorizationPlan.swift →   _Bridges community 9 → community 5_
+- `Difficulty` --inherits--> `String`  [EXTRACTED]
+  WordUnlocked/WordUnlocked/Models/MemorizationPlan.swift →   _Bridges community 9 → community 10_
+- `MemorizationPlan.Difficulty` --inherits--> `CaseIterable`  [EXTRACTED]
+  WordUnlocked/WordUnlocked/Models/MemorizationPlan.swift →   _Bridges community 9 → community 15_
 
 ## Communities
 
 ### Community 0 - "LSV import pipeline"
-Cohesion: 0.09
-Nodes (12): main, 1166ef5 test: add a unit test target covering the cache and selection rules, 1524b07 Update App Store listing: add RV as live translation, emphasize KJV/WEB offline, 3f7b263 chore: track durable graphify + engram state, 606b9f4 Add future translation roadmap to submission notes, 6c96c57 feat: add an app icon, 7f5482d chore(graphify): fingerprint community membership in the label sidecar, 8c91015 feat(translations): hide ESV until its API key is configured (+4 more)
+Cohesion: 0.07
+Nodes (16): main, 1166ef5 test: add a unit test target covering the cache and selection rules, 1524b07 Update App Store listing: add RV as live translation, emphasize KJV/WEB offline, 2879ff0 chore: declare export compliance and tidy repo hygiene, 3cc4c76 chore(graphify): refresh the graph and stop stray caches reaching git, 3f7b263 chore: track durable graphify + engram state, 606b9f4 Add future translation roadmap to submission notes, 6c96c57 feat: add an app icon (+8 more)
 
 ### Community 1 - "ASV import pipeline"
 Cohesion: 0.18
@@ -342,7 +342,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **What connects `old`, `new`, `easy` to the rest of the system?**
   _60 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `LSV import pipeline` be split into smaller, more focused modules?**
-  _Cohesion score 0.08866995073891626 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0746031746031746 - nodes in this community are weakly interconnected._
 - **Should `KJV import pipeline` be split into smaller, more focused modules?**
   _Cohesion score 0.09523809523809523 - nodes in this community are weakly interconnected._
 - **Should `Web seed fetcher` be split into smaller, more focused modules?**
