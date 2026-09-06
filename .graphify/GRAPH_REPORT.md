@@ -67,43 +67,43 @@ Nodes (17): .init(), Book, Codable, Equatable, Favorite, Identifiable, LiveCache
 ### Community 6 - "ESV API fetcher"
 Nodes (17): .addFavorite(), .apply(), .currentSettings(), .init(), .isFavorite(), .loadFavorites(), .loadMemorizationPlan(), .persistDefaults(), .reloadWidgetTimelines(), .removeFavorite(), .removeFavorites(), .resetWidgetSettings(), .save(), .saveFavorites(), .saveMemorizationPlan(), SettingsStore, SettingsStore.swift
 
-### Community 7 - "Community 7"
+### Community 7 - "ESV Bible Data Fetching"
 Nodes (16): .applyingStore(), .cachedVerse(), .fetch(), .fetch(), .init(), .init(), .store(), Decodable, ESVBibleService, ESVBibleService.swift, ESVResponse, LSMResponse, LSMVerse, ObservableObject, RVBibleService, RVBibleService.swift
 
-### Community 8 - "Community 8"
+### Community 8 - "Database Query Operations"
 Nodes (16): .allVerses(), .book(), .books(), .fitCategory(), .init(), .search(), .topic(), .topics(), .translation(), .translations(), .verse(), .verseForToday(), .verses(), .weeklyPlanVerses(), DatabaseService, DatabaseService.swift
 
-### Community 9 - "Community 9"
+### Community 9 - "Memorization Plan Logic"
 Nodes (15): Difficulty, Int, MemorizationPlan, MemorizationPlan.Difficulty, MemorizationPlan.Phase, MemorizationPlan.swift, Phase, easy, firstLetters, fullVerse, hard, medium, partialBlank, referenceOnly, review
 
-### Community 10 - "Community 10"
+### Community 10 - "Chapter Reading Configuration"
 Nodes (15): Book.swift, ChapterEndBehavior, ChapterModeView, ChapterModeView.swift, ChapterRotationSpeed, String, Testament, daily, everySixHours, everyTwelveHours, new, nextChapter, old, repeatChapter, stop
 
-### Community 11 - "Community 11"
+### Community 11 - "Settings and Translations UI"
 Nodes (13): BibleLicensesView, ESVTranslationRow, LicenseRow, PrivacyPolicyView, PrivacyRow, RVTranslationRow, SettingsView, SettingsView.swift, ThemeSwatch, TranslationRow, TranslationsView, TranslationsView.swift, View
 
-### Community 12 - "Community 12"
+### Community 12 - "Wallpaper Export Workflow"
 Nodes (12): .init(), .renderWallpaper(), .saveToPhotos(), .stepRow(), SaveState, WallpaperCanvas, WallpaperExportView, WallpaperView.swift, error, idle, saved, saving
 
-### Community 13 - "Community 13"
+### Community 13 - "Verse Selection Strategies"
 Nodes (11): .builtInVerse(), .chapterVerse(), .datedVerse(), .favoriteVerse(), .memorizationVerse(), .pick(), .referenceCode(), .stableIndex(), .topicVerse(), .verse(), VerseSelectionService
 
-### Community 14 - "Community 14"
+### Community 14 - "Verse Selection Tests"
 Nodes (11): .pickReturnsNilForAnEmptyArray(), .pickReturnsTheElementAtStableIndex(), .pickStaysConsistentWithStableIndexAcrossManyDates(), .stableIndexIsDeterministicForTheSameInputs(), .stableIndexStaysInBoundsForDayComponentAcrossExtremeDates(), .stableIndexStaysInBoundsForWeekOfYearComponentAcrossExtremeDates(), .stableIndexWithZeroCountReturnsZeroInsteadOfCrashing(), .stableIndexYieldsDifferentValuesForDifferentDays(), VerseSelectionServiceTests, VerseSelectionServiceTests.swift, makeVerse()
 
-### Community 15 - "Community 15"
+### Community 15 - "Widget Settings Model"
 Nodes (10): CaseIterable, WidgetKind, WidgetSettings, WidgetSettings.LongVerseStrategy, WidgetSettings.VerseMode, WidgetSettings.WidgetKind, WidgetSettings.swift, circular, inline, rectangular
 
 ### Community 16 - "LSV import pipeline"
 Nodes (10): clean_inline(), derived(), excerpt(), fetch(), fetch_lsv_seed.py, fit_category(), main(), parse_usfm(), segments(), words()
 
-### Community 17 - "Community 17"
+### Community 17 - "Today's Verse Display"
 Nodes (9): .computeCurrentVerse(), .init(), .toggleFavorite(), ActionArea, Chip, InfoRow, MiniWidgetPreview, TodayView, TodayView.swift
 
-### Community 18 - "Community 18"
+### Community 18 - "Coding Key Definitions"
 Nodes (8): CodingKey, CodingKeys, accentHex, backgroundHex, fontDesign, id, name, textHex
 
-### Community 19 - "Community 19"
+### Community 19 - "Favorites Mode View"
 Nodes (8): .loadPreferences(), .savePreferences(), FavoritesModeView, FavoritesModeView.swift, FavoritesRotationSpeed, daily, everySixHours, everyTwelveHours
 
 ### Community 20 - "ASV import pipeline"
@@ -115,112 +115,112 @@ Nodes (8): derived(), excerpt(), fetch_json(), fetch_kjv_seed.py, fit_category()
 ### Community 22 - "Web seed fetcher"
 Nodes (8): clean(), derived(), excerpt(), fetch_web_seed.py, fit_category(), main(), segments(), words()
 
-### Community 23 - "Community 23"
+### Community 23 - "Verse Length Categories"
 Nodes (7): FitCategory, Verse, Verse.swift, long, medium, short, veryLong
 
-### Community 24 - "Community 24"
+### Community 24 - "Daily Verse Mode Options"
 Nodes (7): VerseMode, chapter, daily, favorites, memorization, topic, weeklyTheme
 
-### Community 25 - "Community 25"
+### Community 25 - "Daily Verse Mode View"
 Nodes (7): .loadPreferences(), .savePreferences(), DailyVerseModeView, DailyVerseModeView.swift, DailyVerseUpdateInterval, daily, everyEightHours
 
-### Community 26 - "Community 26"
+### Community 26 - "Topic Mode View"
 Nodes (7): TopicModeOption, TopicModeView, TopicModeView.swift, TopicRotationSpeed, daily, everySixHours, everyTwelveHours
 
 ### Community 27 - "BSB import pipeline"
 Nodes (7): derived(), excerpt(), fetch_bsb_seed.py, fit_category(), main(), segments(), words()
 
-### Community 28 - "Community 28"
+### Community 28 - "Search and Favorite Actions"
 Nodes (7): .performSearch(), .toggleFavorite(), .toggleFavorite(), .useForMemorization(), SearchView, SearchView.swift, VerseDetailSheet
 
-### Community 29 - "Community 29"
+### Community 29 - "Widget Theme Encoding"
 Nodes (7): .encode(), .fontDesign(), .init(), .name(), .theme(), WidgetTheme, WidgetTheme.swift
 
-### Community 30 - "Community 30"
+### Community 30 - "Translation License Status"
 Nodes (6): LicenseStatus, Translation.swift, ccBySA, comingSoon, licensed, publicDomain
 
-### Community 31 - "Community 31"
+### Community 31 - "Long Verse Handling Strategy"
 Nodes (6): LongVerseStrategy, excerpt, excludeLong, referenceOnly, segmented, smartFit
 
-### Community 32 - "Community 32"
+### Community 32 - "Weekly Theme Preview View"
 Nodes (6): .loadPreview(), WeeklyThemeModeView, WeeklyThemeModeView.swift, WeeklyThemePlan, WeeklyVersePreview, weeklyPreview()
 
 ### Community 33 - "ESV API fetcher"
 Nodes (6): Return the ESV text for a single-verse reference, or raise on hard failure., fetch_esv_seed.py, fetch_text(), load_json(), main(), resolve_api_key()
 
-### Community 34 - "Community 34"
+### Community 34 - "Long Verse Text Processing"
 Nodes (6): .excerpt(), .firstLetters(), .fitCategory(), .segments(), LongVerseService, LongVerseService.swift
 
-### Community 35 - "Community 35"
+### Community 35 - "Favorites List Interface"
 Nodes (6): .prefixText(), FavoriteDetailView, FavoriteRow, FavoritesView, FavoritesView.swift, String
 
-### Community 36 - "Community 36"
+### Community 36 - "Widget Data Provider"
 Nodes (6): .getSnapshot(), .getTimeline(), .placeholder(), TimelineProvider, VerseProvider, WidgetProvider.swift
 
-### Community 37 - "Community 37"
+### Community 37 - "Memorization Display Logic"
 Nodes (5): .currentPhase(), .displayText(), .partialBlank(), MemorizationService, MemorizationService.swift
 
-### Community 38 - "Community 38"
+### Community 38 - "Mode Selection Interface"
 Nodes (5): .detailView(), ModeRow, ModeRowData, ModesView, ModesView.swift
 
-### Community 39 - "Community 39"
+### Community 39 - "Onboarding Completion Screen"
 Nodes (4): OnboardingCompleteView, OnboardingCompleteView.swift, OnboardingHeader, OnboardingPageLayout
 
-### Community 40 - "Community 40"
+### Community 40 - "Onboarding Mode Selection"
 Nodes (4): ModeChoiceCard, OnboardingModeCard, OnboardingModeView, OnboardingModeView.swift
 
-### Community 41 - "Community 41"
+### Community 41 - "Onboarding Translation Selection"
 Nodes (4): OnboardingTranslationCard, OnboardingTranslationView, OnboardingTranslationView.swift, TranslationChoiceCard
 
-### Community 42 - "Community 42"
+### Community 42 - "Widget Instructions View"
 Nodes (4): OnboardingWidgetInstructionsView, OnboardingWidgetInstructionsView.swift, WidgetInstructionRow, WidgetInstructionStep
 
-### Community 43 - "Community 43"
+### Community 43 - "Translation Selection View"
 Nodes (4): OnboardingTranslationCard, OnboardingTranslationView, OnboardingTranslationView.swift, TranslationChoiceCard
 
-### Community 44 - "Community 44"
+### Community 44 - "Theme Color Definitions"
 Nodes (4): .init(), Color, ThemeColors, ThemeColors.swift
 
-### Community 45 - "Community 45"
+### Community 45 - "App Entry Point"
 Nodes (3): App, WordUnlockedApp, WordUnlockedApp.swift
 
-### Community 46 - "Community 46"
+### Community 46 - "App Icon Generator"
 Nodes (3): generate-app-icon.swift, page(), rgb()
 
-### Community 47 - "Community 47"
+### Community 47 - "Memorization Mode View"
 Nodes (3): MemorizationModeView, MemorizationModeView.swift, VerseSearchRow
 
-### Community 48 - "Community 48"
+### Community 48 - "Onboarding Theme Selection"
 Nodes (3): OnboardingThemeView, OnboardingThemeView.swift, ThemeChoiceSwatch
 
-### Community 49 - "Community 49"
+### Community 49 - "Main Onboarding Flow"
 Nodes (3): OnboardingProgressDots, OnboardingView, OnboardingView.swift
 
-### Community 50 - "Community 50"
+### Community 50 - "Onboarding Progress Screen"
 Nodes (3): OnboardingProgressDots, OnboardingView, OnboardingView.swift
 
-### Community 51 - "Community 51"
+### Community 51 - "Database Build Script"
 Nodes (3): build_prebuilt_db.py, load(), main()
 
-### Community 52 - "Community 52"
+### Community 52 - "Theme Configuration Service"
 Nodes (3): .theme(), ThemeService, ThemeService.swift
 
-### Community 53 - "Community 53"
+### Community 53 - "Translation Lookup Service"
 Nodes (3): .translation(), TranslationService, TranslationService.swift
 
-### Community 54 - "Community 54"
+### Community 54 - "App Group Settings Keys"
 Nodes (3): AppGroupSettings, AppGroupSettings.swift, Keys
 
-### Community 55 - "Community 55"
+### Community 55 - "Widget Timeline Entries"
 Nodes (3): TimelineEntry, VerseEntry, WidgetEntry.swift
 
-### Community 56 - "Community 56"
+### Community 56 - "Widget Bundle Entry"
 Nodes (3): WidgetBundle, WordUnlockedWidgetBundle, WordUnlockedWidgetBundle.swift
 
-### Community 57 - "Community 57"
+### Community 57 - "Widget Display Component"
 Nodes (3): Widget, WordUnlockedWidget, WordUnlockedWidget.swift
 
-### Community 58 - "Community 58"
+### Community 58 - "Main App Views"
 Nodes (3): ContentView, ContentView.swift, MainTabView
 
 ## Knowledge Gaps
@@ -292,7 +292,7 @@ _Questions this graph is uniquely positioned to answer:_
   _Cohesion score 0.09523809523809523 - nodes in this community are weakly interconnected._
 - **Should `Web seed fetcher` be split into smaller, more focused modules?**
   _Cohesion score 0.10526315789473684 - nodes in this community are weakly interconnected._
-- **Should `Community 9` be split into smaller, more focused modules?**
+- **Should `Memorization Plan Logic` be split into smaller, more focused modules?**
   _Cohesion score 0.13333333333333333 - nodes in this community are weakly interconnected._
-- **Should `Community 10` be split into smaller, more focused modules?**
+- **Should `Chapter Reading Configuration` be split into smaller, more focused modules?**
   _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._
