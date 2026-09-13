@@ -19,6 +19,41 @@ network. Tests 41/41 green with the key.
 Still blocked on user: Apple signing (item 1) and ASC record creation (item 6). Items 2
 (ESV key), 3 (screenshots), 4 (Pages) and 5 (email) below are done.
 
+### Hardening pass (2026-09-12, later)
+
+Verified: 47/47 tests, Release device build with 0 warnings, and in the simulator —
+Search and Memorization with ESV selected, the Topic list, the Weekly Theme preview, and
+the Lock Screen widget gallery rendering the verse. Fixed:
+
+- **Privacy manifests were never bundled.** The files existed but the project didn't
+  reference them, which blocks the App Store Connect upload. Both targets ship one now,
+  with the App Group reason 1C8F.1 added.
+- **Lock Screen widget views had no `containerBackground`**, so iOS 17+ showed "Please
+  adopt containerBackground API" instead of the verse.
+- **The widget loaded a whole translation per timeline entry** (~22 MB each; the extension
+  gets ~30 MB). Verse choice is now one SQL-backed `VerseSelectionService` shared by app
+  and widget. That also fixed Exclude Long always showing Gen 1:1, the app and widget
+  disagreeing, ESV/RV never rotating (and their Search/Memorization being empty), the
+  built-in verse saving as Gen 1:1, and widget days changing at reload time, not midnight.
+- **Topics were hard-coded**: 10 of 26 had no verses, anxiety/fear/grief (named in the App
+  Store copy) weren't offered, and non-KJV translations had no topic verses at all. Topic
+  and Weekly Theme now list the database's topics and match verses across translations.
+  Weekly Theme shows a topic's first seven verses, one per day, matching its preview.
+- **Live fetches**: a cancelled fetch showed a red error, a new verse's fetch could be
+  dropped, cached verses were re-fetched (every install shares one API key), and 429
+  said "check your connection".
+- Memorization search stalled on every keystroke; the widget could create an empty
+  database before the app's first launch.
+
+Still the owner's call:
+- **Controls that are saved but read by nothing**: topic/chapter/favorites rotation speed,
+  chapter end behaviour, daily update interval, weekly auto-repeat, favorites shuffle and
+  favorites exclude-long. Implement or remove them before review.
+- **GitHub secret scanning and push protection are off** (free for public repos:
+  Settings → Code security).
+- **Every commit's author email is the owner's personal address**, now public with the
+  repo. Removing it means rewriting history and force-pushing.
+
 Written 2026-09-01, end of the migration-audit + ship-readiness session. Everything
 below is committed and pushed: `main` = `d078d61`, in sync with
 `origin/main` (https://github.com/burntsteam/word-unlocked.git), working tree clean.
