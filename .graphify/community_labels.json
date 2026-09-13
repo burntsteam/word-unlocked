@@ -6,32 +6,39 @@
       "members": [
         "branch:repo:github.com/burntsteam/word-unlocked#main",
         "commit:repo:github.com/burntsteam/word-unlocked@1166ef5316ef3c02ff9a4b01cac8537e373faa1c",
+        "commit:repo:github.com/burntsteam/word-unlocked@126ee46aa87fb6f9f0106fb1e9886bd7c6a26a8f",
         "commit:repo:github.com/burntsteam/word-unlocked@1524b077c20c8951ba016d670f32a07df0c6a3a9",
         "commit:repo:github.com/burntsteam/word-unlocked@2879ff07462580e86957c75c5bb8067aa55b6a71",
+        "commit:repo:github.com/burntsteam/word-unlocked@2b17ec32c2e391bb4087a8447cb61834cb1b45da",
+        "commit:repo:github.com/burntsteam/word-unlocked@35537abc9cd5160de85edd8492b2b6c1ac28533e",
         "commit:repo:github.com/burntsteam/word-unlocked@3cc4c76ecbd144a947479ec9d16180b4045245e6",
         "commit:repo:github.com/burntsteam/word-unlocked@3f7b263d06474c9f5ffedbb18f3f8834a63f387f",
+        "commit:repo:github.com/burntsteam/word-unlocked@5f4af3d71bbf23787b8f58cf85a93a836543c0e3",
         "commit:repo:github.com/burntsteam/word-unlocked@606b9f41b0f21537069c1b031d47626bcccd3c69",
         "commit:repo:github.com/burntsteam/word-unlocked@6c96c57898cd11924dc26a786d3acd29e69e7a80",
         "commit:repo:github.com/burntsteam/word-unlocked@7f5482d45244884d378c5e452893b5214d74e21e",
         "commit:repo:github.com/burntsteam/word-unlocked@829ec96097f33636ed45de59315dd8d7b22482e9",
         "commit:repo:github.com/burntsteam/word-unlocked@8c91015d3bf62535706abc400a60a9b59375d979",
         "commit:repo:github.com/burntsteam/word-unlocked@9c3ef4342274e58caad8669aaea03f4601f6ce3f",
+        "commit:repo:github.com/burntsteam/word-unlocked@a5b7d50a4334d284cc832447ba6115d41459e007",
         "commit:repo:github.com/burntsteam/word-unlocked@aa2cf1f773a47b67526fbd8e4824187fdef9d991",
+        "commit:repo:github.com/burntsteam/word-unlocked@ad994f437627ed2e27b252cb70b5743bd9721e62",
         "commit:repo:github.com/burntsteam/word-unlocked@c5336f0c39de5504e7683f63f37fcaff7a98a20e",
+        "commit:repo:github.com/burntsteam/word-unlocked@d078d61b339e8d0aa166b10c8a298586bcd27581",
+        "commit:repo:github.com/burntsteam/word-unlocked@ed5eb1d1a89f2bea42497e991ec9e747067ff86b",
+        "commit:repo:github.com/burntsteam/word-unlocked@fa283324fdf20d9aa77347db8caacf838512ab2b",
+        "commit:repo:github.com/burntsteam/word-unlocked@ffb162b6fda0489c57ddec3232623d6baca5c308",
+        "decodable",
         "scripts_generate_app_icon",
         "scripts_generate_app_icon_page",
         "scripts_generate_app_icon_rgb",
+        "services_esvbibleservice",
+        "services_esvbibleservice_esvresponse",
+        "services_rvbibleservice",
+        "services_rvbibleservice_lsmresponse",
+        "services_rvbibleservice_lsmverse",
         "services_verseselectionservice",
         "wordunlockedtests_esvbibleservicetests",
-        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests",
-        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_applyingstoreevictsexactlytheoldestpastthecapkeepingoldestfirst",
-        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_applyingstoreonanemptycacheyieldsasingleentry",
-        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_applyingstoreupsertsbyfetchedrefinsteadofduplicating",
-        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_cachedversereturnsnilforareferencethatwasneverfetched",
-        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_fetchreturnsimmediatelywhenalreadyfetching",
-        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_fetchwithoutanapikeyfailswithaconfigurationerrorandneverstartsfetching",
-        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_isconfiguredisfalsewithoutanapikey",
-        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_maxcachecountmatchestheesvlicensecap",
         "wordunlockedtests_longverseservicetests",
         "wordunlockedtests_sharedmodelstests",
         "wordunlockedtests_sharedmodelstests_sharedmodelstests",
@@ -45,55 +52,36 @@
     "1": {
       "name": "Community 1",
       "members": [
-        "database_scripturedatabase",
-        "database_scripturedatabase_scripturedatabase",
-        "database_scripturedatabase_scripturedatabase_allverses",
-        "database_scripturedatabase_scripturedatabase_books",
-        "database_scripturedatabase_scripturedatabase_boolcolumn",
-        "database_scripturedatabase_scripturedatabase_createschema",
-        "database_scripturedatabase_scripturedatabase_deinit",
-        "database_scripturedatabase_scripturedatabase_execute",
-        "database_scripturedatabase_scripturedatabase_hasverses",
-        "database_scripturedatabase_scripturedatabase_init",
-        "database_scripturedatabase_scripturedatabase_intcolumn",
-        "database_scripturedatabase_scripturedatabase_intvalue",
-        "database_scripturedatabase_scripturedatabase_loadseedrows",
-        "database_scripturedatabase_scripturedatabase_opendatabase",
-        "database_scripturedatabase_scripturedatabase_provisiondatabaseifneeded",
-        "database_scripturedatabase_scripturedatabase_query",
-        "database_scripturedatabase_scripturedatabase_queryverses",
-        "database_scripturedatabase_scripturedatabase_quoted",
-        "database_scripturedatabase_scripturedatabase_scalarint",
-        "database_scripturedatabase_scripturedatabase_seedrvtestingifneeded",
-        "database_scripturedatabase_scripturedatabase_stringcolumn",
-        "database_scripturedatabase_scripturedatabase_stringvalue",
-        "database_scripturedatabase_scripturedatabase_topics",
-        "database_scripturedatabase_scripturedatabase_translations",
-        "database_scripturedatabase_scripturedatabase_verse",
-        "database_scripturedatabase_scripturedatabase_verses"
+        "observableobject",
+        "services_esvbibleservice_esvbibleservice",
+        "services_esvbibleservice_esvbibleservice_applyingstore",
+        "services_esvbibleservice_esvbibleservice_cachedverse",
+        "services_esvbibleservice_esvbibleservice_fetch",
+        "services_esvbibleservice_esvbibleservice_init",
+        "services_esvbibleservice_esvbibleservice_store",
+        "services_rvbibleservice_rvbibleservice",
+        "services_rvbibleservice_rvbibleservice_fetch",
+        "services_rvbibleservice_rvbibleservice_init",
+        "settings_settingsstore",
+        "settings_settingsstore_settingsstore",
+        "settings_settingsstore_settingsstore_addfavorite",
+        "settings_settingsstore_settingsstore_apply",
+        "settings_settingsstore_settingsstore_currentsettings",
+        "settings_settingsstore_settingsstore_init",
+        "settings_settingsstore_settingsstore_isfavorite",
+        "settings_settingsstore_settingsstore_loadfavorites",
+        "settings_settingsstore_settingsstore_loadmemorizationplan",
+        "settings_settingsstore_settingsstore_persistdefaults",
+        "settings_settingsstore_settingsstore_reloadwidgettimelines",
+        "settings_settingsstore_settingsstore_removefavorite",
+        "settings_settingsstore_settingsstore_removefavorites",
+        "settings_settingsstore_settingsstore_resetwidgetsettings",
+        "settings_settingsstore_settingsstore_save",
+        "settings_settingsstore_settingsstore_savefavorites",
+        "settings_settingsstore_settingsstore_savememorizationplan"
       ]
     },
     "10": {
-      "name": "Chapter Reading Configuration",
-      "members": [
-        "models_book",
-        "models_book_testament",
-        "models_book_testament_new",
-        "models_book_testament_old",
-        "modes_chaptermodeview",
-        "modes_chaptermodeview_chapterendbehavior",
-        "modes_chaptermodeview_chapterendbehavior_nextchapter",
-        "modes_chaptermodeview_chapterendbehavior_repeatchapter",
-        "modes_chaptermodeview_chapterendbehavior_stop",
-        "modes_chaptermodeview_chaptermodeview",
-        "modes_chaptermodeview_chapterrotationspeed",
-        "modes_chaptermodeview_chapterrotationspeed_daily",
-        "modes_chaptermodeview_chapterrotationspeed_everysixhours",
-        "modes_chaptermodeview_chapterrotationspeed_everytwelvehours",
-        "string"
-      ]
-    },
-    "11": {
       "name": "Settings and Translations UI",
       "members": [
         "tabs_settingsview",
@@ -111,7 +99,7 @@
         "view"
       ]
     },
-    "12": {
+    "11": {
       "name": "Wallpaper Export Workflow",
       "members": [
         "tabs_wallpaperview",
@@ -128,7 +116,7 @@
         "tabs_wallpaperview_wallpaperexportview_steprow"
       ]
     },
-    "13": {
+    "12": {
       "name": "Verse Selection Strategies",
       "members": [
         "services_verseselectionservice_verseselectionservice",
@@ -144,7 +132,7 @@
         "services_verseselectionservice_verseselectionservice_verse"
       ]
     },
-    "14": {
+    "13": {
       "name": "Verse Selection Tests",
       "members": [
         "wordunlockedtests_verseselectionservicetests",
@@ -160,7 +148,7 @@
         "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexyieldsdifferentvaluesfordifferentdays"
       ]
     },
-    "15": {
+    "14": {
       "name": "Widget Settings Model",
       "members": [
         "caseiterable",
@@ -175,7 +163,7 @@
         "models_widgetsettings_widgetsettings_widgetkind"
       ]
     },
-    "16": {
+    "15": {
       "name": "LSV import pipeline",
       "members": [
         "scripts_fetch_lsv_seed",
@@ -188,6 +176,21 @@
         "scripts_fetch_lsv_seed_parse_usfm",
         "scripts_fetch_lsv_seed_segments",
         "scripts_fetch_lsv_seed_words"
+      ]
+    },
+    "16": {
+      "name": "Community 16",
+      "members": [
+        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests",
+        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_applyingstoreevictsexactlytheoldestpastthecapkeepingoldestfirst",
+        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_applyingstoreonanemptycacheyieldsasingleentry",
+        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_applyingstoreupsertsbyfetchedrefinsteadofduplicating",
+        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_cachedversereturnsnilforareferencethatwasneverfetched",
+        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_fetchreturnsimmediatelywhenalreadyfetching",
+        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_fetchwithoutanapikeyfailswithaconfigurationerrorandneverstartsfetching",
+        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_isconfiguredisfalsewithoutanapikey",
+        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_isconfiguredonlywithanonemptyapikey",
+        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_maxcachecountmatchestheesvlicensecap"
       ]
     },
     "17": {
@@ -233,27 +236,32 @@
     "2": {
       "name": "Community 2",
       "members": [
-        "wordunlockedtests_longverseservicetests_longverseservicetests",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_excerptexactlyatlimitisunchanged",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_excerptfaroverlimitbreaksonwholewords",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_excerptofemptystringisempty",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_excerptshorterthanlimitisunchanged",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_excerptwithnowhitespacefallsbacktohardtruncation",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_firstlettersextractsanduppercasesinitials",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_firstlettersofemptystringisempty",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryatlongupperboundislong",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryatmediumupperboundismedium",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryatshortupperboundisshort",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryatzeroisshort",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryjustpastlongisverylong",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryjustpastmediumislong",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryjustpastshortismedium",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategorywellpastlongisverylong",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_segmentsexactlyatlimitreturnssinglesegment",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_segmentsfaroverlimitsplitsonwordboundaries",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_segmentsofemptystringreturnssingleemptysegment",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_segmentsshorterthanlimitreturnssinglesegment",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_segmentswithnowhitespacecannotsplitandoverflowssinglesegment"
+        "database_scripturedatabase",
+        "database_scripturedatabase_scripturedatabase",
+        "database_scripturedatabase_scripturedatabase_allverses",
+        "database_scripturedatabase_scripturedatabase_books",
+        "database_scripturedatabase_scripturedatabase_boolcolumn",
+        "database_scripturedatabase_scripturedatabase_createschema",
+        "database_scripturedatabase_scripturedatabase_deinit",
+        "database_scripturedatabase_scripturedatabase_execute",
+        "database_scripturedatabase_scripturedatabase_hasverses",
+        "database_scripturedatabase_scripturedatabase_init",
+        "database_scripturedatabase_scripturedatabase_intcolumn",
+        "database_scripturedatabase_scripturedatabase_intvalue",
+        "database_scripturedatabase_scripturedatabase_loadseedrows",
+        "database_scripturedatabase_scripturedatabase_opendatabase",
+        "database_scripturedatabase_scripturedatabase_provisiondatabaseifneeded",
+        "database_scripturedatabase_scripturedatabase_query",
+        "database_scripturedatabase_scripturedatabase_queryverses",
+        "database_scripturedatabase_scripturedatabase_quoted",
+        "database_scripturedatabase_scripturedatabase_scalarint",
+        "database_scripturedatabase_scripturedatabase_seedrvtestingifneeded",
+        "database_scripturedatabase_scripturedatabase_stringcolumn",
+        "database_scripturedatabase_scripturedatabase_stringvalue",
+        "database_scripturedatabase_scripturedatabase_topics",
+        "database_scripturedatabase_scripturedatabase_translations",
+        "database_scripturedatabase_scripturedatabase_verse",
+        "database_scripturedatabase_scripturedatabase_verses"
       ]
     },
     "20": {
@@ -382,25 +390,27 @@
     "3": {
       "name": "Community 3",
       "members": [
-        "commit:repo:github.com/burntsteam/word-unlocked@676cef021ba7105ac9730e58f3a99e07d5ee5fff",
-        "models_favorite",
-        "models_topic",
-        "models_versesegment",
-        "models_weeklyplan",
-        "onboarding_onboardingwelcomeview",
-        "onboarding_onboardingwelcomeview_onboardingwelcomeview",
-        "tabs_lockscreenwidgetguideview",
-        "tabs_lockscreenwidgetguideview_lockscreenwidgetguideview",
-        "wordunlockedwidget_circularwidgetview",
-        "wordunlockedwidget_circularwidgetview_circularwidgetview",
-        "wordunlockedwidget_homescreenwidgetview",
-        "wordunlockedwidget_homescreenwidgetview_homescreenwidgetview",
-        "wordunlockedwidget_inlinewidgetview",
-        "wordunlockedwidget_inlinewidgetview_inlinewidgetview",
-        "wordunlockedwidget_rectangularwidgetview",
-        "wordunlockedwidget_rectangularwidgetview_rectangularwidgetview",
-        "wordunlockedwidget_widgetentryview",
-        "wordunlockedwidget_widgetentryview_widgetentryview"
+        "wordunlockedtests_longverseservicetests_longverseservicetests",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_excerptexactlyatlimitisunchanged",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_excerptfaroverlimitbreaksonwholewords",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_excerptofemptystringisempty",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_excerptshorterthanlimitisunchanged",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_excerptwithnowhitespacefallsbacktohardtruncation",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_firstlettersextractsanduppercasesinitials",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_firstlettersofemptystringisempty",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryatlongupperboundislong",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryatmediumupperboundismedium",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryatshortupperboundisshort",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryatzeroisshort",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryjustpastlongisverylong",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryjustpastmediumislong",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryjustpastshortismedium",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategorywellpastlongisverylong",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_segmentsexactlyatlimitreturnssinglesegment",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_segmentsfaroverlimitsplitsonwordboundaries",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_segmentsofemptystringreturnssingleemptysegment",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_segmentsshorterthanlimitreturnssinglesegment",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_segmentswithnowhitespacecannotsplitandoverflowssinglesegment"
       ]
     },
     "30": {
@@ -512,24 +522,25 @@
     "4": {
       "name": "Community 4",
       "members": [
-        "widget_widgettimelineservice",
-        "widget_widgettimelineservice_widgettimelineservice",
-        "widget_widgettimelineservice_widgettimelineservice_bool",
-        "widget_widgettimelineservice_widgettimelineservice_builtinverse",
-        "widget_widgettimelineservice_widgettimelineservice_chapterverse",
-        "widget_widgettimelineservice_widgettimelineservice_dailyverse",
-        "widget_widgettimelineservice_widgettimelineservice_favoriteverse",
-        "widget_widgettimelineservice_widgettimelineservice_generatetimeline",
-        "widget_widgettimelineservice_widgettimelineservice_init",
-        "widget_widgettimelineservice_widgettimelineservice_makeentry",
-        "widget_widgettimelineservice_widgettimelineservice_makerventry",
-        "widget_widgettimelineservice_widgettimelineservice_pick",
-        "widget_widgettimelineservice_widgettimelineservice_readesvcache",
-        "widget_widgettimelineservice_widgettimelineservice_readfavorites",
-        "widget_widgettimelineservice_widgettimelineservice_readsettings",
-        "widget_widgettimelineservice_widgettimelineservice_selectverse",
-        "widget_widgettimelineservice_widgettimelineservice_stableindex",
-        "widget_widgettimelineservice_widgettimelineservice_topicverse"
+        "commit:repo:github.com/burntsteam/word-unlocked@676cef021ba7105ac9730e58f3a99e07d5ee5fff",
+        "models_favorite",
+        "models_topic",
+        "models_versesegment",
+        "models_weeklyplan",
+        "onboarding_onboardingwelcomeview",
+        "onboarding_onboardingwelcomeview_onboardingwelcomeview",
+        "tabs_lockscreenwidgetguideview",
+        "tabs_lockscreenwidgetguideview_lockscreenwidgetguideview",
+        "wordunlockedwidget_circularwidgetview",
+        "wordunlockedwidget_circularwidgetview_circularwidgetview",
+        "wordunlockedwidget_homescreenwidgetview",
+        "wordunlockedwidget_homescreenwidgetview_homescreenwidgetview",
+        "wordunlockedwidget_inlinewidgetview",
+        "wordunlockedwidget_inlinewidgetview_inlinewidgetview",
+        "wordunlockedwidget_rectangularwidgetview",
+        "wordunlockedwidget_rectangularwidgetview_rectangularwidgetview",
+        "wordunlockedwidget_widgetentryview",
+        "wordunlockedwidget_widgetentryview_widgetentryview"
       ]
     },
     "40": {
@@ -620,23 +631,24 @@
     "5": {
       "name": "Community 5",
       "members": [
-        "codable",
-        "equatable",
-        "identifiable",
-        "models_book_book",
-        "models_favorite_favorite",
-        "models_favorite_favorite_init",
-        "models_sharedmodels",
-        "models_sharedmodels_livecachedverse",
-        "models_sharedmodels_sharedbookrecord",
-        "models_sharedmodels_sharedtopicrecord",
-        "models_sharedmodels_sharedtranslationrecord",
-        "models_sharedmodels_sharedverserecord",
-        "models_topic_topic",
-        "models_translation_translation",
-        "models_versesegment_versesegment",
-        "models_weeklyplan_weeklyplan",
-        "tabs_wallpaperview_wallpaperbackground"
+        "widget_widgettimelineservice",
+        "widget_widgettimelineservice_widgettimelineservice",
+        "widget_widgettimelineservice_widgettimelineservice_bool",
+        "widget_widgettimelineservice_widgettimelineservice_builtinverse",
+        "widget_widgettimelineservice_widgettimelineservice_chapterverse",
+        "widget_widgettimelineservice_widgettimelineservice_dailyverse",
+        "widget_widgettimelineservice_widgettimelineservice_favoriteverse",
+        "widget_widgettimelineservice_widgettimelineservice_generatetimeline",
+        "widget_widgettimelineservice_widgettimelineservice_init",
+        "widget_widgettimelineservice_widgettimelineservice_makeentry",
+        "widget_widgettimelineservice_widgettimelineservice_makerventry",
+        "widget_widgettimelineservice_widgettimelineservice_pick",
+        "widget_widgettimelineservice_widgettimelineservice_readesvcache",
+        "widget_widgettimelineservice_widgettimelineservice_readfavorites",
+        "widget_widgettimelineservice_widgettimelineservice_readsettings",
+        "widget_widgettimelineservice_widgettimelineservice_selectverse",
+        "widget_widgettimelineservice_widgettimelineservice_stableindex",
+        "widget_widgettimelineservice_widgettimelineservice_topicverse"
       ]
     },
     "50": {
@@ -714,47 +726,26 @@
     "6": {
       "name": "Community 6",
       "members": [
-        "settings_settingsstore",
-        "settings_settingsstore_settingsstore",
-        "settings_settingsstore_settingsstore_addfavorite",
-        "settings_settingsstore_settingsstore_apply",
-        "settings_settingsstore_settingsstore_currentsettings",
-        "settings_settingsstore_settingsstore_init",
-        "settings_settingsstore_settingsstore_isfavorite",
-        "settings_settingsstore_settingsstore_loadfavorites",
-        "settings_settingsstore_settingsstore_loadmemorizationplan",
-        "settings_settingsstore_settingsstore_persistdefaults",
-        "settings_settingsstore_settingsstore_reloadwidgettimelines",
-        "settings_settingsstore_settingsstore_removefavorite",
-        "settings_settingsstore_settingsstore_removefavorites",
-        "settings_settingsstore_settingsstore_resetwidgetsettings",
-        "settings_settingsstore_settingsstore_save",
-        "settings_settingsstore_settingsstore_savefavorites",
-        "settings_settingsstore_settingsstore_savememorizationplan"
+        "codable",
+        "equatable",
+        "identifiable",
+        "models_book_book",
+        "models_favorite_favorite",
+        "models_favorite_favorite_init",
+        "models_sharedmodels",
+        "models_sharedmodels_livecachedverse",
+        "models_sharedmodels_sharedbookrecord",
+        "models_sharedmodels_sharedtopicrecord",
+        "models_sharedmodels_sharedtranslationrecord",
+        "models_sharedmodels_sharedverserecord",
+        "models_topic_topic",
+        "models_translation_translation",
+        "models_versesegment_versesegment",
+        "models_weeklyplan_weeklyplan",
+        "tabs_wallpaperview_wallpaperbackground"
       ]
     },
     "7": {
-      "name": "ESV Bible Data Fetching",
-      "members": [
-        "decodable",
-        "observableobject",
-        "services_esvbibleservice",
-        "services_esvbibleservice_esvbibleservice",
-        "services_esvbibleservice_esvbibleservice_applyingstore",
-        "services_esvbibleservice_esvbibleservice_cachedverse",
-        "services_esvbibleservice_esvbibleservice_fetch",
-        "services_esvbibleservice_esvbibleservice_init",
-        "services_esvbibleservice_esvbibleservice_store",
-        "services_esvbibleservice_esvresponse",
-        "services_rvbibleservice",
-        "services_rvbibleservice_lsmresponse",
-        "services_rvbibleservice_lsmverse",
-        "services_rvbibleservice_rvbibleservice",
-        "services_rvbibleservice_rvbibleservice_fetch",
-        "services_rvbibleservice_rvbibleservice_init"
-      ]
-    },
-    "8": {
       "name": "Database Query Operations",
       "members": [
         "services_databaseservice",
@@ -775,7 +766,7 @@
         "services_databaseservice_databaseservice_weeklyplanverses"
       ]
     },
-    "9": {
+    "8": {
       "name": "Memorization Plan Logic",
       "members": [
         "int",
@@ -795,6 +786,26 @@
         "models_memorizationplan_phase_review"
       ]
     },
+    "9": {
+      "name": "Chapter Reading Configuration",
+      "members": [
+        "models_book",
+        "models_book_testament",
+        "models_book_testament_new",
+        "models_book_testament_old",
+        "modes_chaptermodeview",
+        "modes_chaptermodeview_chapterendbehavior",
+        "modes_chaptermodeview_chapterendbehavior_nextchapter",
+        "modes_chaptermodeview_chapterendbehavior_repeatchapter",
+        "modes_chaptermodeview_chapterendbehavior_stop",
+        "modes_chaptermodeview_chaptermodeview",
+        "modes_chaptermodeview_chapterrotationspeed",
+        "modes_chaptermodeview_chapterrotationspeed_daily",
+        "modes_chaptermodeview_chapterrotationspeed_everysixhours",
+        "modes_chaptermodeview_chapterrotationspeed_everytwelvehours",
+        "string"
+      ]
+    },
     "orphan:4": {
       "name": "iOS app build tools",
       "members": [
@@ -805,6 +816,27 @@
         "scripts_build_prebuilt_db",
         "scripts_build_prebuilt_db_load",
         "scripts_build_prebuilt_db_main"
+      ]
+    },
+    "orphan:7": {
+      "name": "ESV Bible Data Fetching",
+      "members": [
+        "decodable",
+        "observableobject",
+        "services_esvbibleservice",
+        "services_esvbibleservice_esvbibleservice",
+        "services_esvbibleservice_esvbibleservice_applyingstore",
+        "services_esvbibleservice_esvbibleservice_cachedverse",
+        "services_esvbibleservice_esvbibleservice_fetch",
+        "services_esvbibleservice_esvbibleservice_init",
+        "services_esvbibleservice_esvbibleservice_store",
+        "services_esvbibleservice_esvresponse",
+        "services_rvbibleservice",
+        "services_rvbibleservice_lsmresponse",
+        "services_rvbibleservice_lsmverse",
+        "services_rvbibleservice_rvbibleservice",
+        "services_rvbibleservice_rvbibleservice_fetch",
+        "services_rvbibleservice_rvbibleservice_init"
       ]
     }
   }
