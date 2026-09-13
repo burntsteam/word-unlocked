@@ -8,6 +8,11 @@
 > Shipping copy that advertises ESV while the app hides it is a metadata mismatch and a
 > rejection risk.
 
+**URLs for App Store Connect** (Pages live as of 2026-09-12):
+- Privacy Policy URL: `https://burntsteam.github.io/word-unlocked/privacy.html`
+- Support URL: `https://burntsteam.github.io/word-unlocked/support.html`
+- Screenshots (6.9", 1320×2868): `marketing/screenshots/6.9/`
+
 Copy blocks below map to fields in App Store Connect. Character limits are noted
 so nothing gets truncated. Everything here reflects the app as built:
 5 full **offline** Bibles (KJV, WEB, BSB, ASV, LSV) plus 2 live translations fetched on demand —

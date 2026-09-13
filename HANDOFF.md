@@ -1,5 +1,15 @@
 # Handoff — Word Unlocked (Bible Widget App)
 
+## Update 2026-09-12
+
+Done this session: **repo made public** (user's choice, history secret-scanned clean),
+**GitHub Pages live** — https://burntsteam.github.io/word-unlocked/ (+ privacy.html,
+support.html — put these two in App Store Connect), **contact email aligned to
+privacy@rippre.com everywhere** (docs edited to match the app; user confirmed they keep
+that mailbox), **nine 6.9" screenshots** at `marketing/screenshots/6.9/` (1320×2868,
+committed). Tests still 41/41 green. Still blocked on user: Apple signing (item 1),
+ESV key (item 2 — signup page opened at api.esv.org), ASC record creation (item 6).
+
 Written 2026-09-01, end of the migration-audit + ship-readiness session. Everything
 below is committed and pushed: `main` = `d078d61`, in sync with
 `origin/main` (https://github.com/burntsteam/word-unlocked.git), working tree clean.
