@@ -40,26 +40,24 @@ struct ESVBibleServiceTests {
     @Test func fetchWithoutAnAPIKeyFailsWithAConfigurationErrorAndNeverStartsFetching() async {
         let service = ESVBibleService(apiKey: "")
 
-        // An empty key always takes fetch(reference:)'s early-return branch --
-        // no network call is ever attempted here.
-        await service.fetch(reference: "John 3:16")
+        // An empty key always takes fetch(reference:)'s early-return branch -- no
+        // network call is ever attempted here. The reference can't be cached, which
+        // would otherwise answer before the key check.
+        await service.fetch(reference: "Unfetched Reference \(UUID().uuidString)")
 
         #expect(service.error == "ESV API key not configured.")
         #expect(service.isFetching == false)
     }
 
-    @Test func fetchReturnsImmediatelyWhenAlreadyFetching() async {
+    @Test func fetchForAnotherReferenceIsNotDroppedWhileOneIsInFlight() async {
         let service = ESVBibleService(apiKey: "")
         service.isFetching = true
-        service.error = "sentinel"
 
-        await service.fetch(reference: "John 3:16")
+        await service.fetch(reference: "Unfetched Reference \(UUID().uuidString)")
 
-        // `error = nil` runs unconditionally at the top of fetch(reference:),
-        // before the `isFetching` guard, so it's always cleared -- but the
-        // guard itself must still return early without flipping isFetching.
-        #expect(service.error == nil)
-        #expect(service.isFetching == true)
+        // It reached the key check instead of returning early behind the fetch
+        // already running for a different reference.
+        #expect(service.error == "ESV API key not configured.")
     }
 
     // MARK: - eviction rule (pure, no persistence)

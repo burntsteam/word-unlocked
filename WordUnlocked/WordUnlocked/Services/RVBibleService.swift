@@ -10,6 +10,8 @@ final class RVBibleService: ObservableObject {
     @Published var error: String?
     @Published private(set) var cachedVerse: RVCachedVerse?
 
+    private var inFlightReference: String?
+
     private var appId: String {
         Bundle.main.infoDictionary?["LSMAppId"] as? String ?? ""
     }
@@ -29,6 +31,7 @@ final class RVBibleService: ObservableObject {
     }
 
     // Fetch a verse reference from the LSM API. Uses standard format: "John 3:16", "Rom. 8:28".
+    // The verse already cached never reaches the network.
     func fetch(reference: String) async {
         #if DEBUG
         if let local = ScriptureDatabase.shared.verse(verseRef: reference, translationCode: "RV") {
@@ -40,19 +43,29 @@ final class RVBibleService: ObservableObject {
             return
         }
         #endif
+        guard cachedVerse?.fetchedRef != reference else {
+            error = nil
+            return
+        }
+        guard reference != inFlightReference else { return }
         error = nil
-        guard !isFetching else { return }
         guard !token.isEmpty else {
             error = "LSM API not configured."
             return
         }
 
+        inFlightReference = reference
         isFetching = true
-        defer { isFetching = false }
+        defer {
+            if inFlightReference == reference {
+                inFlightReference = nil
+                isFetching = false
+            }
+        }
 
         let encoded = reference.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? reference
         guard let url = URL(string: "https://api.lsm.org/recver/txo.php?String=\(encoded)&Out=json") else {
-            error = "Invalid URL."
+            report("Invalid URL.", for: reference)
             return
         }
 
@@ -66,30 +79,44 @@ final class RVBibleService: ObservableObject {
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
             guard let http = response as? HTTPURLResponse else {
-                error = "Could not load verse. Check your connection."
+                report("Could not load verse. Check your connection.", for: reference)
                 return
             }
             if http.statusCode == 401 || http.statusCode == 403 {
-                error = "LSM API credentials rejected. Check your configuration."
+                report("LSM API credentials rejected. Check your configuration.", for: reference)
+                return
+            }
+            if http.statusCode == 429 {
+                report("The Recovery Version service is busy. Try again later.", for: reference)
                 return
             }
             guard (200...299).contains(http.statusCode) else {
-                error = "Could not load verse. Check your connection."
+                report("Could not load verse. Check your connection.", for: reference)
                 return
             }
             let decoded = try JSONDecoder().decode(LSMResponse.self, from: data)
             guard let first = decoded.verses.first, !first.text.isEmpty else {
-                error = "Verse not available."
+                report("Verse not available.", for: reference)
                 return
             }
+            // Only one RV verse is kept, so a superseded response must not replace a newer one.
+            guard inFlightReference == reference else { return }
             let verse = RVCachedVerse(ref: first.ref, text: first.text, fetchedRef: reference)
             cachedVerse = verse
             if let encoded = try? JSONEncoder().encode(verse) {
                 AppGroupSettings.defaults.set(encoded, forKey: AppGroupSettings.Keys.rvCachedVerse)
             }
         } catch is CancellationError {
+        } catch let urlError as URLError where urlError.code == .cancelled {
         } catch {
-            self.error = "Could not load verse: \(error.localizedDescription)"
+            report("Could not load verse: \(error.localizedDescription)", for: reference)
+        }
+    }
+
+    // Only the latest request may surface an error; a superseded one ends quietly.
+    private func report(_ message: String, for reference: String) {
+        if inFlightReference == reference {
+            error = message
         }
     }
 }

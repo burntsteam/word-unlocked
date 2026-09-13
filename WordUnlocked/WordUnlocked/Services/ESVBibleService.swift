@@ -19,6 +19,7 @@ final class ESVBibleService: ObservableObject {
     @Published private(set) var cache: [LiveCachedVerse] = []   // oldest first, <= maxCacheCount
 
     private let apiKey: String
+    private var inFlightReference: String?
 
     // Without a key every fetch dead-ends on the guard below, so the UI hides the
     // translation rather than offering a choice that can only ever produce an error.
@@ -41,16 +42,27 @@ final class ESVBibleService: ObservableObject {
     }
 
     // Fetch a verse reference from the ESV API. Standard format: "John 3:16".
+    // A cached reference never reaches the network: every install shares the key's quota.
     func fetch(reference: String) async {
+        guard cachedVerse(for: reference) == nil else {
+            error = nil
+            return
+        }
+        guard reference != inFlightReference else { return }
         error = nil
-        guard !isFetching else { return }
-        guard !apiKey.isEmpty else {
+        guard isConfigured else {
             error = "ESV API key not configured."
             return
         }
 
+        inFlightReference = reference
         isFetching = true
-        defer { isFetching = false }
+        defer {
+            if inFlightReference == reference {
+                inFlightReference = nil
+                isFetching = false
+            }
+        }
 
         var components = URLComponents(string: "https://api.esv.org/v3/passage/text/")
         components?.queryItems = [
@@ -65,7 +77,7 @@ final class ESVBibleService: ObservableObject {
             URLQueryItem(name: "include-heading-horizontal-lines", value: "false")
         ]
         guard let url = components?.url else {
-            error = "Invalid URL."
+            report("Invalid URL.", for: reference)
             return
         }
 
@@ -76,28 +88,40 @@ final class ESVBibleService: ObservableObject {
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
             guard let http = response as? HTTPURLResponse else {
-                error = "Could not load verse. Check your connection."
+                report("Could not load verse. Check your connection.", for: reference)
                 return
             }
             if http.statusCode == 401 || http.statusCode == 403 {
-                error = "ESV API key rejected. Check your configuration."
+                report("ESV API key rejected. Check your configuration.", for: reference)
+                return
+            }
+            if http.statusCode == 429 {
+                report("The ESV service is busy. Try again later.", for: reference)
                 return
             }
             guard (200...299).contains(http.statusCode) else {
-                error = "Could not load verse. Check your connection."
+                report("Could not load verse. Check your connection.", for: reference)
                 return
             }
             let decoded = try JSONDecoder().decode(ESVResponse.self, from: data)
             let text = (decoded.passages.first ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
             let ref = decoded.canonical.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !text.isEmpty, !ref.isEmpty else {
-                error = "Verse not available."
+                report("Verse not available.", for: reference)
                 return
             }
             store(LiveCachedVerse(ref: ref, text: text, fetchedRef: reference))
         } catch is CancellationError {
+        } catch let urlError as URLError where urlError.code == .cancelled {
         } catch {
-            self.error = "Could not load verse: \(error.localizedDescription)"
+            report("Could not load verse: \(error.localizedDescription)", for: reference)
+        }
+    }
+
+    // Only the latest request may surface an error; a superseded one ends quietly.
+    private func report(_ message: String, for reference: String) {
+        if inFlightReference == reference {
+            error = message
         }
     }
 
