@@ -84,6 +84,8 @@
 		BFAARES00000000000000004 /* seed_verse_topics.json in Resources */ = {isa = PBXBuildFile; fileRef = AARES000000000000000004 /* seed_verse_topics.json */; };
 		BFAARES00000000000000006 /* seed_weekly_plans.json in Resources */ = {isa = PBXBuildFile; fileRef = AARES000000000000000006 /* seed_weekly_plans.json */; };
 		BFAARES00000000000000011 /* wordunlocked_seed.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = AARES000000000000000011 /* wordunlocked_seed.sqlite3 */; };
+		BFAAPRIV0000000000000001 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = AAPRIV000000000000000001 /* PrivacyInfo.xcprivacy */; };
+		BFAAPRIV0000000000000002 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = AAPRIV000000000000000002 /* PrivacyInfo.xcprivacy */; };
 		E6157BD34D5F9168813EBAC4 /* LongVerseServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD52A24968D9EF5486C70A79 /* LongVerseServiceTests.swift */; };
 		RC00000000000000000000006 /* RVBibleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = RC00000000000000000000005 /* RVBibleService.swift */; };
 		RC0000000000000000000000D /* HomeScreenWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = RC0000000000000000000000C /* HomeScreenWidgetView.swift */; };
@@ -170,6 +172,7 @@
 		AA000001000000000000026 /* WidgetTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetTheme.swift; sourceTree = "<group>"; };
 		AA000001000000000000027 /* ThemeColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColors.swift; sourceTree = "<group>"; };
 		AA000001000000000000028 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AAPRIV000000000000000001 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		AA000001000000000000029 /* ScriptureDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../Shared/Database/ScriptureDatabase.swift; sourceTree = "<group>"; };
 		AA00000100000000000002A /* SharedModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ../Shared/Models/SharedModels.swift; sourceTree = "<group>"; };
 		AA00000100000000000002B /* WidgetTimelineService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetTimelineService.swift; sourceTree = "<group>"; };
@@ -186,6 +189,7 @@
 		AA000002000000000000007 /* WordUnlockedWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordUnlockedWidget.swift; sourceTree = "<group>"; };
 		AA000002000000000000008 /* WordUnlockedWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordUnlockedWidgetBundle.swift; sourceTree = "<group>"; };
 		AA000002000000000000009 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AAPRIV000000000000000002 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		AARES000000000000000001 /* seed_books.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = seed_books.json; sourceTree = "<group>"; };
 		AARES000000000000000002 /* seed_topics.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = seed_topics.json; sourceTree = "<group>"; };
 		AARES000000000000000003 /* seed_translations.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = seed_translations.json; sourceTree = "<group>"; };
@@ -283,6 +287,7 @@
 				AA000002000000000000007 /* WordUnlockedWidget.swift */,
 				AA000002000000000000008 /* WordUnlockedWidgetBundle.swift */,
 				AA000002000000000000009 /* Info.plist */,
+				AAPRIV000000000000000002 /* PrivacyInfo.xcprivacy */,
 				000000000000000000000703 /* WordUnlockedWidget.entitlements */,
 			);
 			path = WordUnlockedWidget;
@@ -392,6 +397,7 @@
 			isa = PBXGroup;
 			children = (
 				AA000001000000000000028 /* Info.plist */,
+				AAPRIV000000000000000001 /* PrivacyInfo.xcprivacy */,
 				000000000000000000000701 /* Assets.xcassets */,
 				000000000000000000000702 /* WordUnlocked.entitlements */,
 			);
@@ -566,6 +572,7 @@
 				BFAARES00000000000000004 /* seed_verse_topics.json in Resources */,
 				BFAARES00000000000000006 /* seed_weekly_plans.json in Resources */,
 				BFAARES00000000000000011 /* wordunlocked_seed.sqlite3 in Resources */,
+				BFAAPRIV0000000000000001 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -573,6 +580,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFAAPRIV0000000000000002 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
