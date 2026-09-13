@@ -11,11 +11,15 @@
         "commit:repo:github.com/burntsteam/word-unlocked@2879ff07462580e86957c75c5bb8067aa55b6a71",
         "commit:repo:github.com/burntsteam/word-unlocked@2b17ec32c2e391bb4087a8447cb61834cb1b45da",
         "commit:repo:github.com/burntsteam/word-unlocked@35537abc9cd5160de85edd8492b2b6c1ac28533e",
+        "commit:repo:github.com/burntsteam/word-unlocked@3a44839799c3c254ed3ce791ce536621d4709529",
         "commit:repo:github.com/burntsteam/word-unlocked@3cc4c76ecbd144a947479ec9d16180b4045245e6",
         "commit:repo:github.com/burntsteam/word-unlocked@3f7b263d06474c9f5ffedbb18f3f8834a63f387f",
         "commit:repo:github.com/burntsteam/word-unlocked@5f4af3d71bbf23787b8f58cf85a93a836543c0e3",
         "commit:repo:github.com/burntsteam/word-unlocked@606b9f41b0f21537069c1b031d47626bcccd3c69",
+        "commit:repo:github.com/burntsteam/word-unlocked@6552c8d92e8fb9b35f19777ffaed7322816ec5d9",
         "commit:repo:github.com/burntsteam/word-unlocked@6c96c57898cd11924dc26a786d3acd29e69e7a80",
+        "commit:repo:github.com/burntsteam/word-unlocked@701981f4a6eda9764296d8a0991813d0a710c169",
+        "commit:repo:github.com/burntsteam/word-unlocked@7b57407ca59b38702bb2db136020f0d17cc9bb82",
         "commit:repo:github.com/burntsteam/word-unlocked@7f5482d45244884d378c5e452893b5214d74e21e",
         "commit:repo:github.com/burntsteam/word-unlocked@829ec96097f33636ed45de59315dd8d7b22482e9",
         "commit:repo:github.com/burntsteam/word-unlocked@8c91015d3bf62535706abc400a60a9b59375d979",
@@ -25,6 +29,7 @@
         "commit:repo:github.com/burntsteam/word-unlocked@ad994f437627ed2e27b252cb70b5743bd9721e62",
         "commit:repo:github.com/burntsteam/word-unlocked@c5336f0c39de5504e7683f63f37fcaff7a98a20e",
         "commit:repo:github.com/burntsteam/word-unlocked@d078d61b339e8d0aa166b10c8a298586bcd27581",
+        "commit:repo:github.com/burntsteam/word-unlocked@e5e53238321621a932bf9d203eb69c12667ca142",
         "commit:repo:github.com/burntsteam/word-unlocked@ed5eb1d1a89f2bea42497e991ec9e747067ff86b",
         "commit:repo:github.com/burntsteam/word-unlocked@fa283324fdf20d9aa77347db8caacf838512ab2b",
         "commit:repo:github.com/burntsteam/word-unlocked@ffb162b6fda0489c57ddec3232623d6baca5c308",
@@ -37,9 +42,7 @@
         "services_rvbibleservice",
         "services_rvbibleservice_lsmresponse",
         "services_rvbibleservice_lsmverse",
-        "services_verseselectionservice",
         "wordunlockedtests_esvbibleservicetests",
-        "wordunlockedtests_longverseservicetests",
         "wordunlockedtests_sharedmodelstests",
         "wordunlockedtests_sharedmodelstests_sharedmodelstests",
         "wordunlockedtests_sharedmodelstests_sharedmodelstests_arrayofversesroundtripsthroughjson",
@@ -52,38 +55,42 @@
     "1": {
       "name": "Community 1",
       "members": [
-        "observableobject",
-        "services_esvbibleservice_esvbibleservice",
-        "services_esvbibleservice_esvbibleservice_applyingstore",
-        "services_esvbibleservice_esvbibleservice_cachedverse",
-        "services_esvbibleservice_esvbibleservice_fetch",
-        "services_esvbibleservice_esvbibleservice_init",
-        "services_esvbibleservice_esvbibleservice_store",
-        "services_rvbibleservice_rvbibleservice",
-        "services_rvbibleservice_rvbibleservice_fetch",
-        "services_rvbibleservice_rvbibleservice_init",
-        "settings_settingsstore",
-        "settings_settingsstore_settingsstore",
-        "settings_settingsstore_settingsstore_addfavorite",
-        "settings_settingsstore_settingsstore_apply",
-        "settings_settingsstore_settingsstore_currentsettings",
-        "settings_settingsstore_settingsstore_init",
-        "settings_settingsstore_settingsstore_isfavorite",
-        "settings_settingsstore_settingsstore_loadfavorites",
-        "settings_settingsstore_settingsstore_loadmemorizationplan",
-        "settings_settingsstore_settingsstore_persistdefaults",
-        "settings_settingsstore_settingsstore_reloadwidgettimelines",
-        "settings_settingsstore_settingsstore_removefavorite",
-        "settings_settingsstore_settingsstore_removefavorites",
-        "settings_settingsstore_settingsstore_resetwidgetsettings",
-        "settings_settingsstore_settingsstore_save",
-        "settings_settingsstore_settingsstore_savefavorites",
-        "settings_settingsstore_settingsstore_savememorizationplan"
+        "database_scripturedatabase_scripturedatabase",
+        "database_scripturedatabase_scripturedatabase_allverses",
+        "database_scripturedatabase_scripturedatabase_books",
+        "database_scripturedatabase_scripturedatabase_boolcolumn",
+        "database_scripturedatabase_scripturedatabase_conditions",
+        "database_scripturedatabase_scripturedatabase_connection",
+        "database_scripturedatabase_scripturedatabase_createschema",
+        "database_scripturedatabase_scripturedatabase_deinit",
+        "database_scripturedatabase_scripturedatabase_execute",
+        "database_scripturedatabase_scripturedatabase_hasverses",
+        "database_scripturedatabase_scripturedatabase_init",
+        "database_scripturedatabase_scripturedatabase_intcolumn",
+        "database_scripturedatabase_scripturedatabase_intvalue",
+        "database_scripturedatabase_scripturedatabase_likeescaped",
+        "database_scripturedatabase_scripturedatabase_loadseedrows",
+        "database_scripturedatabase_scripturedatabase_opendatabase",
+        "database_scripturedatabase_scripturedatabase_provisiondatabaseifneeded",
+        "database_scripturedatabase_scripturedatabase_query",
+        "database_scripturedatabase_scripturedatabase_queryverses",
+        "database_scripturedatabase_scripturedatabase_quoted",
+        "database_scripturedatabase_scripturedatabase_scalarint",
+        "database_scripturedatabase_scripturedatabase_searchverses",
+        "database_scripturedatabase_scripturedatabase_seedrvtestingifneeded",
+        "database_scripturedatabase_scripturedatabase_stringcolumn",
+        "database_scripturedatabase_scripturedatabase_stringvalue",
+        "database_scripturedatabase_scripturedatabase_topics",
+        "database_scripturedatabase_scripturedatabase_translations",
+        "database_scripturedatabase_scripturedatabase_verse",
+        "database_scripturedatabase_scripturedatabase_versecount",
+        "database_scripturedatabase_scripturedatabase_verses"
       ]
     },
     "10": {
       "name": "Settings and Translations UI",
       "members": [
+        "modes_memorizationmodeview_versesearchrow",
         "tabs_settingsview",
         "tabs_settingsview_privacypolicyview",
         "tabs_settingsview_privacyrow",
@@ -100,6 +107,24 @@
       ]
     },
     "11": {
+      "name": "Community 11",
+      "members": [
+        "commit:repo:github.com/burntsteam/word-unlocked@4ebcbf96be7a4d8af685430bed9155f08db75747",
+        "commit:repo:github.com/burntsteam/word-unlocked@676cef021ba7105ac9730e58f3a99e07d5ee5fff",
+        "models_favorite",
+        "models_topic",
+        "models_verse",
+        "models_versesegment",
+        "modes_memorizationmodeview",
+        "services_databaseservice",
+        "services_verseselectionservice",
+        "settings_settingsstore",
+        "tabs_searchview",
+        "widget_widgettimelineservice",
+        "wordunlockedwidget_widgetprovider"
+      ]
+    },
+    "12": {
       "name": "Wallpaper Export Workflow",
       "members": [
         "tabs_wallpaperview",
@@ -116,36 +141,20 @@
         "tabs_wallpaperview_wallpaperexportview_steprow"
       ]
     },
-    "12": {
-      "name": "Verse Selection Strategies",
-      "members": [
-        "services_verseselectionservice_verseselectionservice",
-        "services_verseselectionservice_verseselectionservice_builtinverse",
-        "services_verseselectionservice_verseselectionservice_chapterverse",
-        "services_verseselectionservice_verseselectionservice_datedverse",
-        "services_verseselectionservice_verseselectionservice_favoriteverse",
-        "services_verseselectionservice_verseselectionservice_memorizationverse",
-        "services_verseselectionservice_verseselectionservice_pick",
-        "services_verseselectionservice_verseselectionservice_referencecode",
-        "services_verseselectionservice_verseselectionservice_stableindex",
-        "services_verseselectionservice_verseselectionservice_topicverse",
-        "services_verseselectionservice_verseselectionservice_verse"
-      ]
-    },
     "13": {
-      "name": "Verse Selection Tests",
+      "name": "Community 13",
       "members": [
-        "wordunlockedtests_verseselectionservicetests",
-        "wordunlockedtests_verseselectionservicetests_makeverse",
-        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests",
-        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_pickreturnsnilforanemptyarray",
-        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_pickreturnstheelementatstableindex",
-        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_pickstaysconsistentwithstableindexacrossmanydates",
-        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexisdeterministicforthesameinputs",
-        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexstaysinboundsfordaycomponentacrossextremedates",
-        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexstaysinboundsforweekofyearcomponentacrossextremedates",
-        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexwithzerocountreturnszeroinsteadofcrashing",
-        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexyieldsdifferentvaluesfordifferentdays"
+        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests",
+        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_applyingstoreevictsexactlytheoldestpastthecapkeepingoldestfirst",
+        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_applyingstoreonanemptycacheyieldsasingleentry",
+        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_applyingstoreupsertsbyfetchedrefinsteadofduplicating",
+        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_cachedversereturnsnilforareferencethatwasneverfetched",
+        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_fetchforanotherreferenceisnotdroppedwhileoneisinflight",
+        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_fetchreturnsimmediatelywhenalreadyfetching",
+        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_fetchwithoutanapikeyfailswithaconfigurationerrorandneverstartsfetching",
+        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_isconfiguredisfalsewithoutanapikey",
+        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_isconfiguredonlywithanonemptyapikey",
+        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_maxcachecountmatchestheesvlicensecap"
       ]
     },
     "14": {
@@ -179,21 +188,6 @@
       ]
     },
     "16": {
-      "name": "Community 16",
-      "members": [
-        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests",
-        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_applyingstoreevictsexactlytheoldestpastthecapkeepingoldestfirst",
-        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_applyingstoreonanemptycacheyieldsasingleentry",
-        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_applyingstoreupsertsbyfetchedrefinsteadofduplicating",
-        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_cachedversereturnsnilforareferencethatwasneverfetched",
-        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_fetchreturnsimmediatelywhenalreadyfetching",
-        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_fetchwithoutanapikeyfailswithaconfigurationerrorandneverstartsfetching",
-        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_isconfiguredisfalsewithoutanapikey",
-        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_isconfiguredonlywithanonemptyapikey",
-        "wordunlockedtests_esvbibleservicetests_esvbibleservicetests_maxcachecountmatchestheesvlicensecap"
-      ]
-    },
-    "17": {
       "name": "Today's Verse Display",
       "members": [
         "tabs_todayview",
@@ -207,7 +201,7 @@
         "tabs_todayview_todayview_togglefavorite"
       ]
     },
-    "18": {
+    "17": {
       "name": "Coding Key Definitions",
       "members": [
         "codingkey",
@@ -218,6 +212,19 @@
         "theme_widgettheme_codingkeys_id",
         "theme_widgettheme_codingkeys_name",
         "theme_widgettheme_codingkeys_texthex"
+      ]
+    },
+    "18": {
+      "name": "Memorization Plan Logic",
+      "members": [
+        "models_memorizationplan",
+        "models_memorizationplan_difficulty",
+        "models_memorizationplan_difficulty_easy",
+        "models_memorizationplan_difficulty_hard",
+        "models_memorizationplan_difficulty_medium",
+        "models_memorizationplan_memorizationplan",
+        "models_memorizationplan_memorizationplan_difficulty",
+        "models_memorizationplan_memorizationplan_phase"
       ]
     },
     "19": {
@@ -236,32 +243,34 @@
     "2": {
       "name": "Community 2",
       "members": [
-        "database_scripturedatabase",
-        "database_scripturedatabase_scripturedatabase",
-        "database_scripturedatabase_scripturedatabase_allverses",
-        "database_scripturedatabase_scripturedatabase_books",
-        "database_scripturedatabase_scripturedatabase_boolcolumn",
-        "database_scripturedatabase_scripturedatabase_createschema",
-        "database_scripturedatabase_scripturedatabase_deinit",
-        "database_scripturedatabase_scripturedatabase_execute",
-        "database_scripturedatabase_scripturedatabase_hasverses",
-        "database_scripturedatabase_scripturedatabase_init",
-        "database_scripturedatabase_scripturedatabase_intcolumn",
-        "database_scripturedatabase_scripturedatabase_intvalue",
-        "database_scripturedatabase_scripturedatabase_loadseedrows",
-        "database_scripturedatabase_scripturedatabase_opendatabase",
-        "database_scripturedatabase_scripturedatabase_provisiondatabaseifneeded",
-        "database_scripturedatabase_scripturedatabase_query",
-        "database_scripturedatabase_scripturedatabase_queryverses",
-        "database_scripturedatabase_scripturedatabase_quoted",
-        "database_scripturedatabase_scripturedatabase_scalarint",
-        "database_scripturedatabase_scripturedatabase_seedrvtestingifneeded",
-        "database_scripturedatabase_scripturedatabase_stringcolumn",
-        "database_scripturedatabase_scripturedatabase_stringvalue",
-        "database_scripturedatabase_scripturedatabase_topics",
-        "database_scripturedatabase_scripturedatabase_translations",
-        "database_scripturedatabase_scripturedatabase_verse",
-        "database_scripturedatabase_scripturedatabase_verses"
+        "observableobject",
+        "services_esvbibleservice_esvbibleservice",
+        "services_esvbibleservice_esvbibleservice_applyingstore",
+        "services_esvbibleservice_esvbibleservice_cachedverse",
+        "services_esvbibleservice_esvbibleservice_fetch",
+        "services_esvbibleservice_esvbibleservice_init",
+        "services_esvbibleservice_esvbibleservice_report",
+        "services_esvbibleservice_esvbibleservice_store",
+        "services_rvbibleservice_rvbibleservice",
+        "services_rvbibleservice_rvbibleservice_fetch",
+        "services_rvbibleservice_rvbibleservice_init",
+        "services_rvbibleservice_rvbibleservice_report",
+        "settings_settingsstore_settingsstore",
+        "settings_settingsstore_settingsstore_addfavorite",
+        "settings_settingsstore_settingsstore_apply",
+        "settings_settingsstore_settingsstore_currentsettings",
+        "settings_settingsstore_settingsstore_init",
+        "settings_settingsstore_settingsstore_isfavorite",
+        "settings_settingsstore_settingsstore_loadfavorites",
+        "settings_settingsstore_settingsstore_loadmemorizationplan",
+        "settings_settingsstore_settingsstore_persistdefaults",
+        "settings_settingsstore_settingsstore_reloadwidgettimelines",
+        "settings_settingsstore_settingsstore_removefavorite",
+        "settings_settingsstore_settingsstore_removefavorites",
+        "settings_settingsstore_settingsstore_resetwidgetsettings",
+        "settings_settingsstore_settingsstore_save",
+        "settings_settingsstore_settingsstore_savefavorites",
+        "settings_settingsstore_settingsstore_savememorizationplan"
       ]
     },
     "20": {
@@ -304,18 +313,42 @@
       ]
     },
     "23": {
+      "name": "Community 23",
+      "members": [
+        "database_scripturedatabase",
+        "database_scripturedatabase_books",
+        "database_scripturedatabase_books_all",
+        "database_scripturedatabase_books_newtestament",
+        "database_scripturedatabase_books_oldtestament",
+        "database_scripturedatabase_books_psalmsandproverbs",
+        "database_scripturedatabase_versefilter"
+      ]
+    },
+    "24": {
+      "name": "Community 24",
+      "members": [
+        "int",
+        "models_memorizationplan_phase",
+        "models_memorizationplan_phase_firstletters",
+        "models_memorizationplan_phase_fullverse",
+        "models_memorizationplan_phase_partialblank",
+        "models_memorizationplan_phase_referenceonly",
+        "models_memorizationplan_phase_review"
+      ]
+    },
+    "25": {
       "name": "Verse Length Categories",
       "members": [
-        "models_verse",
         "models_verse_fitcategory",
         "models_verse_fitcategory_long",
         "models_verse_fitcategory_medium",
         "models_verse_fitcategory_short",
         "models_verse_fitcategory_verylong",
-        "models_verse_verse"
+        "models_verse_verse",
+        "models_verse_verse_init"
       ]
     },
-    "24": {
+    "26": {
       "name": "Daily Verse Mode Options",
       "members": [
         "models_widgetsettings_versemode",
@@ -327,7 +360,7 @@
         "models_widgetsettings_versemode_weeklytheme"
       ]
     },
-    "25": {
+    "27": {
       "name": "Daily Verse Mode View",
       "members": [
         "modes_dailyversemodeview",
@@ -339,19 +372,7 @@
         "modes_dailyversemodeview_dailyverseupdateinterval_everyeighthours"
       ]
     },
-    "26": {
-      "name": "Topic Mode View",
-      "members": [
-        "modes_topicmodeview",
-        "modes_topicmodeview_topicmodeoption",
-        "modes_topicmodeview_topicmodeview",
-        "modes_topicmodeview_topicrotationspeed",
-        "modes_topicmodeview_topicrotationspeed_daily",
-        "modes_topicmodeview_topicrotationspeed_everysixhours",
-        "modes_topicmodeview_topicrotationspeed_everytwelvehours"
-      ]
-    },
-    "27": {
+    "28": {
       "name": "BSB import pipeline",
       "members": [
         "scripts_fetch_bsb_seed",
@@ -361,18 +382,6 @@
         "scripts_fetch_bsb_seed_main",
         "scripts_fetch_bsb_seed_segments",
         "scripts_fetch_bsb_seed_words"
-      ]
-    },
-    "28": {
-      "name": "Search and Favorite Actions",
-      "members": [
-        "tabs_searchview",
-        "tabs_searchview_searchview",
-        "tabs_searchview_searchview_performsearch",
-        "tabs_searchview_searchview_togglefavorite",
-        "tabs_searchview_versedetailsheet",
-        "tabs_searchview_versedetailsheet_togglefavorite",
-        "tabs_searchview_versedetailsheet_useformemorization"
       ]
     },
     "29": {
@@ -390,27 +399,30 @@
     "3": {
       "name": "Community 3",
       "members": [
-        "wordunlockedtests_longverseservicetests_longverseservicetests",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_excerptexactlyatlimitisunchanged",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_excerptfaroverlimitbreaksonwholewords",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_excerptofemptystringisempty",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_excerptshorterthanlimitisunchanged",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_excerptwithnowhitespacefallsbacktohardtruncation",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_firstlettersextractsanduppercasesinitials",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_firstlettersofemptystringisempty",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryatlongupperboundislong",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryatmediumupperboundismedium",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryatshortupperboundisshort",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryatzeroisshort",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryjustpastlongisverylong",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryjustpastmediumislong",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryjustpastshortismedium",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategorywellpastlongisverylong",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_segmentsexactlyatlimitreturnssinglesegment",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_segmentsfaroverlimitsplitsonwordboundaries",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_segmentsofemptystringreturnssingleemptysegment",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_segmentsshorterthanlimitreturnssinglesegment",
-        "wordunlockedtests_longverseservicetests_longverseservicetests_segmentswithnowhitespacecannotsplitandoverflowssinglesegment"
+        "wordunlockedtests_verseselectionservicetests",
+        "wordunlockedtests_verseselectionservicetests_emptydefaults",
+        "wordunlockedtests_verseselectionservicetests_makeverse",
+        "wordunlockedtests_verseselectionservicetests_settings",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_builtinverseisjohn316withitsrealdatabaseid",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_everytopichasversesineveryofflinetranslation",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_excludelongkeepseverydailyverseshortwhilestillrotating",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_livetranslationsrotatethroughthekjvreferenceset",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_pickreturnsnilforanemptyarray",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_pickreturnstheelementatstableindex",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_pickreturnstheelementatstableindexacrossmanydates",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_pickstaysconsistentwithstableindexacrossmanydates",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_searchmatchestextandtreatswildcardsandquotesliterally",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexadvancesbyoneeachday",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexisdeterministicforthesameinputs",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexstaysinboundsacrossextremedates",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexstaysinboundsfordaycomponentacrossextremedates",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexstaysinboundsforweekofyearcomponentacrossextremedates",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexwithzerocountreturnszeroinsteadofcrashing",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexyieldsdifferentvaluesfordifferentdays",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_topicmodereturnstheselectedtranslation",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_weeklyindexwalksthefirstsevenversesthroughaweekspanningnewyear",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_weeklyindexwrapswhenatopichasfewerthansevenverses"
       ]
     },
     "30": {
@@ -436,17 +448,6 @@
       ]
     },
     "32": {
-      "name": "Weekly Theme Preview View",
-      "members": [
-        "modes_weeklythememodeview",
-        "modes_weeklythememodeview_weeklypreview",
-        "modes_weeklythememodeview_weeklythememodeview",
-        "modes_weeklythememodeview_weeklythememodeview_loadpreview",
-        "modes_weeklythememodeview_weeklythemeplan",
-        "modes_weeklythememodeview_weeklyversepreview"
-      ]
-    },
-    "33": {
       "name": "ESV API fetcher",
       "members": [
         "scripts_fetch_esv_seed",
@@ -457,7 +458,7 @@
         "scripts_fetch_esv_seed_resolve_api_key"
       ]
     },
-    "34": {
+    "33": {
       "name": "Long Verse Text Processing",
       "members": [
         "services_longverseservice",
@@ -468,7 +469,7 @@
         "services_longverseservice_longverseservice_segments"
       ]
     },
-    "35": {
+    "34": {
       "name": "Favorites List Interface",
       "members": [
         "tabs_favoritesview",
@@ -479,18 +480,7 @@
         "tabs_favoritesview_string_prefixtext"
       ]
     },
-    "36": {
-      "name": "Widget Data Provider",
-      "members": [
-        "timelineprovider",
-        "wordunlockedwidget_widgetprovider",
-        "wordunlockedwidget_widgetprovider_verseprovider",
-        "wordunlockedwidget_widgetprovider_verseprovider_getsnapshot",
-        "wordunlockedwidget_widgetprovider_verseprovider_gettimeline",
-        "wordunlockedwidget_widgetprovider_verseprovider_placeholder"
-      ]
-    },
-    "37": {
+    "35": {
       "name": "Memorization Display Logic",
       "members": [
         "services_memorizationservice",
@@ -500,7 +490,7 @@
         "services_memorizationservice_memorizationservice_partialblank"
       ]
     },
-    "38": {
+    "36": {
       "name": "Mode Selection Interface",
       "members": [
         "tabs_modesview",
@@ -510,7 +500,62 @@
         "tabs_modesview_modesview_detailview"
       ]
     },
+    "37": {
+      "name": "Widget Data Provider",
+      "members": [
+        "timelineprovider",
+        "wordunlockedwidget_widgetprovider_verseprovider",
+        "wordunlockedwidget_widgetprovider_verseprovider_getsnapshot",
+        "wordunlockedwidget_widgetprovider_verseprovider_gettimeline",
+        "wordunlockedwidget_widgetprovider_verseprovider_placeholder"
+      ]
+    },
+    "38": {
+      "name": "Topic Mode View",
+      "members": [
+        "modes_topicmodeview_topicrotationspeed",
+        "modes_topicmodeview_topicrotationspeed_daily",
+        "modes_topicmodeview_topicrotationspeed_everysixhours",
+        "modes_topicmodeview_topicrotationspeed_everytwelvehours"
+      ]
+    },
     "39": {
+      "name": "Weekly Theme Preview View",
+      "members": [
+        "modes_weeklythememodeview",
+        "modes_weeklythememodeview_weeklypreview",
+        "modes_weeklythememodeview_weeklythemeplan",
+        "modes_weeklythememodeview_weeklyversepreview"
+      ]
+    },
+    "4": {
+      "name": "Community 4",
+      "members": [
+        "wordunlockedtests_longverseservicetests",
+        "wordunlockedtests_longverseservicetests_longverseservicetests",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_excerptexactlyatlimitisunchanged",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_excerptfaroverlimitbreaksonwholewords",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_excerptofemptystringisempty",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_excerptshorterthanlimitisunchanged",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_excerptwithnowhitespacefallsbacktohardtruncation",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_firstlettersextractsanduppercasesinitials",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_firstlettersofemptystringisempty",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryatlongupperboundislong",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryatmediumupperboundismedium",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryatshortupperboundisshort",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryatzeroisshort",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryjustpastlongisverylong",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryjustpastmediumislong",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategoryjustpastshortismedium",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_fitcategorywellpastlongisverylong",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_segmentsexactlyatlimitreturnssinglesegment",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_segmentsfaroverlimitsplitsonwordboundaries",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_segmentsofemptystringreturnssingleemptysegment",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_segmentsshorterthanlimitreturnssinglesegment",
+        "wordunlockedtests_longverseservicetests_longverseservicetests_segmentswithnowhitespacecannotsplitandoverflowssinglesegment"
+      ]
+    },
+    "40": {
       "name": "Onboarding Completion Screen",
       "members": [
         "onboarding_onboardingcompleteview",
@@ -519,31 +564,7 @@
         "onboarding_onboardingcompleteview_onboardingpagelayout"
       ]
     },
-    "4": {
-      "name": "Community 4",
-      "members": [
-        "commit:repo:github.com/burntsteam/word-unlocked@676cef021ba7105ac9730e58f3a99e07d5ee5fff",
-        "models_favorite",
-        "models_topic",
-        "models_versesegment",
-        "models_weeklyplan",
-        "onboarding_onboardingwelcomeview",
-        "onboarding_onboardingwelcomeview_onboardingwelcomeview",
-        "tabs_lockscreenwidgetguideview",
-        "tabs_lockscreenwidgetguideview_lockscreenwidgetguideview",
-        "wordunlockedwidget_circularwidgetview",
-        "wordunlockedwidget_circularwidgetview_circularwidgetview",
-        "wordunlockedwidget_homescreenwidgetview",
-        "wordunlockedwidget_homescreenwidgetview_homescreenwidgetview",
-        "wordunlockedwidget_inlinewidgetview",
-        "wordunlockedwidget_inlinewidgetview_inlinewidgetview",
-        "wordunlockedwidget_rectangularwidgetview",
-        "wordunlockedwidget_rectangularwidgetview_rectangularwidgetview",
-        "wordunlockedwidget_widgetentryview",
-        "wordunlockedwidget_widgetentryview_widgetentryview"
-      ]
-    },
-    "40": {
+    "41": {
       "name": "Onboarding Mode Selection",
       "members": [
         "onboarding_onboardingmodeview",
@@ -552,7 +573,7 @@
         "onboarding_onboardingmodeview_onboardingmodeview"
       ]
     },
-    "41": {
+    "42": {
       "name": "Onboarding Translation Selection",
       "members": [
         "onboarding_onboardingtranslationview",
@@ -561,7 +582,7 @@
         "onboarding_onboardingtranslationview_translationchoicecard"
       ]
     },
-    "42": {
+    "43": {
       "name": "Widget Instructions View",
       "members": [
         "onboarding_onboardingwidgetinstructionsview",
@@ -570,7 +591,7 @@
         "onboarding_onboardingwidgetinstructionsview_widgetinstructionstep"
       ]
     },
-    "43": {
+    "44": {
       "name": "Translation Selection View",
       "members": [
         "onboardingtranslationview",
@@ -579,7 +600,7 @@
         "onboardingtranslationview_translationchoicecard"
       ]
     },
-    "44": {
+    "45": {
       "name": "Theme Color Definitions",
       "members": [
         "theme_themecolors",
@@ -588,7 +609,7 @@
         "theme_themecolors_themecolors"
       ]
     },
-    "45": {
+    "46": {
       "name": "App Entry Point",
       "members": [
         "app",
@@ -596,7 +617,7 @@
         "wordunlocked_wordunlockedapp_wordunlockedapp"
       ]
     },
-    "46": {
+    "47": {
       "name": "App Icon Generator",
       "members": [
         "generate_app_icon",
@@ -604,15 +625,15 @@
         "generate_app_icon_rgb"
       ]
     },
-    "47": {
-      "name": "Memorization Mode View",
+    "48": {
+      "name": "Community 48",
       "members": [
-        "modes_memorizationmodeview",
-        "modes_memorizationmodeview_memorizationmodeview",
-        "modes_memorizationmodeview_versesearchrow"
+        "modes_topicmodeview",
+        "modes_topicmodeview_topicmodeoption",
+        "modes_topicmodeview_topicmodeview"
       ]
     },
-    "48": {
+    "49": {
       "name": "Onboarding Theme Selection",
       "members": [
         "onboarding_onboardingthemeview",
@@ -620,7 +641,32 @@
         "onboarding_onboardingthemeview_themechoiceswatch"
       ]
     },
-    "49": {
+    "5": {
+      "name": "Verse Selection Strategies",
+      "members": [
+        "services_verseselectionservice_verseselectionservice",
+        "services_verseselectionservice_verseselectionservice_bool",
+        "services_verseselectionservice_verseselectionservice_builtinverse",
+        "services_verseselectionservice_verseselectionservice_chapterverse",
+        "services_verseselectionservice_verseselectionservice_dailybooks",
+        "services_verseselectionservice_verseselectionservice_dailyrecord",
+        "services_verseselectionservice_verseselectionservice_datedverse",
+        "services_verseselectionservice_verseselectionservice_favoriterecord",
+        "services_verseselectionservice_verseselectionservice_favoriteverse",
+        "services_verseselectionservice_verseselectionservice_fitting",
+        "services_verseselectionservice_verseselectionservice_matching",
+        "services_verseselectionservice_verseselectionservice_memorizationverse",
+        "services_verseselectionservice_verseselectionservice_pick",
+        "services_verseselectionservice_verseselectionservice_record",
+        "services_verseselectionservice_verseselectionservice_referencecode",
+        "services_verseselectionservice_verseselectionservice_referencetranslationcode",
+        "services_verseselectionservice_verseselectionservice_stableindex",
+        "services_verseselectionservice_verseselectionservice_topicverse",
+        "services_verseselectionservice_verseselectionservice_verse",
+        "services_verseselectionservice_verseselectionservice_weeklyindex"
+      ]
+    },
+    "50": {
       "name": "Main Onboarding Flow",
       "members": [
         "onboarding_onboardingview",
@@ -628,15 +674,88 @@
         "onboarding_onboardingview_onboardingview"
       ]
     },
-    "5": {
-      "name": "Community 5",
+    "51": {
+      "name": "Onboarding Progress Screen",
       "members": [
-        "widget_widgettimelineservice",
+        "onboardingview",
+        "onboardingview_onboardingprogressdots",
+        "onboardingview_onboardingview"
+      ]
+    },
+    "52": {
+      "name": "Database Build Script",
+      "members": [
+        "scripts_build_prebuilt_db",
+        "scripts_build_prebuilt_db_load",
+        "scripts_build_prebuilt_db_main"
+      ]
+    },
+    "53": {
+      "name": "Theme Configuration Service",
+      "members": [
+        "services_themeservice",
+        "services_themeservice_themeservice",
+        "services_themeservice_themeservice_theme"
+      ]
+    },
+    "54": {
+      "name": "Translation Lookup Service",
+      "members": [
+        "services_translationservice",
+        "services_translationservice_translationservice",
+        "services_translationservice_translationservice_translation"
+      ]
+    },
+    "55": {
+      "name": "App Group Settings Keys",
+      "members": [
+        "settings_appgroupsettings",
+        "settings_appgroupsettings_appgroupsettings",
+        "settings_appgroupsettings_keys"
+      ]
+    },
+    "56": {
+      "name": "Search and Favorite Actions",
+      "members": [
+        "tabs_searchview_searchview",
+        "tabs_searchview_searchview_performsearch",
+        "tabs_searchview_searchview_togglefavorite"
+      ]
+    },
+    "57": {
+      "name": "Community 57",
+      "members": [
+        "tabs_searchview_versedetailsheet",
+        "tabs_searchview_versedetailsheet_togglefavorite",
+        "tabs_searchview_versedetailsheet_useformemorization"
+      ]
+    },
+    "58": {
+      "name": "Widget Timeline Entries",
+      "members": [
+        "timelineentry",
+        "wordunlockedwidget_widgetentry",
+        "wordunlockedwidget_widgetentry_verseentry"
+      ]
+    },
+    "59": {
+      "name": "Widget Bundle Entry",
+      "members": [
+        "widgetbundle",
+        "wordunlockedwidget_wordunlockedwidgetbundle",
+        "wordunlockedwidget_wordunlockedwidgetbundle_wordunlockedwidgetbundle"
+      ]
+    },
+    "6": {
+      "name": "Community 6",
+      "members": [
         "widget_widgettimelineservice_widgettimelineservice",
         "widget_widgettimelineservice_widgettimelineservice_bool",
         "widget_widgettimelineservice_widgettimelineservice_builtinverse",
+        "widget_widgettimelineservice_widgettimelineservice_cachedentry",
         "widget_widgettimelineservice_widgettimelineservice_chapterverse",
         "widget_widgettimelineservice_widgettimelineservice_dailyverse",
+        "widget_widgettimelineservice_widgettimelineservice_entrydates",
         "widget_widgettimelineservice_widgettimelineservice_favoriteverse",
         "widget_widgettimelineservice_widgettimelineservice_generatetimeline",
         "widget_widgettimelineservice_widgettimelineservice_init",
@@ -645,69 +764,14 @@
         "widget_widgettimelineservice_widgettimelineservice_pick",
         "widget_widgettimelineservice_widgettimelineservice_readesvcache",
         "widget_widgettimelineservice_widgettimelineservice_readfavorites",
+        "widget_widgettimelineservice_widgettimelineservice_readrvcache",
         "widget_widgettimelineservice_widgettimelineservice_readsettings",
         "widget_widgettimelineservice_widgettimelineservice_selectverse",
         "widget_widgettimelineservice_widgettimelineservice_stableindex",
         "widget_widgettimelineservice_widgettimelineservice_topicverse"
       ]
     },
-    "50": {
-      "name": "Onboarding Progress Screen",
-      "members": [
-        "onboardingview",
-        "onboardingview_onboardingprogressdots",
-        "onboardingview_onboardingview"
-      ]
-    },
-    "51": {
-      "name": "Database Build Script",
-      "members": [
-        "scripts_build_prebuilt_db",
-        "scripts_build_prebuilt_db_load",
-        "scripts_build_prebuilt_db_main"
-      ]
-    },
-    "52": {
-      "name": "Theme Configuration Service",
-      "members": [
-        "services_themeservice",
-        "services_themeservice_themeservice",
-        "services_themeservice_themeservice_theme"
-      ]
-    },
-    "53": {
-      "name": "Translation Lookup Service",
-      "members": [
-        "services_translationservice",
-        "services_translationservice_translationservice",
-        "services_translationservice_translationservice_translation"
-      ]
-    },
-    "54": {
-      "name": "App Group Settings Keys",
-      "members": [
-        "settings_appgroupsettings",
-        "settings_appgroupsettings_appgroupsettings",
-        "settings_appgroupsettings_keys"
-      ]
-    },
-    "55": {
-      "name": "Widget Timeline Entries",
-      "members": [
-        "timelineentry",
-        "wordunlockedwidget_widgetentry",
-        "wordunlockedwidget_widgetentry_verseentry"
-      ]
-    },
-    "56": {
-      "name": "Widget Bundle Entry",
-      "members": [
-        "widgetbundle",
-        "wordunlockedwidget_wordunlockedwidgetbundle",
-        "wordunlockedwidget_wordunlockedwidgetbundle_wordunlockedwidgetbundle"
-      ]
-    },
-    "57": {
+    "60": {
       "name": "Widget Display Component",
       "members": [
         "widget",
@@ -715,7 +779,7 @@
         "wordunlockedwidget_wordunlockedwidget_wordunlockedwidget"
       ]
     },
-    "58": {
+    "61": {
       "name": "Main App Views",
       "members": [
         "wordunlocked_contentview",
@@ -723,8 +787,64 @@
         "wordunlocked_contentview_maintabview"
       ]
     },
-    "6": {
-      "name": "Community 6",
+    "62": {
+      "name": "Community 62",
+      "members": [
+        "modes_memorizationmodeview_memorizationmodeview",
+        "modes_memorizationmodeview_memorizationmodeview_search"
+      ]
+    },
+    "63": {
+      "name": "Community 63",
+      "members": [
+        "modes_weeklythememodeview_weeklythememodeview",
+        "modes_weeklythememodeview_weeklythememodeview_loadpreview"
+      ]
+    },
+    "64": {
+      "name": "Community 64",
+      "members": [
+        "onboarding_onboardingwelcomeview",
+        "onboarding_onboardingwelcomeview_onboardingwelcomeview"
+      ]
+    },
+    "65": {
+      "name": "Community 65",
+      "members": [
+        "tabs_lockscreenwidgetguideview",
+        "tabs_lockscreenwidgetguideview_lockscreenwidgetguideview"
+      ]
+    },
+    "66": {
+      "name": "Community 66",
+      "members": [
+        "widgetentryview",
+        "widgetentryview_widgetentryview"
+      ]
+    },
+    "67": {
+      "name": "Community 67",
+      "members": [
+        "wordunlockedwidget_circularwidgetview",
+        "wordunlockedwidget_circularwidgetview_circularwidgetview"
+      ]
+    },
+    "68": {
+      "name": "Community 68",
+      "members": [
+        "wordunlockedwidget_homescreenwidgetview",
+        "wordunlockedwidget_homescreenwidgetview_homescreenwidgetview"
+      ]
+    },
+    "69": {
+      "name": "Community 69",
+      "members": [
+        "wordunlockedwidget_inlinewidgetview",
+        "wordunlockedwidget_inlinewidgetview_inlinewidgetview"
+      ]
+    },
+    "7": {
+      "name": "Community 7",
       "members": [
         "codable",
         "equatable",
@@ -741,52 +861,26 @@
         "models_topic_topic",
         "models_translation_translation",
         "models_versesegment_versesegment",
+        "models_weeklyplan",
         "models_weeklyplan_weeklyplan",
         "tabs_wallpaperview_wallpaperbackground"
       ]
     },
-    "7": {
-      "name": "Database Query Operations",
+    "70": {
+      "name": "Community 70",
       "members": [
-        "services_databaseservice",
-        "services_databaseservice_databaseservice",
-        "services_databaseservice_databaseservice_allverses",
-        "services_databaseservice_databaseservice_book",
-        "services_databaseservice_databaseservice_books",
-        "services_databaseservice_databaseservice_fitcategory",
-        "services_databaseservice_databaseservice_init",
-        "services_databaseservice_databaseservice_search",
-        "services_databaseservice_databaseservice_topic",
-        "services_databaseservice_databaseservice_topics",
-        "services_databaseservice_databaseservice_translation",
-        "services_databaseservice_databaseservice_translations",
-        "services_databaseservice_databaseservice_verse",
-        "services_databaseservice_databaseservice_versefortoday",
-        "services_databaseservice_databaseservice_verses",
-        "services_databaseservice_databaseservice_weeklyplanverses"
+        "wordunlockedwidget_rectangularwidgetview",
+        "wordunlockedwidget_rectangularwidgetview_rectangularwidgetview"
+      ]
+    },
+    "71": {
+      "name": "Community 71",
+      "members": [
+        "wordunlockedwidget_widgetentryview",
+        "wordunlockedwidget_widgetentryview_widgetentryview"
       ]
     },
     "8": {
-      "name": "Memorization Plan Logic",
-      "members": [
-        "int",
-        "models_memorizationplan",
-        "models_memorizationplan_difficulty",
-        "models_memorizationplan_difficulty_easy",
-        "models_memorizationplan_difficulty_hard",
-        "models_memorizationplan_difficulty_medium",
-        "models_memorizationplan_memorizationplan",
-        "models_memorizationplan_memorizationplan_difficulty",
-        "models_memorizationplan_memorizationplan_phase",
-        "models_memorizationplan_phase",
-        "models_memorizationplan_phase_firstletters",
-        "models_memorizationplan_phase_fullverse",
-        "models_memorizationplan_phase_partialblank",
-        "models_memorizationplan_phase_referenceonly",
-        "models_memorizationplan_phase_review"
-      ]
-    },
-    "9": {
       "name": "Chapter Reading Configuration",
       "members": [
         "models_book",
@@ -806,6 +900,42 @@
         "string"
       ]
     },
+    "9": {
+      "name": "Database Query Operations",
+      "members": [
+        "services_databaseservice_databaseservice",
+        "services_databaseservice_databaseservice_allverses",
+        "services_databaseservice_databaseservice_book",
+        "services_databaseservice_databaseservice_books",
+        "services_databaseservice_databaseservice_fitcategory",
+        "services_databaseservice_databaseservice_init",
+        "services_databaseservice_databaseservice_search",
+        "services_databaseservice_databaseservice_topic",
+        "services_databaseservice_databaseservice_topics",
+        "services_databaseservice_databaseservice_translation",
+        "services_databaseservice_databaseservice_translations",
+        "services_databaseservice_databaseservice_verse",
+        "services_databaseservice_databaseservice_versefortoday",
+        "services_databaseservice_databaseservice_verses",
+        "services_databaseservice_databaseservice_weeklyplanverses"
+      ]
+    },
+    "orphan:14": {
+      "name": "Verse Selection Tests",
+      "members": [
+        "wordunlockedtests_verseselectionservicetests",
+        "wordunlockedtests_verseselectionservicetests_makeverse",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_pickreturnsnilforanemptyarray",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_pickreturnstheelementatstableindex",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_pickstaysconsistentwithstableindexacrossmanydates",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexisdeterministicforthesameinputs",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexstaysinboundsfordaycomponentacrossextremedates",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexstaysinboundsforweekofyearcomponentacrossextremedates",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexwithzerocountreturnszeroinsteadofcrashing",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexyieldsdifferentvaluesfordifferentdays"
+      ]
+    },
     "orphan:4": {
       "name": "iOS app build tools",
       "members": [
@@ -816,6 +946,14 @@
         "scripts_build_prebuilt_db",
         "scripts_build_prebuilt_db_load",
         "scripts_build_prebuilt_db_main"
+      ]
+    },
+    "orphan:48": {
+      "name": "Memorization Mode View",
+      "members": [
+        "modes_memorizationmodeview",
+        "modes_memorizationmodeview_memorizationmodeview",
+        "modes_memorizationmodeview_versesearchrow"
       ]
     },
     "orphan:7": {
