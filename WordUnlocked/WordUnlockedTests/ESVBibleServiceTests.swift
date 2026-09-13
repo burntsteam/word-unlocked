@@ -2,20 +2,21 @@ import Testing
 import Foundation
 @testable import WordUnlocked
 
-// ESVBibleService is an @MainActor singleton that reads/writes a 500-verse
-// rolling cache to AppGroupSettings (a shared UserDefaults suite) and fetches
-// verses over the network. The network path is out of bounds for a unit test,
-// so this suite covers the guard clauses in fetch(reference:), the read-only
-// cachedVerse(for:) lookup, and -- now that store(_:) is internal rather than
-// private -- the real eviction algorithm itself.
+// ESVBibleService reads/writes a 500-verse rolling cache to AppGroupSettings (a
+// shared UserDefaults suite) and fetches verses over the network. The network
+// path is out of bounds for a unit test, so this suite covers the guard clauses
+// in fetch(reference:), the read-only cachedVerse(for:) lookup, and the real
+// eviction algorithm itself.
 //
 // The eviction rule is exercised through ESVBibleService.applyingStore(_:to:),
 // a pure static function, so these tests never touch the shared App Group
 // UserDefaults suite that the Lock Screen widget reads.
 //
-// Tests share the ESVBibleService.shared singleton, so the suite is
-// serialized and each test restores isFetching to false when it's done.
-@Suite("ESVBibleService", .serialized)
+// Tests build their own keyless instance instead of using .shared: this suite
+// runs inside the app (TEST_HOST), whose Info.plist carries the real ESV key,
+// so the singleton would make live requests and persist the results to the
+// widget's App Group store.
+@Suite("ESVBibleService")
 @MainActor
 struct ESVBibleServiceTests {
 
@@ -25,25 +26,22 @@ struct ESVBibleServiceTests {
         #expect(ESVBibleService.maxCacheCount == 500)
     }
 
-    @Test func isConfiguredIsFalseWithoutAnAPIKey() {
-        // The test bundle's Info.plist has no "ESVApiKey" entry, so this should
-        // always read as unconfigured -- matching the guard in fetch(reference:).
-        #expect(ESVBibleService.isConfigured == false)
+    @Test func isConfiguredOnlyWithANonEmptyAPIKey() {
+        // The same check gates the Translations row and fetch(reference:).
+        #expect(ESVBibleService(apiKey: "").isConfigured == false)
+        #expect(ESVBibleService(apiKey: "test-key").isConfigured == true)
     }
 
     @Test func cachedVerseReturnsNilForAReferenceThatWasNeverFetched() {
         let unknownReference = "Unfetched Reference \(UUID().uuidString)"
-        #expect(ESVBibleService.shared.cachedVerse(for: unknownReference) == nil)
+        #expect(ESVBibleService(apiKey: "").cachedVerse(for: unknownReference) == nil)
     }
 
     @Test func fetchWithoutAnAPIKeyFailsWithAConfigurationErrorAndNeverStartsFetching() async {
-        let service = ESVBibleService.shared
-        service.isFetching = false
-        defer { service.isFetching = false }
+        let service = ESVBibleService(apiKey: "")
 
-        // The test bundle's Info.plist has no "ESVApiKey" entry, so this always
-        // takes fetch(reference:)'s early-return branch -- no network call is
-        // ever attempted here.
+        // An empty key always takes fetch(reference:)'s early-return branch --
+        // no network call is ever attempted here.
         await service.fetch(reference: "John 3:16")
 
         #expect(service.error == "ESV API key not configured.")
@@ -51,10 +49,9 @@ struct ESVBibleServiceTests {
     }
 
     @Test func fetchReturnsImmediatelyWhenAlreadyFetching() async {
-        let service = ESVBibleService.shared
+        let service = ESVBibleService(apiKey: "")
         service.isFetching = true
         service.error = "sentinel"
-        defer { service.isFetching = false }
 
         await service.fetch(reference: "John 3:16")
 

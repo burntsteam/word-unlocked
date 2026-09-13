@@ -7,7 +7,9 @@ import Foundation
 // live; with no connection, callers fall back to public-domain KJV.
 @MainActor
 final class ESVBibleService: ObservableObject {
-    static let shared = ESVBibleService()
+    // ESV_API_KEY is supplied at build time via Config/Secrets.xcconfig.
+    static let shared = ESVBibleService(
+        apiKey: Bundle.main.infoDictionary?["ESVApiKey"] as? String ?? "")
 
     // Crossway's ESV API license cap on local storage.
     static let maxCacheCount = 500
@@ -16,18 +18,17 @@ final class ESVBibleService: ObservableObject {
     @Published var error: String?
     @Published private(set) var cache: [LiveCachedVerse] = []   // oldest first, <= maxCacheCount
 
-    private var apiKey: String {
-        Bundle.main.infoDictionary?["ESVApiKey"] as? String ?? ""
-    }
+    private let apiKey: String
 
-    // ESV_API_KEY is supplied at build time via Config/Secrets.xcconfig. When it is
-    // absent every fetch dead-ends on the guard below, so the UI hides the translation
-    // rather than offering a choice that can only ever produce an error.
-    static var isConfigured: Bool {
-        !((Bundle.main.infoDictionary?["ESVApiKey"] as? String) ?? "").isEmpty
-    }
+    // Without a key every fetch dead-ends on the guard below, so the UI hides the
+    // translation rather than offering a choice that can only ever produce an error.
+    static var isConfigured: Bool { shared.isConfigured }
+    var isConfigured: Bool { !apiKey.isEmpty }
 
-    private init() {
+    // Takes the key as a parameter so tests can build an unconfigured instance
+    // regardless of the key this build carries.
+    init(apiKey: String) {
+        self.apiKey = apiKey
         if let data = AppGroupSettings.defaults.data(forKey: AppGroupSettings.Keys.esvVerseCache),
            let decoded = try? JSONDecoder().decode([LiveCachedVerse].self, from: data) {
             cache = decoded

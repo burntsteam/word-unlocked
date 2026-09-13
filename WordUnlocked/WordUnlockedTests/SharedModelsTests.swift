@@ -69,7 +69,7 @@ struct SharedModelsTests {
     }
 
     @Test func decodingFailsWhenARequiredKeyIsMissing() {
-        // Documents the exact failure mode ESVBibleService.init() guards against
+        // Documents the exact failure mode ESVBibleService.init(apiKey:) guards against
         // with `try?`: a shape mismatch throws DecodingError, which is swallowed,
         // and the persisted cache silently comes back empty on next launch.
         let json = """
