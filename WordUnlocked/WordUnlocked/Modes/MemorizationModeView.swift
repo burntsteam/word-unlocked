@@ -3,6 +3,8 @@ import SwiftUI
 struct MemorizationModeView: View {
     @EnvironmentObject var settingsStore: SettingsStore
     @State private var searchText = ""
+    @State private var searchResults: [Verse] = []
+    @State private var searchedText = ""
     @State private var selectedVerseId: Int?
     @State private var durationDays = 7
     @State private var difficulty: MemorizationPlan.Difficulty = .medium
@@ -11,22 +13,12 @@ struct MemorizationModeView: View {
         VerseSelectionService.verse(for: settingsStore.currentSettings(), favorites: settingsStore.favorites)
     }
 
-    private var searchableVerses: [Verse] {
-        DatabaseService.shared.allVerses(translationCode: settingsStore.selectedTranslation)
-    }
-
-    private var searchResults: [Verse] {
-        let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !query.isEmpty else { return [] }
-        return searchableVerses.filter { verse in
-            verse.verseRef.localizedCaseInsensitiveContains(query)
-                || verse.text.localizedCaseInsensitiveContains(query)
-        }
+    private var searchTranslationCode: String {
+        VerseSelectionService.referenceTranslationCode(for: settingsStore.selectedTranslation)
     }
 
     private var selectedVerse: Verse {
-        if let selectedVerseId,
-           let verse = searchableVerses.first(where: { $0.id == selectedVerseId }) {
+        if let selectedVerseId, let verse = DatabaseService.shared.verse(id: selectedVerseId) {
             return verse
         }
         return searchResults.first ?? fallbackVerse
@@ -39,12 +31,12 @@ struct MemorizationModeView: View {
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
 
-                if searchResults.isEmpty && !searchText.isEmpty {
-                    Text("No matching verses found in \(settingsStore.selectedTranslation).")
+                if searchResults.isEmpty && !searchText.isEmpty && searchedText == searchText {
+                    Text("No matching verses found in \(searchTranslationCode).")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 } else {
-                    ForEach(Array(searchResults.prefix(8))) { verse in
+                    ForEach(searchResults) { verse in
                         Button {
                             selectedVerseId = verse.id
                         } label: {
@@ -115,6 +107,9 @@ struct MemorizationModeView: View {
             }
         }
         .navigationTitle("Memorization")
+        .task(id: searchText) {
+            await search(searchText)
+        }
         .onAppear {
             if let plan = settingsStore.memorizationPlan {
                 selectedVerseId = plan.verseId
@@ -129,6 +124,21 @@ struct MemorizationModeView: View {
                 }
             }
         }
+    }
+
+    // Debounced and limited to the rows shown, so typing never waits on a scan of
+    // the whole translation.
+    private func search(_ text: String) async {
+        let query = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !query.isEmpty else {
+            searchResults = []
+            searchedText = text
+            return
+        }
+        try? await Task.sleep(for: .milliseconds(250))
+        guard !Task.isCancelled else { return }
+        searchResults = DatabaseService.shared.search(query: query, translationCode: searchTranslationCode, limit: 8)
+        searchedText = text
     }
 }
 

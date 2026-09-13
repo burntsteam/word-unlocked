@@ -2,18 +2,19 @@ import SwiftUI
 
 struct TopicModeView: View {
     @EnvironmentObject var settingsStore: SettingsStore
-    @State private var selectedTopicSlug = topicModeOptions[0].slug
+    @State private var topics: [Topic] = []
+    @State private var selectedTopicSlug = "love"
     @State private var rotationSpeed: TopicRotationSpeed = .daily
 
     var body: some View {
         Form {
             Section("Topics") {
-                ForEach(topicModeOptions) { topic in
+                ForEach(topics, id: \.slug) { topic in
                     Button {
                         selectedTopicSlug = topic.slug
                     } label: {
                         HStack(spacing: 12) {
-                            Image(systemName: topic.icon)
+                            Image(systemName: topic.symbolName)
                                 .frame(width: 28)
                                 .foregroundStyle(selectedTopicSlug == topic.slug ? Color.accentColor : Color.secondary)
 
@@ -63,6 +64,8 @@ struct TopicModeView: View {
         }
         .navigationTitle("Topic")
         .onAppear {
+            // The database's topics, so every topic offered has verses behind it.
+            topics = DatabaseService.shared.topics()
             selectedTopicSlug = settingsStore.topicSlug ?? selectedTopicSlug
             if let rawValue = AppGroupSettings.defaults.string(forKey: AppGroupSettings.Keys.topicRotationSpeed),
                let value = TopicRotationSpeed(rawValue: rawValue) {
@@ -70,15 +73,6 @@ struct TopicModeView: View {
             }
         }
     }
-}
-
-private struct TopicModeOption: Identifiable {
-    let slug: String
-    let name: String
-    let summary: String
-    let icon: String
-
-    var id: String { slug }
 }
 
 private enum TopicRotationSpeed: String, CaseIterable, Identifiable {
@@ -96,32 +90,3 @@ private enum TopicRotationSpeed: String, CaseIterable, Identifiable {
         }
     }
 }
-
-private let topicModeOptions: [TopicModeOption] = [
-    TopicModeOption(slug: "love", name: "Love", summary: "God's steadfast care.", icon: "heart"),
-    TopicModeOption(slug: "peace", name: "Peace", summary: "Quiet trust under pressure.", icon: "leaf"),
-    TopicModeOption(slug: "hope", name: "Hope", summary: "Confidence in God's promise.", icon: "sunrise"),
-    TopicModeOption(slug: "faith", name: "Faith", summary: "Trust in what God has spoken.", icon: "shield"),
-    TopicModeOption(slug: "wisdom", name: "Wisdom", summary: "Discernment for daily life.", icon: "lightbulb"),
-    TopicModeOption(slug: "courage", name: "Courage", summary: "Strength when fear rises.", icon: "figure.strengthtraining.traditional"),
-    TopicModeOption(slug: "prayer", name: "Prayer", summary: "Attention turned toward God.", icon: "hands.sparkles"),
-    TopicModeOption(slug: "forgiveness", name: "Forgiveness", summary: "Mercy received and extended.", icon: "arrow.counterclockwise"),
-    TopicModeOption(slug: "gratitude", name: "Gratitude", summary: "Practicing thankfulness.", icon: "gift"),
-    TopicModeOption(slug: "joy", name: "Joy", summary: "Gladness grounded in God.", icon: "sparkles"),
-    TopicModeOption(slug: "patience", name: "Patience", summary: "Faithful waiting.", icon: "hourglass"),
-    TopicModeOption(slug: "humility", name: "Humility", summary: "A quiet life before God.", icon: "arrow.down.heart"),
-    TopicModeOption(slug: "discipline", name: "Discipline", summary: "Daily attention and practice.", icon: "target"),
-    TopicModeOption(slug: "strength", name: "Strength", summary: "Help for weakness.", icon: "bolt"),
-    TopicModeOption(slug: "rest", name: "Rest", summary: "Receiving grace and renewal.", icon: "bed.double"),
-    TopicModeOption(slug: "guidance", name: "Guidance", summary: "Letting God direct the path.", icon: "map"),
-    TopicModeOption(slug: "mercy", name: "Mercy", summary: "Compassion in action.", icon: "hand.raised"),
-    TopicModeOption(slug: "obedience", name: "Obedience", summary: "Hearing and doing.", icon: "checkmark.seal"),
-    TopicModeOption(slug: "generosity", name: "Generosity", summary: "Open hands and cheerful giving.", icon: "shippingbox"),
-    TopicModeOption(slug: "identity", name: "Identity", summary: "Who you are in Christ.", icon: "person.text.rectangle"),
-    TopicModeOption(slug: "worship", name: "Worship", summary: "Life oriented toward God.", icon: "music.note"),
-    TopicModeOption(slug: "healing", name: "Healing", summary: "Wholeness and restoration.", icon: "cross.case"),
-    TopicModeOption(slug: "justice", name: "Justice", summary: "Doing what is right.", icon: "scalemass"),
-    TopicModeOption(slug: "purity", name: "Purity", summary: "A clean heart and focused mind.", icon: "drop"),
-    TopicModeOption(slug: "service", name: "Service", summary: "Loving through action.", icon: "wrench.and.screwdriver"),
-    TopicModeOption(slug: "perseverance", name: "Perseverance", summary: "Endurance through difficulty.", icon: "figure.walk")
-]

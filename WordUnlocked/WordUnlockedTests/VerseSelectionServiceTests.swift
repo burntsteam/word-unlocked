@@ -2,127 +2,168 @@ import Testing
 import Foundation
 @testable import WordUnlocked
 
-// VerseSelectionService's only non-private entry point, verse(for:date:favorites:),
-// unconditionally touches DatabaseService.shared / ScriptureDatabase.shared (a
-// real SQLite-backed singleton) on every branch, so it stays untested here --
-// see the project README for why. `pick(from:date:component:)` and
-// `stableIndex(for:component:count:)`, however, are pure: no DB, no
-// UserDefaults, no singletons, just Foundation.Calendar arithmetic over
-// whatever's passed in. They were `private` (unreachable even via
-// @testable import) and are now `internal`, so this file covers exactly
-// those two functions and nothing else.
-@Suite("VerseSelectionService.stableIndex / pick")
+// The pure index functions behind verse selection, then selection itself against the
+// bundled database. The suite runs inside the app (TEST_HOST), which provisions that
+// database into the App Group container on first use; nothing here writes to it.
+@Suite("VerseSelectionService")
 struct VerseSelectionServiceTests {
 
-    // MARK: - stableIndex(for:component:count:)
+    // MARK: - stableIndex(for:count:)
 
     @Test func stableIndexIsDeterministicForTheSameInputs() {
         let date = Date(timeIntervalSince1970: 1_700_000_000)
 
-        let first = VerseSelectionService.stableIndex(for: date, component: .day, count: 37)
-        let second = VerseSelectionService.stableIndex(for: date, component: .day, count: 37)
+        let first = VerseSelectionService.stableIndex(for: date, count: 37)
+        let second = VerseSelectionService.stableIndex(for: date, count: 37)
 
         #expect(first == second)
     }
 
-    @Test func stableIndexStaysInBoundsForDayComponentAcrossExtremeDates() {
-        // "Far in the past" / "far in the future" per Foundation's own extremes,
-        // plus "now" for a realistic middle case.
+    @Test func stableIndexStaysInBoundsAcrossExtremeDates() {
         let dates = [Date.distantPast, Date.distantFuture, Date()]
         for date in dates {
             for count in 1...20 {
-                let index = VerseSelectionService.stableIndex(for: date, component: .day, count: count)
+                let index = VerseSelectionService.stableIndex(for: date, count: count)
                 #expect(index >= 0)
                 #expect(index < count)
             }
         }
     }
 
-    @Test func stableIndexStaysInBoundsForWeekOfYearComponentAcrossExtremeDates() {
-        // stableIndex has a separate branch for .weekOfYear (used by the
-        // weekly-theme mode) with its own arithmetic -- covered independently
-        // of the .day branch above.
-        let dates = [Date.distantPast, Date.distantFuture, Date()]
-        for date in dates {
-            for count in 1...20 {
-                let index = VerseSelectionService.stableIndex(for: date, component: .weekOfYear, count: count)
-                #expect(index >= 0)
-                #expect(index < count)
-            }
-        }
-    }
-
-    @Test func stableIndexYieldsDifferentValuesForDifferentDays() {
-        // Two dates exactly one calendar day apart (built with Calendar's own
-        // `.day` arithmetic, not a raw 86_400-second offset, so this can't be
-        // thrown off by a DST transition in whatever time zone the test runs
-        // in). The underlying `.era` day-ordinality differs by exactly 1
-        // between them, and a difference of exactly 1 mod a count > 1 can
-        // never be congruent to 0, so the two indices are guaranteed distinct.
+    @Test func stableIndexAdvancesByOneEachDay() {
+        // Built with Calendar's own .day arithmetic, so a DST change can't interfere.
         let calendar = Calendar.current
         let day1 = calendar.date(from: DateComponents(year: 2024, month: 3, day: 1))!
         let day2 = calendar.date(byAdding: .day, value: 1, to: day1)!
         let count = 30
 
-        let index1 = VerseSelectionService.stableIndex(for: day1, component: .day, count: count)
-        let index2 = VerseSelectionService.stableIndex(for: day2, component: .day, count: count)
+        let index1 = VerseSelectionService.stableIndex(for: day1, count: count)
+        let index2 = VerseSelectionService.stableIndex(for: day2, count: count)
 
-        #expect(index1 != index2)
+        #expect(index2 == (index1 + 1) % count)
     }
 
     @Test func stableIndexWithZeroCountReturnsZeroInsteadOfCrashing() {
-        // The implementation guards its modulo with `max(count, 1)`, so this
-        // is well-defined rather than a divide-by-zero -- pinned here rather
-        // than left as an unstated assumption. Note `pick` never actually
-        // triggers this path: it short-circuits to nil for an empty array
-        // before computing an index at all (see below).
-        let index = VerseSelectionService.stableIndex(for: Date(), component: .day, count: 0)
-        #expect(index == 0)
+        #expect(VerseSelectionService.stableIndex(for: Date(), count: 0) == 0)
     }
 
-    // MARK: - pick(from:date:component:)
+    // MARK: - weeklyIndex(for:count:)
+
+    @Test func weeklyIndexWalksTheFirstSevenVersesThroughAWeekSpanningNewYear() {
+        let calendar = Calendar.current
+        let newYear = calendar.date(from: DateComponents(year: 2027, month: 1, day: 1))!
+        let week = calendar.dateInterval(of: .weekOfYear, for: newYear)!
+
+        let indices = (0..<7).map { offset in
+            VerseSelectionService.weeklyIndex(for: calendar.date(byAdding: .day, value: offset, to: week.start)!, count: 12)
+        }
+
+        #expect(indices == Array(0..<7))
+    }
+
+    @Test func weeklyIndexWrapsWhenATopicHasFewerThanSevenVerses() {
+        let calendar = Calendar.current
+        let week = calendar.dateInterval(of: .weekOfYear, for: Date())!
+        for offset in 0..<7 {
+            let day = calendar.date(byAdding: .day, value: offset, to: week.start)!
+            #expect(VerseSelectionService.weeklyIndex(for: day, count: 3) == offset % 3)
+        }
+    }
+
+    // MARK: - pick(from:date:)
 
     @Test func pickReturnsNilForAnEmptyArray() {
-        #expect(VerseSelectionService.pick(from: [], date: Date(), component: .day) == nil)
+        #expect(VerseSelectionService.pick(from: [Int](), date: Date()) == nil)
     }
 
-    @Test func pickReturnsTheElementAtStableIndex() {
-        let verses = (0..<5).map(makeVerse)
-        let date = Date(timeIntervalSince1970: 1_700_000_000)
-        let expectedIndex = VerseSelectionService.stableIndex(for: date, component: .day, count: verses.count)
-
-        let picked = VerseSelectionService.pick(from: verses, date: date, component: .day)
-
-        #expect(picked?.id == verses[expectedIndex].id)
-    }
-
-    @Test func pickStaysConsistentWithStableIndexAcrossManyDates() {
-        // Broader version of the above: for a range of dates, whatever index
-        // stableIndex computes is exactly the element pick returns -- pick
-        // adds no logic of its own beyond that lookup.
-        let verses = (0..<12).map(makeVerse)
+    @Test func pickReturnsTheElementAtStableIndexAcrossManyDates() {
+        let elements = Array(100..<112)
         for offset in 0..<40 {
             let date = Date(timeIntervalSince1970: 1_700_000_000 + Double(offset) * 86_400)
-            let expectedIndex = VerseSelectionService.stableIndex(for: date, component: .day, count: verses.count)
-            let picked = VerseSelectionService.pick(from: verses, date: date, component: .day)
-            #expect(picked?.id == verses[expectedIndex].id)
+            let expected = elements[VerseSelectionService.stableIndex(for: date, count: elements.count)]
+            #expect(VerseSelectionService.pick(from: elements, date: date) == expected)
         }
+    }
+
+    // MARK: - record(for:date:favorites:) against the bundled database
+
+    @Test(arguments: ["KJV", "WEB", "BSB", "ASV", "LSV"])
+    func everyTopicHasVersesInEveryOfflineTranslation(translationCode: String) {
+        let topics = ScriptureDatabase.shared.topics()
+        #expect(!topics.isEmpty)
+        for topic in topics {
+            let verses = ScriptureDatabase.shared.verses(topicSlug: topic.slug, translationCode: translationCode)
+            #expect(verses.count >= 7, "\(topic.slug) has \(verses.count) verses in \(translationCode)")
+            #expect(verses.allSatisfy { $0.translationCode == translationCode })
+        }
+    }
+
+    @Test func topicModeReturnsTheSelectedTranslation() {
+        let verse = VerseSelectionService.record(
+            for: settings(.topic, translation: "BSB", topicSlug: "grief"),
+            defaults: emptyDefaults()
+        )
+        #expect(verse.translationCode == "BSB")
+    }
+
+    @Test func excludeLongKeepsEveryDailyVerseShortWhileStillRotating() {
+        let calendar = Calendar.current
+        let start = calendar.date(from: DateComponents(year: 2026, month: 9, day: 1))!
+        let verses = (0..<14).map { offset in
+            VerseSelectionService.record(
+                for: settings(.daily, strategy: .excludeLong),
+                date: calendar.date(byAdding: .day, value: offset, to: start)!,
+                defaults: emptyDefaults()
+            )
+        }
+
+        #expect(verses.allSatisfy { $0.charCount <= VerseSelectionService.excludeLongMaxCharCount })
+        #expect(Set(verses.map(\.id)).count == verses.count)
+    }
+
+    @Test(arguments: ["ESV", "RV"])
+    func liveTranslationsRotateThroughTheKJVReferenceSet(translationCode: String) {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let tomorrow = calendar.date(byAdding: .day, value: 1, to: today)!
+
+        let first = VerseSelectionService.record(for: settings(.daily, translation: translationCode), date: today, defaults: emptyDefaults())
+        let second = VerseSelectionService.record(for: settings(.daily, translation: translationCode), date: tomorrow, defaults: emptyDefaults())
+
+        #expect(first.translationCode == "KJV")
+        #expect(first.id != second.id)
+    }
+
+    @Test func builtInVerseIsJohn316WithItsRealDatabaseId() {
+        let verse = VerseSelectionService.builtInVerse(translationCode: "KJV")
+        #expect(verse.verseRef == "John 3:16")
+        #expect(verse.id == 212)
+    }
+
+    @Test func searchMatchesTextAndTreatsWildcardsAndQuotesLiterally() {
+        let database = ScriptureDatabase.shared
+        #expect(database.searchVerses(containing: "my shepherd", translationCode: "KJV", limit: 10).contains { $0.verseRef == "Ps 23:1" })
+        #expect(database.searchVerses(containing: "%", translationCode: "KJV", limit: 10).isEmpty)
+        #expect(database.searchVerses(containing: "_", translationCode: "KJV", limit: 10).isEmpty)
+        #expect(database.searchVerses(containing: "' OR 1=1 --", translationCode: "KJV", limit: 10).isEmpty)
     }
 }
 
-private func makeVerse(id: Int) -> Verse {
-    Verse(
-        id: id,
-        translationId: 1,
-        bookId: 43,
-        chapter: 3,
-        verse: 16,
-        verseRef: "Test \(id):1",
-        text: "Test verse text \(id)",
-        charCount: 20,
-        wordCount: 4,
-        fitCategory: .short,
-        excerpt: "Test verse text \(id)",
-        segmentCount: 1
-    )
+private func settings(
+    _ mode: WidgetSettings.VerseMode,
+    translation: String = "KJV",
+    strategy: WidgetSettings.LongVerseStrategy = .smartFit,
+    topicSlug: String? = nil
+) -> WidgetSettings {
+    var settings = WidgetSettings.defaultSettings
+    settings.activeMode = mode
+    settings.translationCode = translation
+    settings.longVerseStrategy = strategy
+    settings.topicSlug = topicSlug
+    return settings
+}
+
+// A suite nothing writes to, so daily-scope choices saved in the App Group can't leak in.
+private func emptyDefaults() -> UserDefaults {
+    UserDefaults(suiteName: "VerseSelectionServiceTests.\(UUID().uuidString)")!
 }

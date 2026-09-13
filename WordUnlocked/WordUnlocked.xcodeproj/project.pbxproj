@@ -46,6 +46,7 @@
 		BFAA00000100000000000001D /* WidgetSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000001D /* WidgetSettings.swift */; };
 		BFAA00000100000000000001E /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000001E /* DatabaseService.swift */; };
 		BFAA00000100000000000001F /* VerseSelectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000001F /* VerseSelectionService.swift */; };
+		BFAAVSS00000000000000001 /* VerseSelectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000001F /* VerseSelectionService.swift */; };
 		BFAA000001000000000000020 /* LongVerseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000020 /* LongVerseService.swift */; };
 		BFAA000001000000000000021 /* MemorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000021 /* MemorizationService.swift */; };
 		BFAA000001000000000000022 /* ThemeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000022 /* ThemeService.swift */; };
@@ -652,6 +653,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFAA000002000000000000001 /* WidgetEntry.swift in Sources */,
+				BFAAVSS00000000000000001 /* VerseSelectionService.swift in Sources */,
 				BFAA000002000000000000002 /* WidgetProvider.swift in Sources */,
 				BFAA000002000000000000003 /* InlineWidgetView.swift in Sources */,
 				BFAA000002000000000000004 /* CircularWidgetView.swift in Sources */,

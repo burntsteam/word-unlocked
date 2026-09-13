@@ -69,7 +69,10 @@ struct SearchView: View {
             results = []
             return
         }
-        results = DatabaseService.shared.search(query: trimmed, translationCode: settingsStore.selectedTranslation)
+        results = DatabaseService.shared.search(
+            query: trimmed,
+            translationCode: VerseSelectionService.referenceTranslationCode(for: settingsStore.selectedTranslation)
+        )
     }
 
     private func toggleFavorite(_ verse: Verse) {
@@ -108,7 +111,7 @@ private struct VerseDetailSheet: View {
                         .font(.title3)
                         .lineSpacing(5)
 
-                    Text(settingsStore.selectedTranslation)
+                    Text(VerseSelectionService.referenceTranslationCode(for: settingsStore.selectedTranslation))
                         .font(.caption.weight(.semibold))
                         .padding(.horizontal, 10)
                         .padding(.vertical, 6)

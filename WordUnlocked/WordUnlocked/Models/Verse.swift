@@ -23,6 +23,23 @@ struct Verse: Identifiable, Codable {
 }
 
 extension Verse {
+    init(record: SharedVerseRecord) {
+        self.init(
+            id: record.id,
+            translationId: record.translationId,
+            bookId: record.bookId,
+            chapter: record.chapter,
+            verse: record.verse,
+            verseRef: record.verseRef,
+            text: record.text,
+            charCount: record.charCount,
+            wordCount: record.wordCount,
+            fitCategory: FitCategory(rawValue: record.fitCategory) ?? .medium,
+            excerpt: record.excerpt,
+            segmentCount: record.segmentCount
+        )
+    }
+
     var bookName: String {
         verseRef.components(separatedBy: " ").dropLast().joined(separator: " ")
     }

@@ -42,6 +42,7 @@ struct TodayView: View {
         return [
             settingsStore.activeMode.rawValue,
             settingsStore.selectedTranslation,
+            settingsStore.longVerseStrategy.rawValue,
             settingsStore.topicSlug ?? "",
             settingsStore.chapterBookId.map(String.init) ?? "",
             settingsStore.chapterNumber.map(String.init) ?? "",

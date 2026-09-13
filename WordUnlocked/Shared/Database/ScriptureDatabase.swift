@@ -1,8 +1,25 @@
 import Foundation
 import SQLite3
+import WidgetKit
 
 final class ScriptureDatabase {
     static let shared = ScriptureDatabase()
+
+    /// Narrows a translation's verses in SQL, so picking one verse never loads the
+    /// whole translation into memory — the widget extension has roughly 30MB.
+    struct VerseFilter: Equatable {
+        enum Books: Equatable {
+            case all
+            case oldTestament
+            case newTestament
+            case psalmsAndProverbs
+        }
+
+        var books: Books = .all
+        var maxCharCount: Int?
+    }
+
+    private static let verseColumns = "v.id, v.translation_id, v.translation_code, v.book_id, v.book_name, v.chapter, v.verse, v.verse_ref, v.text, v.char_count, v.word_count, v.fit_category, v.excerpt, v.segment_count"
 
     private let databaseURL: URL
     private var database: OpaquePointer?
@@ -11,19 +28,15 @@ final class ScriptureDatabase {
 
     private init() {
         databaseURL = AppGroupSettings.databaseURL
+        // The widget extension never creates or changes the shared database: it opens
+        // the app-provisioned file read-only on first use, and until that file exists
+        // callers fall back to a built-in verse.
+        guard !Self.isAppExtension else { return }
         openDatabase()
-        // Provision only from the main app. The widget extension has a tight
-        // (~30MB) memory budget; it reads the shared App Group database the app
-        // has already populated, falling back to a built-in verse if the app
-        // hasn't run yet.
-        if !Self.isAppExtension {
-            provisionDatabaseIfNeeded()
-        }
+        provisionDatabaseIfNeeded()
         createSchema()
         #if DEBUG
-        if !Self.isAppExtension {
-            seedRVTestingIfNeeded()
-        }
+        seedRVTestingIfNeeded()
         #endif
     }
 
@@ -102,66 +115,74 @@ final class ScriptureDatabase {
         return records
     }
 
-    func allVerses(translationCode: String) -> [SharedVerseRecord] {
-        lock.lock()
-        defer { lock.unlock() }
-
-        return queryVerses(
-            """
-            SELECT id, translation_id, translation_code, book_id, book_name, chapter, verse, verse_ref, text, char_count, word_count, fit_category, excerpt, segment_count
-            FROM verses
-            WHERE translation_code = \(quoted(translationCode))
-            ORDER BY id;
-            """
-        )
-    }
-
     func hasVerses(translationCode: String) -> Bool {
         lock.lock(); defer { lock.unlock() }
         return scalarInt("SELECT COUNT(*) FROM verses WHERE translation_code = \(quoted(translationCode)) LIMIT 1;") > 0
     }
 
-    func verse(id: Int) -> SharedVerseRecord? {
-        lock.lock()
-        defer { lock.unlock() }
+    func verseCount(translationCode: String, filter: VerseFilter = VerseFilter()) -> Int {
+        lock.lock(); defer { lock.unlock() }
+        return scalarInt("SELECT COUNT(*) FROM verses v WHERE \(conditions(translationCode: translationCode, filter: filter));")
+    }
 
+    /// The verse at `offset`, in id order, among the verses matching `filter`.
+    func verse(translationCode: String, filter: VerseFilter = VerseFilter(), offset: Int) -> SharedVerseRecord? {
+        lock.lock(); defer { lock.unlock() }
         return queryVerses(
             """
-            SELECT id, translation_id, translation_code, book_id, book_name, chapter, verse, verse_ref, text, char_count, word_count, fit_category, excerpt, segment_count
-            FROM verses
-            WHERE id = \(id)
-            LIMIT 1;
+            SELECT \(Self.verseColumns) FROM verses v
+            WHERE \(conditions(translationCode: translationCode, filter: filter))
+            ORDER BY v.id
+            LIMIT 1 OFFSET \(max(offset, 0));
             """
         ).first
+    }
+
+    func verse(id: Int) -> SharedVerseRecord? {
+        lock.lock(); defer { lock.unlock() }
+        return queryVerses("SELECT \(Self.verseColumns) FROM verses v WHERE v.id = \(id) LIMIT 1;").first
     }
 
     func verse(id: Int, translationCode: String) -> SharedVerseRecord? {
         lock.lock(); defer { lock.unlock() }
         return queryVerses("""
-            SELECT id, translation_id, translation_code, book_id, book_name, chapter, verse, verse_ref, text, char_count, word_count, fit_category, excerpt, segment_count
-            FROM verses WHERE id = \(id) AND translation_code = \(quoted(translationCode)) LIMIT 1;
+            SELECT \(Self.verseColumns) FROM verses v
+            WHERE v.id = \(id) AND v.translation_code = \(quoted(translationCode)) LIMIT 1;
             """).first
     }
 
     func verse(verseRef: String, translationCode: String) -> SharedVerseRecord? {
         lock.lock(); defer { lock.unlock() }
         return queryVerses("""
-            SELECT id, translation_id, translation_code, book_id, book_name, chapter, verse, verse_ref, text, char_count, word_count, fit_category, excerpt, segment_count
-            FROM verses WHERE verse_ref = \(quoted(verseRef)) AND translation_code = \(quoted(translationCode)) LIMIT 1;
+            SELECT \(Self.verseColumns) FROM verses v
+            WHERE v.verse_ref = \(quoted(verseRef)) AND v.translation_code = \(quoted(translationCode)) LIMIT 1;
             """).first
     }
 
+    func verse(bookId: Int, chapter: Int, verse: Int, translationCode: String) -> SharedVerseRecord? {
+        lock.lock(); defer { lock.unlock() }
+        return queryVerses("""
+            SELECT \(Self.verseColumns) FROM verses v
+            WHERE v.translation_code = \(quoted(translationCode))
+              AND v.book_id = \(bookId) AND v.chapter = \(chapter) AND v.verse = \(verse)
+            LIMIT 1;
+            """).first
+    }
+
+    /// A topic's verses in `translationCode`. topic_verses stores KJV verse ids, so
+    /// other translations are matched on book, chapter and verse.
     func verses(topicSlug: String, translationCode: String) -> [SharedVerseRecord] {
         lock.lock()
         defer { lock.unlock() }
 
         return queryVerses(
             """
-            SELECT v.id, v.translation_id, v.translation_code, v.book_id, v.book_name, v.chapter, v.verse, v.verse_ref, v.text, v.char_count, v.word_count, v.fit_category, v.excerpt, v.segment_count
-            FROM verses v
-            INNER JOIN topic_verses tv ON tv.verse_id = v.id
+            SELECT \(Self.verseColumns)
+            FROM topic_verses tv
+            INNER JOIN verses ref ON ref.id = tv.verse_id
+            INNER JOIN verses v ON v.book_id = ref.book_id AND v.chapter = ref.chapter AND v.verse = ref.verse
             WHERE tv.topic_slug = \(quoted(topicSlug)) AND v.translation_code = \(quoted(translationCode))
-            ORDER BY v.id;
+            ORDER BY ref.id;
             """
         )
     }
@@ -172,23 +193,73 @@ final class ScriptureDatabase {
 
         return queryVerses(
             """
-            SELECT id, translation_id, translation_code, book_id, book_name, chapter, verse, verse_ref, text, char_count, word_count, fit_category, excerpt, segment_count
-            FROM verses
-            WHERE book_id = \(bookId) AND chapter = \(chapter) AND translation_code = \(quoted(translationCode))
-            ORDER BY verse;
+            SELECT \(Self.verseColumns)
+            FROM verses v
+            WHERE v.book_id = \(bookId) AND v.chapter = \(chapter) AND v.translation_code = \(quoted(translationCode))
+            ORDER BY v.verse;
             """
         )
     }
 
+    /// Verses whose reference or text contains `text`, in id order. LIKE is
+    /// case-insensitive for ASCII, which covers the bundled English translations.
+    func searchVerses(containing text: String, translationCode: String, limit: Int) -> [SharedVerseRecord] {
+        lock.lock(); defer { lock.unlock() }
+        let pattern = quoted("%\(likeEscaped(text))%")
+        return queryVerses(
+            """
+            SELECT \(Self.verseColumns) FROM verses v
+            WHERE v.translation_code = \(quoted(translationCode))
+              AND (v.verse_ref LIKE \(pattern) ESCAPE '\\' OR v.text LIKE \(pattern) ESCAPE '\\')
+            ORDER BY v.id
+            LIMIT \(max(limit, 0));
+            """
+        )
+    }
+
+    private func conditions(translationCode: String, filter: VerseFilter) -> String {
+        var conditions = ["v.translation_code = \(quoted(translationCode))"]
+        switch filter.books {
+        case .all:
+            break
+        case .oldTestament:
+            conditions.append("v.book_id < 40")
+        case .newTestament:
+            conditions.append("v.book_id >= 40")
+        case .psalmsAndProverbs:
+            conditions.append("v.book_id IN (19, 20)")
+        }
+        if let maxCharCount = filter.maxCharCount {
+            conditions.append("v.char_count <= \(maxCharCount)")
+        }
+        return conditions.joined(separator: " AND ")
+    }
+
     private func openDatabase() {
-        let directory = databaseURL.deletingLastPathComponent()
-        try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-        if sqlite3_open(databaseURL.path, &database) != SQLITE_OK {
+        let flags: Int32
+        if Self.isAppExtension {
+            flags = SQLITE_OPEN_READONLY
+        } else {
+            try? FileManager.default.createDirectory(at: databaseURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+            flags = SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE
+        }
+        guard sqlite3_open_v2(databaseURL.path, &database, flags, nil) == SQLITE_OK else {
+            sqlite3_close(database)
             database = nil
+            return
         }
         // Wait for a cross-process lock (widget may hold a read lock) instead of
         // failing writes immediately with SQLITE_BUSY.
         sqlite3_busy_timeout(database, 5000)
+    }
+
+    /// The open handle. The extension can be asked for a timeline before the app has
+    /// provisioned the file, so a failed open is retried by the next query.
+    private func connection() -> OpaquePointer? {
+        if database == nil {
+            openDatabase()
+        }
+        return database
     }
 
     private func createSchema() {
@@ -267,13 +338,23 @@ final class ScriptureDatabase {
             sqlite3_close(database)
             self.database = nil
         }
+        // Copy beside the live file and swap it in with rename(2), so the widget can
+        // never open a half-copied database.
         let fileManager = FileManager.default
-        for suffix in ["", "-wal", "-shm", "-journal"] {
-            try? fileManager.removeItem(atPath: databaseURL.path + suffix)
-        }
+        let stagingPath = databaseURL.path + ".provisioning"
+        try? fileManager.removeItem(atPath: stagingPath)
         do {
-            try fileManager.copyItem(at: bundled, to: databaseURL)
+            try fileManager.copyItem(atPath: bundled.path, toPath: stagingPath)
+            for suffix in ["-wal", "-shm", "-journal"] {
+                try? fileManager.removeItem(atPath: databaseURL.path + suffix)
+            }
+            guard rename(stagingPath, databaseURL.path) == 0 else {
+                throw POSIXError(POSIXErrorCode(rawValue: errno) ?? .EIO)
+            }
+            // A timeline built before this point could only show the built-in verse.
+            WidgetCenter.shared.reloadAllTimelines()
         } catch {
+            try? fileManager.removeItem(atPath: stagingPath)
             #if DEBUG
             NSLog("ScriptureDatabase provisioning failed: \(error)")
             #endif
@@ -364,7 +445,7 @@ final class ScriptureDatabase {
     }
 
     private func execute(_ sql: String) {
-        guard let database else { return }
+        guard let database = connection() else { return }
         let result = sqlite3_exec(database, sql, nil, nil, nil)
         #if DEBUG
         if result != SQLITE_OK {
@@ -375,7 +456,7 @@ final class ScriptureDatabase {
     }
 
     private func scalarInt(_ sql: String) -> Int {
-        guard let database else { return 0 }
+        guard let database = connection() else { return 0 }
         var statement: OpaquePointer?
         defer {
             if statement != nil {
@@ -389,7 +470,7 @@ final class ScriptureDatabase {
     }
 
     private func query(_ sql: String, row: (OpaquePointer?) -> Void) {
-        guard let database else { return }
+        guard let database = connection() else { return }
         var statement: OpaquePointer?
         defer {
             if statement != nil {
@@ -405,6 +486,13 @@ final class ScriptureDatabase {
 
     private func quoted(_ value: String) -> String {
         "'\(value.replacingOccurrences(of: "'", with: "''"))'"
+    }
+
+    private func likeEscaped(_ value: String) -> String {
+        value
+            .replacingOccurrences(of: "\\", with: "\\\\")
+            .replacingOccurrences(of: "%", with: "\\%")
+            .replacingOccurrences(of: "_", with: "\\_")
     }
 
     private func intColumn(_ statement: OpaquePointer?, _ index: Int32) -> Int {

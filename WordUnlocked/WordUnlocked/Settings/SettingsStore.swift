@@ -159,7 +159,8 @@ final class SettingsStore: ObservableObject {
                 verseId: verse.id,
                 verseRef: verse.verseRef,
                 text: verse.text,
-                translationCode: selectedTranslation
+                // A live translation's local verses are the KJV reference text.
+                translationCode: VerseSelectionService.referenceTranslationCode(for: selectedTranslation)
             )
         )
     }

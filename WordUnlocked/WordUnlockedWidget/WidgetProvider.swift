@@ -13,12 +13,14 @@ struct VerseProvider: TimelineProvider {
     }
     
     func getSnapshot(in context: Context, completion: @escaping (VerseEntry) -> Void) {
-        completion(WidgetTimelineService.shared.generateTimeline().first ?? placeholder(in: context))
+        completion(WidgetTimelineService.shared.generateTimeline(dayCount: 1).first ?? placeholder(in: context))
     }
-    
+
     func getTimeline(in context: Context, completion: @escaping (Timeline<VerseEntry>) -> Void) {
-        let entries = WidgetTimelineService.shared.generateTimeline()
-        let nextUpdate = Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date().addingTimeInterval(86_400)
-        completion(Timeline(entries: entries, policy: .after(nextUpdate)))
+        let now = Date()
+        let entries = WidgetTimelineService.shared.generateTimeline(now: now)
+        let calendar = Calendar.current
+        let nextMidnight = calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: now)) ?? now.addingTimeInterval(86_400)
+        completion(Timeline(entries: entries, policy: .after(nextMidnight)))
     }
 }
