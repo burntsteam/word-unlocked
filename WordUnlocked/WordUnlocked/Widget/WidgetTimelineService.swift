@@ -11,34 +11,28 @@ final class WidgetTimelineService {
         self.database = database
     }
 
-    func generateTimeline(now: Date = Date(), dayCount: Int = 7) -> [VerseEntry] {
+    func generateTimeline(now: Date = Date(), maxEntries: Int = .max) -> [VerseEntry] {
         let settings = readSettings()
-        let dates = Self.entryDates(now: now, dayCount: dayCount)
 
         switch settings.translationCode {
         case "RV", "ESV":
             // Live translations show their most recent cached verse (RV keeps one, ESV
             // up to 500); the extension never fetches, and nothing is stored in bulk.
             let cached = settings.translationCode == "RV" ? readRVCache() : readESVCache().last
+            let dates = VerseSelectionService.slotStartDates(from: now, interval: .daily, dayCount: 7).prefix(maxEntries)
             return dates.map { cachedEntry(cached, date: $0, settings: settings) }
         default:
             let favorites = readFavorites()
+            let interval = VerseSelectionService.rotationInterval(for: settings.activeMode, defaults: defaults)
+            // A week of daily entries, or two days of shorter slots; the provider rebuilds at midnight.
+            let dayCount = interval == .daily ? 7 : 2
+            let dates = VerseSelectionService.slotStartDates(from: now, interval: interval, dayCount: dayCount).prefix(maxEntries)
             return dates.enumerated().map { offset, date in
                 let verse = VerseSelectionService.record(
                     for: settings, date: date, favorites: favorites, database: database, defaults: defaults
                 )
                 return makeEntry(date: date, verse: verse, settings: settings, offset: offset)
             }
-        }
-    }
-
-    /// The first entry starts now and each later one at a following midnight, so the
-    /// Lock Screen changes verse when the day changes.
-    static func entryDates(now: Date, dayCount: Int) -> [Date] {
-        let calendar = Calendar.current
-        let startOfToday = calendar.startOfDay(for: now)
-        return (0..<max(dayCount, 1)).map { offset in
-            offset == 0 ? now : calendar.date(byAdding: .day, value: offset, to: startOfToday) ?? now
         }
     }
 

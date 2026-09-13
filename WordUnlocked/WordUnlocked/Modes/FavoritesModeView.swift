@@ -2,9 +2,11 @@ import SwiftUI
 
 struct FavoritesModeView: View {
     @EnvironmentObject var settingsStore: SettingsStore
-    @State private var rotationSpeed: FavoritesRotationSpeed = .daily
+    @State private var rotationSpeed: WidgetSettings.RotationInterval = .daily
     @State private var shuffleFavorites = true
     @State private var excludeLongVerses = false
+
+    private let speedOptions: [WidgetSettings.RotationInterval] = [.daily, .everyTwelveHours, .everySixHours]
 
     var body: some View {
         Form {
@@ -20,7 +22,7 @@ struct FavoritesModeView: View {
 
             Section("Rotation") {
                 Picker("Speed", selection: $rotationSpeed) {
-                    ForEach(FavoritesRotationSpeed.allCases) { speed in
+                    ForEach(speedOptions) { speed in
                         Text(speed.title).tag(speed)
                     }
                 }
@@ -36,11 +38,6 @@ struct FavoritesModeView: View {
             Section {
                 Button {
                     savePreferences()
-                    if excludeLongVerses {
-                        settingsStore.longVerseStrategy = .excludeLong
-                    } else if settingsStore.longVerseStrategy == .excludeLong {
-                        settingsStore.longVerseStrategy = .smartFit
-                    }
                     settingsStore.activeMode = .favorites
                 } label: {
                     Label("Set as Active Mode", systemImage: "checkmark.circle")
@@ -73,7 +70,7 @@ struct FavoritesModeView: View {
     private func loadPreferences() {
         let defaults = AppGroupSettings.defaults
         if let rawValue = defaults.string(forKey: AppGroupSettings.Keys.favoritesRotationSpeed),
-           let value = FavoritesRotationSpeed(rawValue: rawValue) {
+           let value = WidgetSettings.RotationInterval(rawValue: rawValue) {
             rotationSpeed = value
         }
         if defaults.object(forKey: AppGroupSettings.Keys.favoritesShuffle) != nil {
@@ -81,8 +78,6 @@ struct FavoritesModeView: View {
         }
         if defaults.object(forKey: AppGroupSettings.Keys.favoritesExcludeLong) != nil {
             excludeLongVerses = defaults.bool(forKey: AppGroupSettings.Keys.favoritesExcludeLong)
-        } else {
-            excludeLongVerses = settingsStore.longVerseStrategy == .excludeLong
         }
     }
 
@@ -91,21 +86,5 @@ struct FavoritesModeView: View {
         defaults.set(rotationSpeed.rawValue, forKey: AppGroupSettings.Keys.favoritesRotationSpeed)
         defaults.set(shuffleFavorites, forKey: AppGroupSettings.Keys.favoritesShuffle)
         defaults.set(excludeLongVerses, forKey: AppGroupSettings.Keys.favoritesExcludeLong)
-    }
-}
-
-private enum FavoritesRotationSpeed: String, CaseIterable, Identifiable {
-    case daily
-    case everyTwelveHours
-    case everySixHours
-
-    var id: String { rawValue }
-
-    var title: String {
-        switch self {
-        case .daily: "Daily"
-        case .everyTwelveHours: "Every 12 Hours"
-        case .everySixHours: "Every 6 Hours"
-        }
     }
 }

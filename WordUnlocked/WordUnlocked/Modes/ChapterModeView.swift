@@ -4,10 +4,12 @@ struct ChapterModeView: View {
     @EnvironmentObject var settingsStore: SettingsStore
     @State private var selectedBookId = 43
     @State private var chapterNumber = 3
-    @State private var rotationSpeed: ChapterRotationSpeed = .daily
-    @State private var endBehavior: ChapterEndBehavior = .repeatChapter
+    @State private var rotationSpeed: WidgetSettings.RotationInterval = .daily
+    @State private var endBehavior: WidgetSettings.ChapterEndBehavior = .repeatChapter
     @State private var showProgress = true
     @State private var books: [Book] = []
+
+    private let speedOptions: [WidgetSettings.RotationInterval] = [.daily, .everyTwelveHours, .everySixHours]
 
     private var selectedBook: Book {
         books.first { $0.id == selectedBookId } ?? books.first ?? Book(id: selectedBookId, name: "", abbreviation: "", testament: .new, chapterCount: 1)
@@ -47,20 +49,20 @@ struct ChapterModeView: View {
 
             Section("Rotation") {
                 Picker("Speed", selection: $rotationSpeed) {
-                    ForEach(ChapterRotationSpeed.allCases) { speed in
+                    ForEach(speedOptions) { speed in
                         Text(speed.title).tag(speed)
                     }
                 }
 
                 Picker("End Behavior", selection: $endBehavior) {
-                    ForEach(ChapterEndBehavior.allCases) { behavior in
+                    ForEach(WidgetSettings.ChapterEndBehavior.allCases) { behavior in
                         Text(behavior.title).tag(behavior)
                     }
                 }
 
                 Toggle("Show Progress", isOn: $showProgress)
 
-                Text("Chapter mode saves the selected passage, progress display, and rotation preferences.")
+                Text("Reading starts at verse 1 when you set a new passage. After the last verse, Repeat starts the chapter again, Next Chapter keeps reading, and Stop stays on the last verse.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
@@ -85,48 +87,16 @@ struct ChapterModeView: View {
             chapterNumber = settingsStore.chapterNumber ?? chapterNumber
             showProgress = settingsStore.showProgress
             if let rawValue = AppGroupSettings.defaults.string(forKey: AppGroupSettings.Keys.chapterRotationSpeed),
-               let value = ChapterRotationSpeed(rawValue: rawValue) {
+               let value = WidgetSettings.RotationInterval(rawValue: rawValue) {
                 rotationSpeed = value
             }
             if let rawValue = AppGroupSettings.defaults.string(forKey: AppGroupSettings.Keys.chapterEndBehavior),
-               let value = ChapterEndBehavior(rawValue: rawValue) {
+               let value = WidgetSettings.ChapterEndBehavior(rawValue: rawValue) {
                 endBehavior = value
             }
             if books.isEmpty {
                 books = DatabaseService.shared.books()
             }
-        }
-    }
-}
-
-private enum ChapterRotationSpeed: String, CaseIterable, Identifiable {
-    case daily
-    case everyTwelveHours
-    case everySixHours
-
-    var id: String { rawValue }
-
-    var title: String {
-        switch self {
-        case .daily: "Daily"
-        case .everyTwelveHours: "Every 12 Hours"
-        case .everySixHours: "Every 6 Hours"
-        }
-    }
-}
-
-private enum ChapterEndBehavior: String, CaseIterable, Identifiable {
-    case repeatChapter
-    case nextChapter
-    case stop
-
-    var id: String { rawValue }
-
-    var title: String {
-        switch self {
-        case .repeatChapter: "Repeat"
-        case .nextChapter: "Next Chapter"
-        case .stop: "Stop"
         }
     }
 }

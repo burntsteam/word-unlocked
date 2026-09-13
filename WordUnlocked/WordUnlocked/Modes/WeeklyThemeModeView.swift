@@ -55,13 +55,14 @@ struct WeeklyThemeModeView: View {
             Section("Start") {
                 Toggle("Auto-repeat weekly plan", isOn: $autoRepeat)
 
-                Text("The selected weekly theme and repeat preference are saved to the shared widget settings.")
+                Text("Auto-repeat keeps this theme every week. Turn it off to move on to the next theme each week.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
 
                 Button {
                     AppGroupSettings.defaults.set(autoRepeat, forKey: AppGroupSettings.Keys.weeklyAutoRepeat)
                     settingsStore.topicSlug = selectedPlanID
+                    settingsStore.startPlan(for: .weeklyTheme)
                     settingsStore.activeMode = .weeklyTheme
                 } label: {
                     Label("Start This Week", systemImage: "calendar.badge.checkmark")
@@ -84,20 +85,20 @@ struct WeeklyThemeModeView: View {
         }
     }
 
-    // The verse Weekly Theme selects for each day of the current week.
+    // The verse this plan shows on each day of the current week.
     private func loadPreview() {
-        var settings = settingsStore.currentSettings()
-        settings.activeMode = .weeklyTheme
-        settings.topicSlug = selectedPlanID
+        let settings = settingsStore.currentSettings()
         let calendar = Calendar.current
         guard let week = calendar.dateInterval(of: .weekOfYear, for: Date()) else {
             previewVerses = []
             return
         }
-        previewVerses = (0..<7).compactMap { offset in
-            calendar.date(byAdding: .day, value: offset, to: week.start).map { day in
-                (dayNumber: offset + 1, verse: VerseSelectionService.verse(for: settings, date: day))
+        previewVerses = (0..<7).compactMap { offset -> (dayNumber: Int, verse: Verse)? in
+            guard let day = calendar.date(byAdding: .day, value: offset, to: week.start),
+                  let record = VerseSelectionService.weeklyThemeRecord(topicSlug: selectedPlanID, settings: settings, date: day) else {
+                return nil
             }
+            return (dayNumber: offset + 1, verse: Verse(record: record))
         }
     }
 }

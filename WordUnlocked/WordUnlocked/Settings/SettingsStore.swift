@@ -15,6 +15,9 @@ final class SettingsStore: ObservableObject {
     @Published var activeMode: WidgetSettings.VerseMode {
         didSet {
             defaults.set(activeMode.rawValue, forKey: AppGroupSettings.Keys.activeMode)
+            if activeMode != oldValue {
+                startPlan(for: activeMode)
+            }
             reloadWidgetTimelines()
         }
     }
@@ -36,6 +39,9 @@ final class SettingsStore: ObservableObject {
     @Published var topicSlug: String? {
         didSet {
             defaults.set(topicSlug, forKey: AppGroupSettings.Keys.topicSlug)
+            if topicSlug != oldValue, activeMode == .weeklyTheme {
+                startPlan(for: .weeklyTheme)
+            }
             reloadWidgetTimelines()
         }
     }
@@ -43,6 +49,9 @@ final class SettingsStore: ObservableObject {
     @Published var chapterBookId: Int? {
         didSet {
             defaults.set(chapterBookId, forKey: AppGroupSettings.Keys.chapterBookId)
+            if chapterBookId != oldValue, activeMode == .chapter {
+                startPlan(for: .chapter)
+            }
             reloadWidgetTimelines()
         }
     }
@@ -50,6 +59,9 @@ final class SettingsStore: ObservableObject {
     @Published var chapterNumber: Int? {
         didSet {
             defaults.set(chapterNumber, forKey: AppGroupSettings.Keys.chapterNumber)
+            if chapterNumber != oldValue, activeMode == .chapter {
+                startPlan(for: .chapter)
+            }
             reloadWidgetTimelines()
         }
     }
@@ -117,6 +129,9 @@ final class SettingsStore: ObservableObject {
         favorites = SettingsStore.loadFavorites(defaults: defaults)
         memorizationPlan = SettingsStore.loadMemorizationPlan(defaults: defaults)
         persistDefaults()
+        if let key = Self.planStartKey(for: activeMode), defaults.object(forKey: key) == nil {
+            startPlan(for: activeMode)
+        }
     }
 
     func currentSettings(widgetKind: WidgetSettings.WidgetKind = .rectangular) -> WidgetSettings {
@@ -150,6 +165,13 @@ final class SettingsStore: ObservableObject {
 
     func resetWidgetSettings() {
         apply(settings: .defaultSettings)
+    }
+
+    /// Chapter mode reads from verse 1, and Weekly Theme counts its weeks, from the moment
+    /// its plan starts: when the mode, its passage or its theme is chosen.
+    func startPlan(for mode: WidgetSettings.VerseMode) {
+        guard let key = Self.planStartKey(for: mode) else { return }
+        defaults.set(Date(), forKey: key)
     }
 
     func addFavorite(verse: Verse) {
@@ -187,6 +209,14 @@ final class SettingsStore: ObservableObject {
     func save(plan: MemorizationPlan) {
         memorizationPlan = plan
         memorizationPlanId = plan.id
+    }
+
+    private static func planStartKey(for mode: WidgetSettings.VerseMode) -> String? {
+        switch mode {
+        case .chapter: AppGroupSettings.Keys.chapterStartDate
+        case .weeklyTheme: AppGroupSettings.Keys.weeklyStartDate
+        default: nil
+        }
     }
 
     private func persistDefaults() {

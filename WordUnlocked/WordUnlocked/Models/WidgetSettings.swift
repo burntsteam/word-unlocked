@@ -121,3 +121,50 @@ extension WidgetSettings.LongVerseStrategy: CaseIterable, Identifiable {
     }
 }
 
+extension WidgetSettings {
+    /// How often a mode moves on to its next verse, counted from midnight.
+    enum RotationInterval: String, CaseIterable, Identifiable {
+        case daily
+        case everyTwelveHours
+        case everyEightHours
+        case everySixHours
+
+        var id: String { rawValue }
+
+        var hours: Int {
+            switch self {
+            case .daily: 24
+            case .everyTwelveHours: 12
+            case .everyEightHours: 8
+            case .everySixHours: 6
+            }
+        }
+
+        var title: String {
+            switch self {
+            case .daily: "Daily"
+            case .everyTwelveHours: "Every 12 Hours"
+            case .everyEightHours: "Every 8 Hours"
+            case .everySixHours: "Every 6 Hours"
+            }
+        }
+    }
+
+    /// What Chapter mode does after the last verse of its chapter.
+    enum ChapterEndBehavior: String, CaseIterable, Identifiable {
+        case repeatChapter
+        case nextChapter
+        case stop
+
+        var id: String { rawValue }
+
+        var title: String {
+            switch self {
+            case .repeatChapter: "Repeat"
+            case .nextChapter: "Next Chapter"
+            case .stop: "Stop"
+            }
+        }
+    }
+}
+

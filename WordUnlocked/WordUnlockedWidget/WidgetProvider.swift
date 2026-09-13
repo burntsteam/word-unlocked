@@ -13,7 +13,7 @@ struct VerseProvider: TimelineProvider {
     }
     
     func getSnapshot(in context: Context, completion: @escaping (VerseEntry) -> Void) {
-        completion(WidgetTimelineService.shared.generateTimeline(dayCount: 1).first ?? placeholder(in: context))
+        completion(WidgetTimelineService.shared.generateTimeline(maxEntries: 1).first ?? placeholder(in: context))
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<VerseEntry>) -> Void) {

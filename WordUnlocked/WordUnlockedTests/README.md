@@ -27,11 +27,15 @@ The target is hosted by the app (`TEST_HOST`). Two consequences shape every test
 - **ESVBibleServiceTests** — the 500-verse license cap, `isConfigured`, the fetch guard
   clauses (a fetch for a new reference is not dropped while another is in flight), and
   the pure eviction rule `applyingStore(_:to:)`.
-- **VerseSelectionServiceTests** — the pure `stableIndex`, `weeklyIndex` and `pick`, then
-  selection against the database: every topic has verses in every offline translation,
-  Exclude Long keeps daily verses short while still rotating, ESV and RV rotate through
-  the KJV reference set, the built-in verse is John 3:16's real row, and search treats
-  `%`, `_` and quotes literally.
+- **VerseSelectionServiceTests** — the pure `stableIndex`, `slot`, `slotStartDates`,
+  `weeklyIndex`, `shuffledOrder` and `pick`, then selection against the database: every
+  topic has verses in every offline translation, Exclude Long keeps daily verses short
+  while still rotating, ESV and RV rotate through the KJV reference set, Chapter mode's
+  Repeat / Stop / Next Chapter (including Revelation wrapping to Genesis) and rotation
+  speed, Weekly Theme without auto-repeat moving one theme per week, Favorites in saved
+  order, shuffled once per pass, and without long verses, the built-in verse being John
+  3:16's real row, and search treating `%`, `_` and quotes literally. Mode settings are
+  written to throwaway `UserDefaults` suites that are removed after each test.
 
 ## Not covered
 

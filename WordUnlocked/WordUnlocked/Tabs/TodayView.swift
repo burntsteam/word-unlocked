@@ -34,10 +34,8 @@ struct TodayView: View {
 
     // Changes to any field below alter VerseSelectionService.verse() output.
     // Used as the .onChange key so currentVerse refreshes on real settings
-    // changes (and on a new day) without recomputing on RV publishes.
+    // changes (and at each new rotation slot) without recomputing on RV publishes.
     private var verseSelectionKey: String {
-        let dayStamp = Calendar.current.ordinality(of: .day, in: .era, for: Date()) ?? 0
-        let weekStamp = Calendar.current.component(.weekOfYear, from: Date())
         let favoriteIds = settingsStore.favorites.map { String($0.verseId) }.joined(separator: ",")
         return [
             settingsStore.activeMode.rawValue,
@@ -48,8 +46,7 @@ struct TodayView: View {
             settingsStore.chapterNumber.map(String.init) ?? "",
             settingsStore.memorizationPlanId.map(String.init) ?? "",
             favoriteIds,
-            String(dayStamp),
-            String(weekStamp)
+            VerseSelectionService.selectionStamp(for: settingsStore.activeMode)
         ].joined(separator: "|")
     }
 
@@ -114,8 +111,7 @@ struct TodayView: View {
 
     private var chapterProgressText: String? {
         guard settingsStore.activeMode == .chapter else { return nil }
-        let chapter = settingsStore.chapterNumber ?? currentVerse.chapter
-        return "\(currentVerse.bookName) \(chapter) · verse \(currentVerse.verse)"
+        return "\(currentVerse.bookName) \(currentVerse.chapter) · verse \(currentVerse.verse)"
     }
 
     var body: some View {

@@ -4,7 +4,9 @@ struct TopicModeView: View {
     @EnvironmentObject var settingsStore: SettingsStore
     @State private var topics: [Topic] = []
     @State private var selectedTopicSlug = "love"
-    @State private var rotationSpeed: TopicRotationSpeed = .daily
+    @State private var rotationSpeed: WidgetSettings.RotationInterval = .daily
+
+    private let speedOptions: [WidgetSettings.RotationInterval] = [.daily, .everyTwelveHours, .everySixHours]
 
     var body: some View {
         Form {
@@ -40,13 +42,13 @@ struct TopicModeView: View {
 
             Section("Rotation Speed") {
                 Picker("Speed", selection: $rotationSpeed) {
-                    ForEach(TopicRotationSpeed.allCases) { speed in
-                        Text(speed.title).tag(speed)
+                    ForEach(speedOptions) { speed in
+                        Text(speed == .daily ? "Daily" : "\(speed.hours)h").tag(speed)
                     }
                 }
                 .pickerStyle(.segmented)
 
-                Text("The selected topic and rotation speed are saved for widget timeline generation.")
+                Text("12h and 6h change the verse through the day, starting at midnight.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
@@ -68,25 +70,9 @@ struct TopicModeView: View {
             topics = DatabaseService.shared.topics()
             selectedTopicSlug = settingsStore.topicSlug ?? selectedTopicSlug
             if let rawValue = AppGroupSettings.defaults.string(forKey: AppGroupSettings.Keys.topicRotationSpeed),
-               let value = TopicRotationSpeed(rawValue: rawValue) {
+               let value = WidgetSettings.RotationInterval(rawValue: rawValue) {
                 rotationSpeed = value
             }
-        }
-    }
-}
-
-private enum TopicRotationSpeed: String, CaseIterable, Identifiable {
-    case daily
-    case everyTwelveHours
-    case everySixHours
-
-    var id: String { rawValue }
-
-    var title: String {
-        switch self {
-        case .daily: "Daily"
-        case .everyTwelveHours: "12h"
-        case .everySixHours: "6h"
         }
     }
 }

@@ -4,7 +4,8 @@ import Foundation
 
 // The pure index functions behind verse selection, then selection itself against the
 // bundled database. The suite runs inside the app (TEST_HOST), which provisions that
-// database into the App Group container on first use; nothing here writes to it.
+// database into the App Group container on first use; nothing here writes to it, and
+// mode settings go into throwaway UserDefaults suites.
 @Suite("VerseSelectionService")
 struct VerseSelectionServiceTests {
 
@@ -47,7 +48,48 @@ struct VerseSelectionServiceTests {
         #expect(VerseSelectionService.stableIndex(for: Date(), count: 0) == 0)
     }
 
-    // MARK: - weeklyIndex(for:count:)
+    // MARK: - slot(for:interval:) and slotStartDates(from:interval:dayCount:)
+
+    @Test func slotAdvancesAtEachIntervalBoundaryAndCountsDaysWhenDaily() {
+        let calendar = Calendar.current
+        let day = calendar.date(from: DateComponents(year: 2026, month: 9, day: 12))!
+        func at(_ hour: Int, _ minute: Int) -> Date {
+            calendar.date(bySettingHour: hour, minute: minute, second: 0, of: day)!
+        }
+        func slot(_ date: Date, _ interval: WidgetSettings.RotationInterval) -> Int {
+            VerseSelectionService.slot(for: date, interval: interval)
+        }
+
+        #expect(slot(at(5, 59), .everySixHours) + 1 == slot(at(6, 0), .everySixHours))
+        #expect(slot(at(7, 59), .everyEightHours) + 1 == slot(at(8, 0), .everyEightHours))
+        #expect(slot(at(11, 59), .everyTwelveHours) + 1 == slot(at(12, 0), .everyTwelveHours))
+        // A daily slot lasts from local midnight to local midnight.
+        let nextDay = calendar.date(byAdding: .day, value: 1, to: day)!
+        #expect(slot(at(0, 0), .daily) == slot(at(23, 59), .daily))
+        #expect(slot(at(23, 59), .daily) + 1 == VerseSelectionService.slot(for: nextDay, interval: .daily))
+    }
+
+    @Test func slotStartDatesBeginNowThenFollowEveryBoundary() {
+        let calendar = Calendar.current
+        let today = calendar.date(from: DateComponents(year: 2026, month: 9, day: 12))!
+        let tomorrow = calendar.date(byAdding: .day, value: 1, to: today)!
+        let now = calendar.date(bySettingHour: 10, minute: 57, second: 0, of: today)!
+        func at(_ hour: Int, on day: Date) -> Date {
+            calendar.date(bySettingHour: hour, minute: 0, second: 0, of: day)!
+        }
+
+        #expect(VerseSelectionService.slotStartDates(from: now, interval: .everySixHours, dayCount: 2) == [
+            now, at(12, on: today), at(18, on: today),
+            at(0, on: tomorrow), at(6, on: tomorrow), at(12, on: tomorrow), at(18, on: tomorrow)
+        ])
+
+        let daily = VerseSelectionService.slotStartDates(from: now, interval: .daily, dayCount: 7)
+        #expect(daily.count == 7)
+        #expect(daily.first == now)
+        #expect(daily.dropFirst().allSatisfy { calendar.startOfDay(for: $0) == $0 })
+    }
+
+    // MARK: - weeklyIndex(for:count:) and shuffledOrder(count:seed:)
 
     @Test func weeklyIndexWalksTheFirstSevenVersesThroughAWeekSpanningNewYear() {
         let calendar = Calendar.current
@@ -68,6 +110,15 @@ struct VerseSelectionServiceTests {
             let day = calendar.date(byAdding: .day, value: offset, to: week.start)!
             #expect(VerseSelectionService.weeklyIndex(for: day, count: 3) == offset % 3)
         }
+    }
+
+    @Test func shuffledOrderIsAReproduciblePermutation() {
+        let order = VerseSelectionService.shuffledOrder(count: 10, seed: 42)
+
+        #expect(order.sorted() == Array(0..<10))
+        #expect(order == VerseSelectionService.shuffledOrder(count: 10, seed: 42))
+        #expect((0..<5).contains { VerseSelectionService.shuffledOrder(count: 10, seed: $0) != Array(0..<10) })
+        #expect(VerseSelectionService.shuffledOrder(count: 0, seed: 1).isEmpty)
     }
 
     // MARK: - pick(from:date:)
@@ -134,6 +185,94 @@ struct VerseSelectionServiceTests {
         #expect(first.id != second.id)
     }
 
+    @Test func chapterRepeatStartsTheChapterAgainAfterItsLastVerse() {
+        #expect(chapterVerse(.repeatChapter, book: 43, chapter: 3, daysAfterStart: 35)?.verseRef == "John 3:36")
+        #expect(chapterVerse(.repeatChapter, book: 43, chapter: 3, daysAfterStart: 36)?.verseRef == "John 3:1")
+    }
+
+    @Test func chapterStopStaysOnTheLastVerse() {
+        #expect(chapterVerse(.stop, book: 43, chapter: 3, daysAfterStart: 40)?.verseRef == "John 3:36")
+    }
+
+    @Test func chapterNextChapterReadsOnAndWrapsFromRevelationToGenesis() {
+        #expect(chapterVerse(.nextChapter, book: 43, chapter: 3, daysAfterStart: 36)?.verseRef == "John 4:1")
+        #expect(chapterVerse(.nextChapter, book: 66, chapter: 22, daysAfterStart: 21)?.verseRef == "Gen 1:1")
+    }
+
+    @Test func chapterRotationSpeedAdvancesWithinADay() {
+        // Started at midnight and rotating every six hours, 18:00 is the fourth slot.
+        let verse = chapterVerse(.repeatChapter, book: 43, chapter: 3, daysAfterStart: 0, hour: 18, interval: .everySixHours)
+        #expect(verse?.verseRef == "John 3:4")
+    }
+
+    @Test func weeklyAutoRepeatOffMovesOnOneThemePerWeek() {
+        let calendar = Calendar.current
+        let start = calendar.date(from: DateComponents(year: 2026, month: 9, day: 1))!
+        let twoWeeksLater = calendar.date(byAdding: .day, value: 14, to: start)!
+        let weekly = settings(.weeklyTheme, topicSlug: "anxiety")
+        func verseId(autoRepeat: Bool) -> Int {
+            withScratchDefaults([
+                AppGroupSettings.Keys.weeklyAutoRepeat: autoRepeat,
+                AppGroupSettings.Keys.weeklyStartDate: start
+            ]) { defaults in
+                VerseSelectionService.record(for: weekly, date: twoWeeksLater, defaults: defaults).id
+            }
+        }
+
+        // Topics run alphabetically: anxiety, courage, discipline.
+        let database = ScriptureDatabase.shared
+        #expect(database.verses(topicSlug: "discipline", translationCode: "KJV").map(\.id).contains(verseId(autoRepeat: false)))
+        #expect(database.verses(topicSlug: "anxiety", translationCode: "KJV").map(\.id).contains(verseId(autoRepeat: true)))
+    }
+
+    @Test func favoritesWithoutShuffleWalkSavedOrderAndCanSkipLongVerses() {
+        let calendar = Calendar.current
+        let start = calendar.date(from: DateComponents(year: 2026, month: 9, day: 1))!
+        let refs = (0..<4).map { offset in
+            withScratchDefaults([
+                AppGroupSettings.Keys.favoritesShuffle: false,
+                AppGroupSettings.Keys.favoritesExcludeLong: true
+            ]) { defaults in
+                VerseSelectionService.record(
+                    for: settings(.favorites),
+                    date: calendar.date(byAdding: .day, value: offset, to: start)!,
+                    favorites: sampleFavorites,
+                    defaults: defaults
+                ).verseRef
+            }
+        }
+
+        #expect(Set(refs) == ["Gen 1:1", "Ps 23:1"])
+        #expect(zip(refs, refs.dropFirst()).allSatisfy { $0 != $1 })
+    }
+
+    @Test func favoritesShuffleShowsEachFavoriteOncePerPass() {
+        let calendar = Calendar.current
+        let day = calendar.date(from: DateComponents(year: 2026, month: 9, day: 1))!
+        let position = VerseSelectionService.slot(for: day, interval: .daily)
+        let passStart = calendar.date(byAdding: .day, value: -(position % sampleFavorites.count), to: day)!
+        let refs = (0..<sampleFavorites.count).map { offset in
+            withScratchDefaults([AppGroupSettings.Keys.favoritesShuffle: true]) { defaults in
+                VerseSelectionService.record(
+                    for: settings(.favorites),
+                    date: calendar.date(byAdding: .day, value: offset, to: passStart)!,
+                    favorites: sampleFavorites,
+                    defaults: defaults
+                ).verseRef
+            }
+        }
+
+        #expect(Set(refs).count == sampleFavorites.count)
+    }
+
+    @Test func selectionStampChangesWhenAModeSettingChanges() {
+        withScratchDefaults([:]) { defaults in
+            let before = VerseSelectionService.selectionStamp(for: .topic, defaults: defaults)
+            defaults.set(WidgetSettings.RotationInterval.everySixHours.rawValue, forKey: AppGroupSettings.Keys.topicRotationSpeed)
+            #expect(VerseSelectionService.selectionStamp(for: .topic, defaults: defaults) != before)
+        }
+    }
+
     @Test func builtInVerseIsJohn316WithItsRealDatabaseId() {
         let verse = VerseSelectionService.builtInVerse(translationCode: "KJV")
         #expect(verse.verseRef == "John 3:16")
@@ -147,6 +286,11 @@ struct VerseSelectionServiceTests {
         #expect(database.searchVerses(containing: "_", translationCode: "KJV", limit: 10).isEmpty)
         #expect(database.searchVerses(containing: "' OR 1=1 --", translationCode: "KJV", limit: 10).isEmpty)
     }
+}
+
+// Gen 1:1 and Ps 23:1 are short; John 3:16 is 141 characters.
+private let sampleFavorites = [(1, "Gen 1:1"), (212, "John 3:16"), (44, "Ps 23:1")].map { id, ref in
+    Favorite(verseId: id, verseRef: ref, text: "", translationCode: "KJV")
 }
 
 private func settings(
@@ -163,7 +307,41 @@ private func settings(
     return settings
 }
 
+/// Chapter mode's verse `daysAfterStart` days after a plan started at midnight on 1 Sep 2026.
+private func chapterVerse(
+    _ behavior: WidgetSettings.ChapterEndBehavior,
+    book: Int,
+    chapter: Int,
+    daysAfterStart: Int,
+    hour: Int = 9,
+    interval: WidgetSettings.RotationInterval = .daily
+) -> SharedVerseRecord? {
+    let calendar = Calendar.current
+    let start = calendar.date(from: DateComponents(year: 2026, month: 9, day: 1))!
+    let day = calendar.date(byAdding: .day, value: daysAfterStart, to: start)!
+    let date = calendar.date(bySettingHour: hour, minute: 0, second: 0, of: day)!
+    var chapterSettings = settings(.chapter)
+    chapterSettings.chapterBookId = book
+    chapterSettings.chapterNumber = chapter
+    return withScratchDefaults([
+        AppGroupSettings.Keys.chapterEndBehavior: behavior.rawValue,
+        AppGroupSettings.Keys.chapterRotationSpeed: interval.rawValue,
+        AppGroupSettings.Keys.chapterStartDate: start
+    ]) { defaults in
+        VerseSelectionService.record(for: chapterSettings, date: date, defaults: defaults)
+    }
+}
+
 // A suite nothing writes to, so daily-scope choices saved in the App Group can't leak in.
 private func emptyDefaults() -> UserDefaults {
     UserDefaults(suiteName: "VerseSelectionServiceTests.\(UUID().uuidString)")!
+}
+
+// A throwaway suite holding `values`, removed once `body` returns.
+private func withScratchDefaults<T>(_ values: [String: Any], _ body: (UserDefaults) -> T) -> T {
+    let name = "VerseSelectionServiceTests.\(UUID().uuidString)"
+    let defaults = UserDefaults(suiteName: name)!
+    defer { UserDefaults.standard.removePersistentDomain(forName: name) }
+    values.forEach { defaults.set($0.value, forKey: $0.key) }
+    return body(defaults)
 }

@@ -5,7 +5,9 @@ struct DailyVerseModeView: View {
     @State private var includeOldTestament = true
     @State private var includeNewTestament = true
     @State private var psalmsProverbsOnly = false
-    @State private var updateInterval: DailyVerseUpdateInterval = .daily
+    @State private var updateInterval: WidgetSettings.RotationInterval = .daily
+
+    private let intervalOptions: [WidgetSettings.RotationInterval] = [.daily, .everyEightHours]
 
     var body: some View {
         Form {
@@ -29,13 +31,13 @@ struct DailyVerseModeView: View {
 
             Section("Update Interval") {
                 Picker("Update", selection: $updateInterval) {
-                    ForEach(DailyVerseUpdateInterval.allCases) { interval in
+                    ForEach(intervalOptions) { interval in
                         Text(interval.title).tag(interval)
                     }
                 }
                 .pickerStyle(.segmented)
 
-                Text("Lock Screen timelines refresh daily; this setting is saved for the in-app daily reading rhythm.")
+                Text("Every 8 Hours changes the verse at midnight, 8 AM and 4 PM.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
@@ -66,7 +68,7 @@ struct DailyVerseModeView: View {
             psalmsProverbsOnly = defaults.bool(forKey: AppGroupSettings.Keys.dailyPsalmsProverbsOnly)
         }
         if let rawValue = defaults.string(forKey: AppGroupSettings.Keys.dailyUpdateInterval),
-           let value = DailyVerseUpdateInterval(rawValue: rawValue) {
+           let value = WidgetSettings.RotationInterval(rawValue: rawValue) {
             updateInterval = value
         }
     }
@@ -77,19 +79,5 @@ struct DailyVerseModeView: View {
         defaults.set(includeNewTestament, forKey: AppGroupSettings.Keys.dailyIncludeNewTestament)
         defaults.set(psalmsProverbsOnly, forKey: AppGroupSettings.Keys.dailyPsalmsProverbsOnly)
         defaults.set(updateInterval.rawValue, forKey: AppGroupSettings.Keys.dailyUpdateInterval)
-    }
-}
-
-private enum DailyVerseUpdateInterval: String, CaseIterable, Identifiable {
-    case daily
-    case everyEightHours
-
-    var id: String { rawValue }
-
-    var title: String {
-        switch self {
-        case .daily: "Daily"
-        case .everyEightHours: "Every 8 Hours"
-        }
     }
 }

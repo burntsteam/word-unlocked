@@ -125,6 +125,35 @@ final class ScriptureDatabase {
         return scalarInt("SELECT COUNT(*) FROM verses v WHERE \(conditions(translationCode: translationCode, filter: filter));")
     }
 
+    struct ChapterVerseCount: Equatable {
+        let bookId: Int
+        let chapter: Int
+        let verseCount: Int
+    }
+
+    /// Every chapter of a translation in reading order, with how many of its verses fit
+    /// `maxCharCount` (all of them when nil). Chapters with none are left out.
+    func chapterVerseCounts(translationCode: String, maxCharCount: Int? = nil) -> [ChapterVerseCount] {
+        lock.lock(); defer { lock.unlock() }
+        let filter = VerseFilter(books: .all, maxCharCount: maxCharCount)
+        var counts: [ChapterVerseCount] = []
+        query(
+            """
+            SELECT v.book_id, v.chapter, COUNT(*) FROM verses v
+            WHERE \(conditions(translationCode: translationCode, filter: filter))
+            GROUP BY v.book_id, v.chapter
+            ORDER BY v.book_id, v.chapter;
+            """
+        ) { statement in
+            counts.append(ChapterVerseCount(
+                bookId: intColumn(statement, 0),
+                chapter: intColumn(statement, 1),
+                verseCount: intColumn(statement, 2)
+            ))
+        }
+        return counts
+    }
+
     /// The verse at `offset`, in id order, among the verses matching `filter`.
     func verse(translationCode: String, filter: VerseFilter = VerseFilter(), offset: Int) -> SharedVerseRecord? {
         lock.lock(); defer { lock.unlock() }
