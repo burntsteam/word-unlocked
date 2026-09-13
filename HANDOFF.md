@@ -7,8 +7,17 @@ Done this session: **repo made public** (user's choice, history secret-scanned c
 support.html — put these two in App Store Connect), **contact email aligned to
 privacy@rippre.com everywhere** (docs edited to match the app; user confirmed they keep
 that mailbox), **nine 6.9" screenshots** at `marketing/screenshots/6.9/` (1320×2868,
-committed). Tests still 41/41 green. Still blocked on user: Apple signing (item 1),
-ESV key (item 2 — signup page opened at api.esv.org), ASC record creation (item 6).
+committed).
+
+**ESV is ON.** The key is in the gitignored `Secrets.xcconfig` (verified with a live
+api.esv.org request; never commit it — the repo is public). Listing, docs and the
+Translations screenshot now say seven translations; the listing banner says how to flip
+back. `ESVBibleService` takes its key via `init(apiKey:)`: unit tests run inside the app
+(TEST_HOST), so the old "no key" tests broke once the key existed and would have hit the
+network. Tests 41/41 green with the key.
+
+Still blocked on user: Apple signing (item 1) and ASC record creation (item 6). Items 2
+(ESV key), 3 (screenshots), 4 (Pages) and 5 (email) below are done.
 
 Written 2026-09-01, end of the migration-audit + ship-readiness session. Everything
 below is committed and pushed: `main` = `d078d61`, in sync with

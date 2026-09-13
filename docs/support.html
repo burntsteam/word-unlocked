@@ -1,5 +1,5 @@
-<!-- ESV is hidden at runtime while ESV_API_KEY is unset (ESVBibleService.isConfigured).
-     If the key is added, restore the ESV wording removed here. -->
+<!-- ESV wording assumes ESV_API_KEY is set. Without the key ESVBibleService.isConfigured
+     hides ESV in the app, so remove the ESV mentions here. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -155,8 +155,8 @@
       Word Unlocked puts a Bible verse on your iPhone Lock Screen. Pick a mode &mdash;
       Daily Verse, Weekly Theme, Topic, Chapter, Memorization, or Favorites &mdash; and a
       translation, and the widget keeps your Lock Screen updated with scripture. Five
-      translations (KJV, WEB, BSB, ASV, LSV) work fully offline; the Recovery Version
-      fetches live and then caches on your device.
+      translations (KJV, WEB, BSB, ASV, LSV) work fully offline; the English Standard
+      Version and the Recovery Version fetch live and then cache on your device.
     </p>
 
     <section>
@@ -169,17 +169,17 @@
 
       <details>
         <summary>Why isn't my verse updating?</summary>
-        <p>iOS manages exactly when widgets refresh to save battery, so updates aren't always instant. First check Settings in the app to confirm you're in the mode and translation you expect &mdash; modes like Daily Verse, Topic, and Chapter each have their own update or rotation interval. If the Recovery Version is selected, a new verse also requires a network connection the first time it&rsquo;s fetched.</p>
+        <p>iOS manages exactly when widgets refresh to save battery, so updates aren't always instant. First check Settings in the app to confirm you're in the mode and translation you expect &mdash; modes like Daily Verse, Topic, and Chapter each have their own update or rotation interval. If the English Standard Version or the Recovery Version is selected, a new verse also requires a network connection the first time it&rsquo;s fetched.</p>
       </details>
 
       <details>
         <summary>How do I switch translations?</summary>
-        <p>Open the app and go to Settings, then use the Default Translation picker (or the Translations tab to browse all available translations). KJV, WEB, BSB, ASV, and LSV are available immediately since they're bundled offline. Selecting the Recovery Version fetches that verse live the first time, then caches it locally.</p>
+        <p>Open the app and go to Settings, then use the Default Translation picker (or the Translations tab to browse all available translations). KJV, WEB, BSB, ASV, and LSV are available immediately since they're bundled offline. Selecting the English Standard Version or the Recovery Version fetches that verse live the first time, then caches it locally.</p>
       </details>
 
       <details>
         <summary>How does offline mode work?</summary>
-        <p>King James Version, World English Bible, Berean Standard Bible, American Standard Version, and Literal Standard Version are bundled inside the app itself, so no network request is ever made when one of them is selected. The Recovery Version is the only translation that needs a connection, and only at the moment you select it or move to a verse that isn&rsquo;t already cached.</p>
+        <p>King James Version, World English Bible, Berean Standard Bible, American Standard Version, and Literal Standard Version are bundled inside the app itself, so no network request is ever made when one of them is selected. The English Standard Version and the Recovery Version are the only translations that need a connection, and only at the moment you select one or move to a verse that isn&rsquo;t already cached.</p>
       </details>
     </section>
 

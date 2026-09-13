@@ -1,5 +1,5 @@
-<!-- ESV is hidden at runtime while ESV_API_KEY is unset (ESVBibleService.isConfigured).
-     If the key is added, restore the ESV wording removed here. -->
+<!-- ESV wording assumes ESV_API_KEY is set. Without the key ESVBibleService.isConfigured
+     hides ESV in the app, so remove the ESV mentions here. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -147,7 +147,7 @@
 <main>
   <div class="wrap">
     <h1>Privacy Policy</h1>
-    <p class="updated">Last updated: August 29, 2026</p>
+    <p class="updated">Last updated: September 12, 2026</p>
 
     <div class="summary">
       <p>Word Unlocked at a glance:</p>
@@ -171,11 +171,13 @@
 
     <section>
       <h2>Network Access</h2>
-      <p>Word Unlocked bundles five Bible translations that work entirely offline. One additional translation is available live, and it only makes a network request when you actually select it.</p>
+      <p>Word Unlocked bundles five Bible translations that work entirely offline. Two additional translations are available live, and each only makes a network request when you actually select it.</p>
 
       <h3>Offline translations</h3>
       <p>King James Version (KJV), World English Bible (WEB), Berean Standard Bible (BSB), American Standard Version (ASV), and Literal Standard Version (LSV) are bundled with the app and stored entirely on your device. No network request is ever made when one of these translations is selected.</p>
 
+      <h3>English Standard Version (ESV)</h3>
+      <p>When the English Standard Version is selected, verses are fetched live from <code>api.esv.org</code>, operated by Crossway, as you read. Up to 500 recently viewed verses are cached locally on your device so they stay available offline &mdash; nothing is sent to any server operated by this app.</p>
 
       <h3>Recovery Version (RV)</h3>
       <p>When the Recovery Version is selected, a live request is made to <code>api.lsm.org</code>, operated by Living Stream Ministry, to fetch the current verse. Only the single most recently fetched verse is cached, locally on your device &mdash; nothing is sent to any server operated by this app.</p>
