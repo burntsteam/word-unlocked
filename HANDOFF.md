@@ -45,10 +45,26 @@ the Lock Screen widget gallery rendering the verse. Fixed:
 - Memorization search stalled on every keystroke; the widget could create an empty
   database before the app's first launch.
 
+### Mode settings implemented (2026-09-13)
+
+Every mode setting now changes what the app and the Lock Screen show, through the shared
+verse picker, and each has a test:
+- **Rotation speed** (Topic, Chapter, Favorites: daily / 12h / 6h) and **Daily Verse's
+  update interval** (daily / 8h): the verse advances at fixed hours counted from midnight,
+  and the widget schedules an entry at each boundary.
+- **Chapter end behaviour**: reading starts at verse 1 whenever a new passage is set; then
+  Repeat starts the chapter again, Next Chapter reads on (Revelation wraps to Genesis), and
+  Stop stays on the last verse.
+- **Weekly auto-repeat**: on keeps the theme; off moves to the next theme (alphabetical)
+  each week after "Start This Week".
+- **Favorites shuffle** plays each pass in a new but reproducible order, every favorite
+  once per pass. **Favorites exclude-long** filters favorites only, instead of switching
+  the app-wide long-verse strategy as it used to.
+- **Days now turn over at local midnight.** `Calendar.ordinality(of: .day, in: .era)` rolls
+  over at midnight UTC (5 PM in California), so the daily verse used to change in the late
+  afternoon. Slots now count local calendar days.
+
 Still the owner's call:
-- **Controls that are saved but read by nothing**: topic/chapter/favorites rotation speed,
-  chapter end behaviour, daily update interval, weekly auto-repeat, favorites shuffle and
-  favorites exclude-long. Implement or remove them before review.
 - **GitHub secret scanning and push protection are off** (free for public repos:
   Settings → Code security).
 - **Every commit's author email is the owner's personal address**, now public with the
