@@ -24,14 +24,18 @@ enum AppGroupSettings {
         static let topicRotationSpeed = "topicRotationSpeed"
         static let weeklyAutoRepeat = "weeklyAutoRepeat"
         static let weeklyStartDate = "weeklyStartDate"
+        static let weeklySource = "weeklySource"
+        static let weeklyBookId = "weeklyBookId"
+        static let weeklyChapter = "weeklyChapter"
+        static let weeklyCustomVerseIds = "weeklyCustomVerseIds"
         static let chapterRotationSpeed = "chapterRotationSpeed"
         static let chapterEndBehavior = "chapterEndBehavior"
         static let chapterStartDate = "chapterStartDate"
         static let favoritesRotationSpeed = "favoritesRotationSpeed"
         static let favoritesShuffle = "favoritesShuffle"
         static let favoritesExcludeLong = "favoritesExcludeLong"
-        static let rvCachedVerse = "rvCachedVerse"
         static let esvVerseCache = "esvVerseCache"
+        static let esvLastFetchDate = "esvLastFetchDate"
     }
 
     static var defaults: UserDefaults {

@@ -65,7 +65,7 @@ private struct ModeRowData: Identifiable {
 
 private let modeRows: [ModeRowData] = [
     ModeRowData(mode: .daily, icon: "calendar", title: "Daily Verse", description: "A new verse for every day."),
-    ModeRowData(mode: .weeklyTheme, icon: "7.square", title: "Weekly Theme", description: "Seven verses around one weekly theme."),
+    ModeRowData(mode: .weeklyTheme, icon: "7.square", title: "Weekly Plan", description: "Seven verses a week from a theme, book, or your list."),
     ModeRowData(mode: .topic, icon: "tag", title: "Topic", description: "Rotate through verses by subject."),
     ModeRowData(mode: .chapter, icon: "book.pages", title: "Chapter", description: "Move through a Bible chapter in order."),
     ModeRowData(mode: .memorization, icon: "brain.head.profile", title: "Memorization", description: "Practice one verse through guided phases."),

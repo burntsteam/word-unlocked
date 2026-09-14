@@ -205,24 +205,81 @@ struct VerseSelectionServiceTests {
         #expect(verse?.verseRef == "John 3:4")
     }
 
-    @Test func weeklyAutoRepeatOffMovesOnOneThemePerWeek() {
-        let calendar = Calendar.current
-        let start = calendar.date(from: DateComponents(year: 2026, month: 9, day: 1))!
-        let twoWeeksLater = calendar.date(byAdding: .day, value: 14, to: start)!
-        let weekly = settings(.weeklyTheme, topicSlug: "anxiety")
-        func verseId(autoRepeat: Bool) -> Int {
-            withScratchDefaults([
-                AppGroupSettings.Keys.weeklyAutoRepeat: autoRepeat,
-                AppGroupSettings.Keys.weeklyStartDate: start
-            ]) { defaults in
-                VerseSelectionService.record(for: weekly, date: twoWeeksLater, defaults: defaults).id
-            }
+    @Test func weeklyPlanRepeatsItsFirstSevenVersesOrMovesOnSevenAWeek() {
+        func verseRef(autoRepeat: Bool, weeks: Int, day: Int) -> String? {
+            VerseSelectionService.weeklyRecord(
+                WeeklyPlan(source: .chapter, bookId: 43, chapter: 3),
+                autoRepeat: autoRepeat,
+                startDate: weekStart,
+                settings: settings(.weeklyTheme),
+                date: weekDay(weeks * 7 + day)
+            )?.verseRef
         }
 
-        // Topics run alphabetically: anxiety, courage, discipline.
-        let database = ScriptureDatabase.shared
-        #expect(database.verses(topicSlug: "discipline", translationCode: "KJV").map(\.id).contains(verseId(autoRepeat: false)))
-        #expect(database.verses(topicSlug: "anxiety", translationCode: "KJV").map(\.id).contains(verseId(autoRepeat: true)))
+        #expect(verseRef(autoRepeat: true, weeks: 2, day: 0) == "John 3:1")
+        #expect(verseRef(autoRepeat: false, weeks: 1, day: 0) == "John 3:8")
+        // John 3 has 36 verses, so the sixth week starts the chapter over.
+        #expect(verseRef(autoRepeat: false, weeks: 5, day: 2) == "John 3:2")
+    }
+
+    @Test func weeklyPlanReadsItsSavedBookOneVerseADay() {
+        let ref = withScratchDefaults([
+            AppGroupSettings.Keys.weeklySource: WeeklyPlan.Source.book.rawValue,
+            AppGroupSettings.Keys.weeklyBookId: 65,
+            AppGroupSettings.Keys.weeklyStartDate: weekStart
+        ]) { defaults in
+            VerseSelectionService.record(for: settings(.weeklyTheme), date: weekDay(3), defaults: defaults).verseRef
+        }
+
+        #expect(ref == "Jude 1:4")
+    }
+
+    @Test func weeklyPlanShowsYourOwnVersesInTheSelectedTranslation() {
+        let plan = WeeklyPlan(source: .custom, customVerseIds: [212, 1])
+        let days = (0..<3).map { day in
+            VerseSelectionService.weeklyRecord(
+                plan, autoRepeat: true, startDate: nil, settings: settings(.weeklyTheme, translation: "WEB"), date: weekDay(day)
+            )
+        }
+
+        #expect(days.map { $0?.verseRef } == ["John 3:16", "Gen 1:1", "John 3:16"])
+        #expect(days.allSatisfy { $0?.translationCode == "WEB" })
+    }
+
+    @Test func weeklyPlanThemeWithoutRepeatReachesItsLaterVerses() {
+        let hope = ScriptureDatabase.shared.verses(topicSlug: "hope", translationCode: "KJV")
+        let verse = VerseSelectionService.weeklyRecord(
+            WeeklyPlan(source: .theme, topicSlug: "hope"), autoRepeat: false, startDate: weekStart,
+            settings: settings(.weeklyTheme), date: weekDay(7)
+        )
+
+        #expect(verse?.id == hope[7 % hope.count].id)
+    }
+
+    @Test func upcomingRecordsListEachComingVerseOnceAndStopWhenAModeOnlyRepeats() {
+        let now = weekDay(0)
+        let daily = VerseSelectionService.upcomingRecords(for: settings(.daily), from: now, limit: 30, defaults: emptyDefaults())
+
+        #expect(daily.count == 30)
+        #expect(Set(daily.map(\.id)).count == 30)
+        #expect(daily.first?.id == VerseSelectionService.record(for: settings(.daily), date: now, defaults: emptyDefaults()).id)
+
+        var memorization = settings(.memorization)
+        memorization.memorizationPlanId = 212
+        #expect(VerseSelectionService.upcomingRecords(for: memorization, from: now, limit: 500, defaults: emptyDefaults()).map(\.id) == [212])
+    }
+
+    @Test func liveRecordCarriesTheLiveTextMeasuredForTheLockScreen() {
+        let kjv = VerseSelectionService.builtInVerse(translationCode: "KJV")
+        let text = "“For God so loved the world, that he gave his only Son, that whoever believes in him should not perish but have eternal life."
+
+        let esv = VerseSelectionService.liveRecord(kjv, ref: "John 3:16", text: text, translationCode: "ESV")
+
+        #expect(esv.id == kjv.id)
+        #expect(esv.bookId == 43)
+        #expect(esv.translationCode == "ESV")
+        #expect(esv.text == text)
+        #expect(esv.charCount == text.count)
     }
 
     @Test func favoritesWithoutShuffleWalkSavedOrderAndCanSkipLongVerses() {
@@ -305,6 +362,17 @@ private func settings(
     settings.longVerseStrategy = strategy
     settings.topicSlug = topicSlug
     return settings
+}
+
+/// The start of the week holding 1 Sep 2026.
+private let weekStart = Calendar.current.dateInterval(
+    of: .weekOfYear, for: Calendar.current.date(from: DateComponents(year: 2026, month: 9, day: 1))!
+)!.start
+
+/// 9 AM on the day `offset` days after `weekStart`.
+private func weekDay(_ offset: Int) -> Date {
+    let calendar = Calendar.current
+    return calendar.date(bySettingHour: 9, minute: 0, second: 0, of: calendar.date(byAdding: .day, value: offset, to: weekStart)!)!
 }
 
 /// Chapter mode's verse `daysAfterStart` days after a plan started at midnight on 1 Sep 2026.

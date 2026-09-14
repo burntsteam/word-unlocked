@@ -2,13 +2,14 @@ import SwiftUI
 
 struct TodayView: View {
     @EnvironmentObject var settingsStore: SettingsStore
+    @Environment(\.scenePhase) private var scenePhase
     @StateObject private var rvService = RVBibleService.shared
     @StateObject private var esvService = ESVBibleService.shared
 
     // Drives verse reference selection (always KJV-backed for mode logic).
     // Held as @State so it is recomputed only when verse-selection-relevant
     // settings change (see verseSelectionKey), not on every body re-render
-    // triggered by RVBibleService publishing fetch progress.
+    // triggered by the live services publishing fetch progress.
     @State private var currentVerse: Verse
 
     init() {
@@ -34,7 +35,7 @@ struct TodayView: View {
 
     // Changes to any field below alter VerseSelectionService.verse() output.
     // Used as the .onChange key so currentVerse refreshes on real settings
-    // changes (and at each new rotation slot) without recomputing on RV publishes.
+    // changes (and at each new rotation slot) without recomputing on live-service publishes.
     private var verseSelectionKey: String {
         let favoriteIds = settingsStore.favorites.map { String($0.verseId) }.joined(separator: ",")
         return [
@@ -50,20 +51,26 @@ struct TodayView: View {
         ].joined(separator: "|")
     }
 
-    // Online translations fetched live and cached (RV: single verse; ESV: up to
-    // 500 verses). Not stored in bulk beyond their licensed caps.
-    private var isLiveTranslation: Bool {
-        settingsStore.selectedTranslation == "RV" || settingsStore.selectedTranslation == "ESV"
+    // Reruns the live request for another translation or verse, and each time the app comes
+    // to the foreground, which is when a due ESV download can start.
+    private var liveRequestKey: String {
+        [settingsStore.selectedTranslation, currentVerse.verseRef, scenePhase == .active ? "active" : "inactive"]
+            .joined(separator: "|")
     }
 
-    // The cached live verse matching the current reference, if we have it.
-    private var liveCachedVerse: LiveCachedVerse? {
+    // Translations whose text comes from an API rather than the bundled database.
+    private var isLiveTranslation: Bool {
+        VerseSelectionService.liveTranslationCodes.contains(settingsStore.selectedTranslation)
+    }
+
+    // The live translation's text for the current reference, when the app has it: ESV
+    // downloaded ahead of time, or a Recovery Version verse loaded into memory.
+    private var liveVerse: (ref: String, text: String)? {
         switch settingsStore.selectedTranslation {
         case "RV":
-            if let cached = rvService.cachedVerse, cached.fetchedRef == currentVerse.verseRef { return cached }
-            return nil
+            return rvService.verse(for: currentVerse.verseRef).map { ($0.ref, $0.text) }
         case "ESV":
-            return esvService.cachedVerse(for: currentVerse.verseRef)
+            return esvService.cachedVerse(for: currentVerse.verseRef).map { ($0.ref, $0.text) }
         default:
             return nil
         }
@@ -77,14 +84,14 @@ struct TodayView: View {
         }
     }
 
-    // Show the cached live verse when it matches the current reference; otherwise
+    // Show the live verse when it matches the current reference; otherwise
     // currentVerse (King James-backed) drives the display so ref and text agree.
     private var displayRef: String {
-        liveCachedVerse?.ref ?? currentVerse.verseRef
+        liveVerse?.ref ?? currentVerse.verseRef
     }
 
     private var displayText: String {
-        liveCachedVerse?.text ?? currentVerse.text
+        liveVerse?.text ?? currentVerse.text
     }
 
     // The public-domain translation shown when a live translation's text isn't
@@ -95,7 +102,7 @@ struct TodayView: View {
     // bundled public-domain verse is showing instead. Excludes the in-flight
     // fetch window so the label doesn't flip while loading.
     private var liveFallbackActive: Bool {
-        isLiveTranslation && !isLiveFetching && liveCachedVerse == nil
+        isLiveTranslation && !isLiveFetching && liveVerse == nil
     }
 
     // Translation label for the text actually on screen. Reports the
@@ -103,6 +110,35 @@ struct TodayView: View {
     // is never mislabeled.
     private var displayTranslation: String {
         liveFallbackActive ? Self.offlineFallbackCode : settingsStore.selectedTranslation
+    }
+
+    // What the Lock Screen widget and a saved wallpaper show. Recovery Version text can't be
+    // stored, so those use the reference translation.
+    private var storableVerse: (ref: String, text: String, translation: String) {
+        settingsStore.selectedTranslation == "RV"
+            ? (currentVerse.verseRef, currentVerse.text, Self.offlineFallbackCode)
+            : (displayRef, displayText, displayTranslation)
+    }
+
+    // The attribution a live verse needs, or why the King James Version shows instead.
+    private var liveTranslationNote: String? {
+        switch settingsStore.selectedTranslation {
+        case "RV":
+            if let verse = rvService.verse(for: currentVerse.verseRef) {
+                return "\(verse.attribution)\n\nRecovery Version text isn't stored on your device, so the Lock Screen widget and wallpapers use the King James Version."
+            }
+            return liveFallbackActive
+                ? "Showing the King James Version until the Recovery Version loads, which needs an internet connection."
+                : nil
+        case "ESV":
+            guard liveFallbackActive else { return nil }
+            if let next = esvService.nextFetchDate, next > Date() {
+                return "Showing the King James Version. ESV verses download at most once every 48 hours, so this one can download after \(next.formatted(date: .abbreviated, time: .shortened))."
+            }
+            return "Showing the King James Version until this ESV verse downloads, which needs an internet connection."
+        default:
+            return nil
+        }
     }
 
     private var theme: WidgetTheme {
@@ -118,6 +154,12 @@ struct TodayView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 activeVerseCard
+                if let liveTranslationNote {
+                    Text(liveTranslationNote)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .padding(.horizontal, 4)
+                }
                 widgetPreviewSection
                 navigationActions
                 Text("Lock Screen widgets have limited space. Word Unlocked may use excerpts, segmented rotation, or references for longer verses based on your fitting setting.")
@@ -134,11 +176,15 @@ struct TodayView: View {
         .onChange(of: verseSelectionKey) { _, _ in
             currentVerse = computeCurrentVerse()
         }
-        .task(id: settingsStore.selectedTranslation + "|" + currentVerse.verseRef) {
+        .task(id: liveRequestKey) {
+            guard scenePhase == .active else { return }
             switch settingsStore.selectedTranslation {
-            case "RV": await rvService.fetch(reference: currentVerse.verseRef)
-            case "ESV": await esvService.fetch(reference: currentVerse.verseRef)
-            default: break
+            case "RV":
+                await rvService.fetch(reference: currentVerse.verseRef)
+            case "ESV":
+                await esvService.refreshIfDue(settings: settingsStore.currentSettings(), favorites: settingsStore.favorites)
+            default:
+                break
             }
         }
     }
@@ -207,10 +253,10 @@ struct TodayView: View {
                 .foregroundStyle(.secondary)
 
             MiniWidgetPreview(
-                ref: displayRef,
-                text: displayText,
+                ref: storableVerse.ref,
+                text: storableVerse.text,
                 theme: theme,
-                translation: displayTranslation
+                translation: storableVerse.translation
             )
 
             Text("Long verse handling: \(settingsStore.longVerseStrategy.summary)")
@@ -234,9 +280,9 @@ struct TodayView: View {
 
             NavigationLink {
                 WallpaperExportView(
-                    ref: displayRef,
-                    text: displayText,
-                    translation: displayTranslation,
+                    ref: storableVerse.ref,
+                    text: storableVerse.text,
+                    translation: storableVerse.translation,
                     theme: theme
                 )
             } label: {
@@ -275,9 +321,12 @@ struct TodayView: View {
     private func toggleFavorite() {
         if let favorite = settingsStore.favorites.first(where: { $0.verseId == currentVerse.id }) {
             settingsStore.removeFavorite(favorite)
-        } else if isLiveTranslation, let cached = liveCachedVerse {
-            settingsStore.addFavorite(verseId: currentVerse.id, verseRef: cached.ref, text: cached.text, translationCode: settingsStore.selectedTranslation)
+        } else if settingsStore.selectedTranslation == "ESV", let live = liveVerse,
+                  ESVBibleService.canSaveFavorite(bookId: currentVerse.bookId, favorites: settingsStore.favorites) {
+            settingsStore.addFavorite(verseId: currentVerse.id, verseRef: live.ref, text: live.text, translationCode: "ESV")
         } else {
+            // Recovery Version text can't be stored, and ESV text past Crossway's limits isn't
+            // kept, so those favorites keep the reference translation's text.
             settingsStore.addFavorite(verse: currentVerse)
         }
     }

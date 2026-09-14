@@ -13,6 +13,7 @@
 		000000000000000000000804 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 000000000000000000000704 /* libsqlite3.tbd */; };
 		06E2840C4B595FCE3F4D6960 /* VerseSelectionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A6016EFB3D8FDE4C1D098D /* VerseSelectionServiceTests.swift */; };
 		3B8112C28434CA4EBA244B2E /* ESVBibleServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF76D99129DEF1E81AA0B3EE /* ESVBibleServiceTests.swift */; };
+		BFRVSTESTS00000000000001 /* RVBibleServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AARVSTESTS00000000000001 /* RVBibleServiceTests.swift */; };
 		652778B52FC37E2A34356F39 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A548CA74BB8134FE37975A /* Foundation.framework */; };
 		84A43594085EDA6386EBC706 /* SharedModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E120D30113BD4580549691 /* SharedModelsTests.swift */; };
 		BFAA000001000000000000001 /* WordUnlockedApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000001 /* WordUnlockedApp.swift */; };
@@ -47,6 +48,7 @@
 		BFAA00000100000000000001E /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000001E /* DatabaseService.swift */; };
 		BFAA00000100000000000001F /* VerseSelectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000001F /* VerseSelectionService.swift */; };
 		BFAAVSS00000000000000001 /* VerseSelectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000001F /* VerseSelectionService.swift */; };
+		BFAAWPLAN000000000000001 /* WeeklyPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000019 /* WeeklyPlan.swift */; };
 		BFAA000001000000000000020 /* LongVerseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000020 /* LongVerseService.swift */; };
 		BFAA000001000000000000021 /* MemorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000021 /* MemorizationService.swift */; };
 		BFAA000001000000000000022 /* ThemeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000022 /* ThemeService.swift */; };
@@ -199,6 +201,7 @@
 		AARES000000000000000011 /* wordunlocked_seed.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = wordunlocked_seed.sqlite3; sourceTree = "<group>"; };
 		AD52A24968D9EF5486C70A79 /* LongVerseServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LongVerseServiceTests.swift; sourceTree = "<group>"; };
 		DF76D99129DEF1E81AA0B3EE /* ESVBibleServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ESVBibleServiceTests.swift; sourceTree = "<group>"; };
+		AARVSTESTS00000000000001 /* RVBibleServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RVBibleServiceTests.swift; sourceTree = "<group>"; };
 		F1A6016EFB3D8FDE4C1D098D /* VerseSelectionServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VerseSelectionServiceTests.swift; sourceTree = "<group>"; };
 		RC00000000000000000000004 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = Config/Secrets.xcconfig; sourceTree = "<group>"; };
 		RC00000000000000000000005 /* RVBibleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVBibleService.swift; sourceTree = "<group>"; };
@@ -441,6 +444,7 @@
 			children = (
 				DF76D99129DEF1E81AA0B3EE /* ESVBibleServiceTests.swift */,
 				AD52A24968D9EF5486C70A79 /* LongVerseServiceTests.swift */,
+				AARVSTESTS00000000000001 /* RVBibleServiceTests.swift */,
 				05E120D30113BD4580549691 /* SharedModelsTests.swift */,
 				F1A6016EFB3D8FDE4C1D098D /* VerseSelectionServiceTests.swift */,
 			);
@@ -654,6 +658,7 @@
 			files = (
 				BFAA000002000000000000001 /* WidgetEntry.swift in Sources */,
 				BFAAVSS00000000000000001 /* VerseSelectionService.swift in Sources */,
+				BFAAWPLAN000000000000001 /* WeeklyPlan.swift in Sources */,
 				BFAA000002000000000000002 /* WidgetProvider.swift in Sources */,
 				BFAA000002000000000000003 /* InlineWidgetView.swift in Sources */,
 				BFAA000002000000000000004 /* CircularWidgetView.swift in Sources */,
@@ -681,6 +686,7 @@
 			files = (
 				3B8112C28434CA4EBA244B2E /* ESVBibleServiceTests.swift in Sources */,
 				E6157BD34D5F9168813EBAC4 /* LongVerseServiceTests.swift in Sources */,
+				BFRVSTESTS00000000000001 /* RVBibleServiceTests.swift in Sources */,
 				84A43594085EDA6386EBC706 /* SharedModelsTests.swift in Sources */,
 				06E2840C4B595FCE3F4D6960 /* VerseSelectionServiceTests.swift in Sources */,
 			);

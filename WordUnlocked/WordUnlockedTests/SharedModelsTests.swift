@@ -2,14 +2,12 @@ import Testing
 import Foundation
 @testable import WordUnlocked
 
-// LiveCachedVerse (and its RVCachedVerse alias, defined in
-// Shared/Models/SharedModels.swift) is exactly what ESVBibleService and
-// RVBibleService persist to AppGroupSettings via JSONEncoder/JSONDecoder. Both
-// services load their cache with `try? JSONDecoder().decode(...)`, so a decode
-// failure is swallowed silently and the cache just comes back empty on next
-// launch. These tests lock down the wire format so that failure mode would
-// show up here first.
-@Suite("LiveCachedVerse / RVCachedVerse decoding")
+// LiveCachedVerse (defined in Shared/Models/SharedModels.swift) is exactly what
+// ESVBibleService writes to the App Group and the widget reads back. Both read it with
+// `try? JSONDecoder().decode(...)`, so a decode failure is swallowed and the downloaded
+// verses silently come back empty. These tests lock down the wire format so that failure
+// mode would show up here first.
+@Suite("LiveCachedVerse decoding")
 struct SharedModelsTests {
 
     @Test func singleVerseRoundTripsThroughJSON() throws {
@@ -23,34 +21,23 @@ struct SharedModelsTests {
         #expect(decoded.fetchedRef == original.fetchedRef)
     }
 
-    @Test func arrayOfVersesRoundTripsThroughJSON() throws {
-        // This is the exact on-disk shape ESVBibleService persists: [LiveCachedVerse].
+    @Test func storedVersesReadBackWhatWasWrittenAndNothingFromCorruptData() throws {
+        // The exact on-disk shape ESVBibleService writes: [LiveCachedVerse].
+        let name = "SharedModelsTests.\(UUID().uuidString)"
+        let defaults = try #require(UserDefaults(suiteName: name))
+        defer { UserDefaults.standard.removePersistentDomain(forName: name) }
         let original = [
-            LiveCachedVerse(ref: "John 3:16", text: "Text A", fetchedRef: "John 3:16"),
-            LiveCachedVerse(ref: "Romans 8:28", text: "Text B", fetchedRef: "Rom. 8:28")
+            LiveCachedVerse(ref: "Psalm 23:1", text: "Text A", fetchedRef: "Ps 23:1"),
+            LiveCachedVerse(ref: "Romans 8:28", text: "Text B", fetchedRef: "Rom 8:28")
         ]
 
-        let data = try JSONEncoder().encode(original)
-        let decoded = try JSONDecoder().decode([LiveCachedVerse].self, from: data)
-
-        #expect(decoded.count == 2)
-        #expect(decoded.map(\.fetchedRef) == ["John 3:16", "Rom. 8:28"])
+        defaults.set(try JSONEncoder().encode(original), forKey: AppGroupSettings.Keys.esvVerseCache)
+        let decoded = LiveCachedVerse.storedESVVerses(in: defaults)
+        #expect(decoded.map(\.fetchedRef) == ["Ps 23:1", "Rom 8:28"])
         #expect(decoded.map(\.text) == ["Text A", "Text B"])
-    }
 
-    @Test func rvCachedVerseRoundTripsThroughJSON() throws {
-        // RVBibleService persists a single RVCachedVerse (not an array). It's a
-        // `typealias` for LiveCachedVerse today, so this is really the same
-        // round-trip as above -- kept as its own test so a future split of the
-        // two types into distinct declarations gets caught here.
-        let original = RVCachedVerse(ref: "Rom. 8:28", text: "And we know...", fetchedRef: "Rom. 8:28")
-
-        let data = try JSONEncoder().encode(original)
-        let decoded = try JSONDecoder().decode(RVCachedVerse.self, from: data)
-
-        #expect(decoded.ref == original.ref)
-        #expect(decoded.text == original.text)
-        #expect(decoded.fetchedRef == original.fetchedRef)
+        defaults.set(Data("not json".utf8), forKey: AppGroupSettings.Keys.esvVerseCache)
+        #expect(LiveCachedVerse.storedESVVerses(in: defaults).isEmpty)
     }
 
     @Test func decodingLocksTheExpectedWireKeys() throws {
@@ -69,9 +56,9 @@ struct SharedModelsTests {
     }
 
     @Test func decodingFailsWhenARequiredKeyIsMissing() {
-        // Documents the exact failure mode ESVBibleService.init(apiKey:) guards against
-        // with `try?`: a shape mismatch throws DecodingError, which is swallowed,
-        // and the persisted cache silently comes back empty on next launch.
+        // Documents the exact failure mode storedESVVerses(in:) guards against with `try?`:
+        // a shape mismatch throws DecodingError, which is swallowed, and the downloaded
+        // verses silently come back empty.
         let json = """
         {"ref":"John 3:16","text":"For God so loved the world..."}
         """

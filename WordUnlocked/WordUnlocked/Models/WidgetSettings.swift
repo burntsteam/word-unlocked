@@ -66,7 +66,7 @@ extension WidgetSettings.VerseMode: CaseIterable, Identifiable {
     var title: String {
         switch self {
         case .daily: "Daily Verse"
-        case .weeklyTheme: "Weekly Theme"
+        case .weeklyTheme: "Weekly Plan"
         case .topic: "Topic"
         case .chapter: "Chapter"
         case .memorization: "Memorization"
@@ -88,7 +88,7 @@ extension WidgetSettings.VerseMode: CaseIterable, Identifiable {
     var summary: String {
         switch self {
         case .daily: "A fresh verse selected each day."
-        case .weeklyTheme: "A weekly rhythm around one spiritual theme."
+        case .weeklyTheme: "Seven verses a week from a theme, book, or your list."
         case .topic: "Verses chosen from a topic you select."
         case .chapter: "Move through one chapter in order."
         case .memorization: "Phase-based prompts for committing a verse to memory."

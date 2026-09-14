@@ -78,27 +78,28 @@ struct TranslationsView: View {
                 }
                 .buttonStyle(.plain)
 
-                // Recovery Version — live API only, no offline storage
+                // Recovery Version — live API only; LSM's terms forbid storing the text
                 RVTranslationRow(
                     isSelected: settingsStore.selectedTranslation == "RV",
-                    cachedVerse: rvService.cachedVerse,
                     isFetching: rvService.isFetching,
                     error: rvService.error
                 ) {
                     settingsStore.selectedTranslation = "RV"
                 }
 
-                // English Standard Version — live API, ≤500-verse offline cache.
-                // Hidden entirely when ESV_API_KEY is unset: without it the row can only
-                // ever show "ESV API key not configured."
+                // English Standard Version — downloaded ahead, up to 500 verses on the device.
+                // Hidden entirely when ESV_API_KEY is unset: without it nothing can download.
                 if ESVBibleService.isConfigured {
                     ESVTranslationRow(
                         isSelected: settingsStore.selectedTranslation == "ESV",
-                        cachedCount: esvService.cache.count,
+                        storedCount: esvService.verses.count,
                         isFetching: esvService.isFetching,
                         error: esvService.error
                     ) {
                         settingsStore.selectedTranslation = "ESV"
+                        Task {
+                            await esvService.refreshIfDue(settings: settingsStore.currentSettings(), favorites: settingsStore.favorites)
+                        }
                     }
                 }
             }
@@ -106,10 +107,10 @@ struct TranslationsView: View {
             if settingsStore.selectedTranslation == "RV" {
                 Section {
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("Recovery Version is fetched live from the LSM API each time you open the app. The most recently loaded verse appears on your Lock Screen widget.")
+                        Text("The Recovery Version loads from Living Stream Ministry's API while you read. LSM's terms don't allow storing its text on your device, so the Lock Screen widget and wallpapers show the King James Version.")
                             .font(.footnote)
                             .foregroundStyle(.secondary)
-                        Text("© Living Stream Ministry — used by permission.")
+                        Text(RVBibleService.defaultAttribution)
                             .font(.caption)
                             .foregroundStyle(.tertiary)
                     }
@@ -122,7 +123,7 @@ struct TranslationsView: View {
             if settingsStore.selectedTranslation == "ESV" {
                 Section {
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("English Standard Version is fetched live from the Crossway ESV API (api.esv.org) as you read. Up to 500 recently-viewed verses are saved for offline use; others load when you're online.")
+                        Text("Word Unlocked keeps up to 500 ESV verses on your device, the ones your mode shows next, so the Lock Screen widget works offline. Crossway's terms allow no more than that, or half of any book. New verses download from api.esv.org at most once every 48 hours.")
                             .font(.footnote)
                             .foregroundStyle(.secondary)
                         Text("Scripture quotations are from the ESV® Bible, © 2001 by Crossway. Used by permission. All rights reserved.")
@@ -182,7 +183,6 @@ private struct TranslationRow: View {
 
 private struct RVTranslationRow: View {
     let isSelected: Bool
-    let cachedVerse: RVCachedVerse?
     let isFetching: Bool
     let error: String?
     let onSelect: () -> Void
@@ -196,15 +196,9 @@ private struct RVTranslationRow: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text("RV").font(.headline)
                 Text("Recovery Version").font(.subheadline).foregroundStyle(.secondary)
-                if let verse = cachedVerse {
-                    Text(verse.ref)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                } else {
-                    Label("Requires internet", systemImage: "wifi")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
+                Label("Requires internet · not stored", systemImage: "wifi")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
 
             Spacer()
@@ -232,7 +226,7 @@ private struct RVTranslationRow: View {
 
 private struct ESVTranslationRow: View {
     let isSelected: Bool
-    let cachedCount: Int
+    let storedCount: Int
     let isFetching: Bool
     let error: String?
     let onSelect: () -> Void
@@ -246,8 +240,8 @@ private struct ESVTranslationRow: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text("ESV").font(.headline)
                 Text("English Standard Version").font(.subheadline).foregroundStyle(.secondary)
-                if cachedCount > 0 {
-                    Text("\(cachedCount) verse\(cachedCount == 1 ? "" : "s") saved offline")
+                if storedCount > 0 {
+                    Text("\(storedCount) verse\(storedCount == 1 ? "" : "s") on this device")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 } else {
@@ -320,14 +314,14 @@ struct BibleLicensesView: View {
                 LicenseRow(
                     title: "Recovery Version",
                     code: "RV",
-                    license: "© 2022 Living Stream Ministry. All rights reserved.",
-                    attribution: "Recovery Version text is served live from the LSM API by permission of Living Stream Ministry. Text is not stored offline."
+                    license: "© 2025 Living Stream Ministry. All rights reserved.",
+                    attribution: "\(RVBibleService.defaultAttribution). Loaded from the LSM API while you read; LSM's terms don't allow storing the text on your device."
                 )
                 LicenseRow(
                     title: "English Standard Version",
                     code: "ESV",
                     license: "© 2001 by Crossway. All rights reserved.",
-                    attribution: "Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), © 2001 by Crossway, a publishing ministry of Good News Publishers. Used by permission. Up to 500 verses are cached locally per the ESV API license; the full text is not stored offline."
+                    attribution: "Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), © 2001 by Crossway, a publishing ministry of Good News Publishers. Used by permission. Up to 500 verses, and never more than half of a book, are kept on the device as the ESV API terms allow; the full text is not stored."
                 )
                 Link("English Standard Version — esv.org", destination: URL(string: "https://www.esv.org")!)
                     .font(.subheadline)

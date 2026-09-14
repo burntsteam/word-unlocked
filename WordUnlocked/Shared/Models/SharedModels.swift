@@ -1,14 +1,22 @@
 import Foundation
 
-// Cached verse from a live Bible API (RV / ESV), shared across app and widget targets.
+// An English Standard Version verse downloaded from the ESV API, kept in the App Group so
+// the app and its widget can show it offline.
 struct LiveCachedVerse: Codable {
+    /// The reference as the ESV API writes it, such as "Psalm 23:1".
     let ref: String
     let text: String
+    /// The reference translation's verse this one stands in for, such as "Ps 23:1".
     let fetchedRef: String
 }
 
-// Back-compat alias for existing Recovery Version call sites.
-typealias RVCachedVerse = LiveCachedVerse
+extension LiveCachedVerse {
+    /// The downloaded ESV verses, in the order the settings they were planned for show them.
+    static func storedESVVerses(in defaults: UserDefaults) -> [LiveCachedVerse] {
+        guard let data = defaults.data(forKey: AppGroupSettings.Keys.esvVerseCache) else { return [] }
+        return (try? JSONDecoder().decode([LiveCachedVerse].self, from: data)) ?? []
+    }
+}
 
 struct SharedTranslationRecord: Codable, Equatable {
     let id: Int

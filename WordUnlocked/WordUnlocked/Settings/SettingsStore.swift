@@ -167,11 +167,12 @@ final class SettingsStore: ObservableObject {
         apply(settings: .defaultSettings)
     }
 
-    /// Chapter mode reads from verse 1, and Weekly Theme counts its weeks, from the moment
-    /// its plan starts: when the mode, its passage or its theme is chosen.
+    /// Chapter mode reads from verse 1, and Weekly Plan counts its weeks, from the moment
+    /// its plan starts: when the mode, its passage or its plan is chosen.
     func startPlan(for mode: WidgetSettings.VerseMode) {
         guard let key = Self.planStartKey(for: mode) else { return }
         defaults.set(Date(), forKey: key)
+        reloadWidgetTimelines()
     }
 
     func addFavorite(verse: Verse) {

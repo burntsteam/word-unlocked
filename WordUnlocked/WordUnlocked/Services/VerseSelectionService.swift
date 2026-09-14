@@ -21,6 +21,10 @@ enum VerseSelectionService {
         AppGroupSettings.Keys.topicRotationSpeed,
         AppGroupSettings.Keys.weeklyAutoRepeat,
         AppGroupSettings.Keys.weeklyStartDate,
+        AppGroupSettings.Keys.weeklySource,
+        AppGroupSettings.Keys.weeklyBookId,
+        AppGroupSettings.Keys.weeklyChapter,
+        AppGroupSettings.Keys.weeklyCustomVerseIds,
         AppGroupSettings.Keys.chapterRotationSpeed,
         AppGroupSettings.Keys.chapterEndBehavior,
         AppGroupSettings.Keys.chapterStartDate,
@@ -52,8 +56,14 @@ enum VerseSelectionService {
         case .daily:
             selected = dailyVerse()
         case .weeklyTheme:
-            let slug = weeklyTopicSlug(settings, date: date, database: database, defaults: defaults)
-            selected = weeklyThemeRecord(topicSlug: slug, settings: settings, date: date, database: database)
+            selected = weeklyRecord(
+                WeeklyPlan(defaults: defaults, topicSlug: settings.topicSlug),
+                autoRepeat: bool(defaults, AppGroupSettings.Keys.weeklyAutoRepeat, default: true),
+                startDate: defaults.object(forKey: AppGroupSettings.Keys.weeklyStartDate) as? Date,
+                settings: settings,
+                date: date,
+                database: database
+            )
         case .topic:
             let verses = database.verses(topicSlug: settings.topicSlug ?? "love", translationCode: code)
             selected = pick(from: fitting(verses, excludeLong: excludeLong), date: date, interval: interval)
@@ -75,20 +85,85 @@ enum VerseSelectionService {
         return selected ?? dailyVerse() ?? builtInVerse(translationCode: code, database: database)
     }
 
-    /// The verse Weekly Theme shows for `topicSlug` on `date`: the topic's first seven
-    /// verses in order, one per day of the week.
-    static func weeklyThemeRecord(
-        topicSlug: String,
+    /// The verse Weekly Plan shows on `date`: one a day, in order, from the plan's theme,
+    /// chapter, book or list. With `autoRepeat` every week shows the same seven; without it
+    /// each week since `startDate` moves on seven verses, starting over at the end.
+    static func weeklyRecord(
+        _ plan: WeeklyPlan,
+        autoRepeat: Bool,
+        startDate: Date?,
         settings: WidgetSettings,
         date: Date,
         database: ScriptureDatabase = .shared
     ) -> SharedVerseRecord? {
         let code = referenceTranslationCode(for: settings.translationCode)
-        let verses = fitting(
-            database.verses(topicSlug: topicSlug, translationCode: code),
-            excludeLong: settings.longVerseStrategy == .excludeLong
+        let excludeLong = settings.longVerseStrategy == .excludeLong
+        let weeks = autoRepeat ? 0 : startDate.map { max(weeksBetween($0, date), 0) } ?? 0
+        let index = { (count: Int) in weeklyIndex(for: date, count: count, weeksElapsed: weeks) }
+
+        switch plan.source {
+        case .theme:
+            let verses = fitting(database.verses(topicSlug: plan.topicSlug, translationCode: code), excludeLong: excludeLong)
+            return verses.isEmpty ? nil : verses[index(verses.count)]
+        case .chapter:
+            return filteredRecord(
+                .chapter(bookId: plan.bookId, chapter: plan.chapter),
+                translationCode: code, excludeLong: excludeLong, inReadingOrder: true, database: database, index: index
+            )
+        case .book:
+            return filteredRecord(
+                .book(plan.bookId),
+                translationCode: code, excludeLong: excludeLong, inReadingOrder: true, database: database, index: index
+            )
+        case .custom:
+            let verses = fitting(
+                plan.customVerseIds.compactMap { database.verse(id: $0) }.map { matching($0, translationCode: code, database: database) },
+                excludeLong: excludeLong
+            )
+            return verses.isEmpty ? nil : verses[index(verses.count)]
+        }
+    }
+
+    /// The distinct verses `settings` shows from `now` on that pass `include`, in the order
+    /// they come up, up to `limit`: what a live translation keeps ready ahead of time. It
+    /// looks as many days ahead as `limit`, which daily rotation needs to reach it, and stops
+    /// once four weeks of slots bring no new verse, as in a mode that repeats a few verses.
+    static func upcomingRecords(
+        for settings: WidgetSettings,
+        from now: Date,
+        favorites: [Favorite] = [],
+        limit: Int,
+        database: ScriptureDatabase = .shared,
+        defaults: UserDefaults = AppGroupSettings.defaults,
+        where include: (SharedVerseRecord) -> Bool = { _ in true }
+    ) -> [SharedVerseRecord] {
+        let interval = rotationInterval(for: settings.activeMode, defaults: defaults)
+        let slotsWithoutNewVerseLimit = 28 * 24 / interval.hours
+        var seen = Set<Int>()
+        var records: [SharedVerseRecord] = []
+        var slotsWithoutNewVerse = 0
+        for date in slotStartDates(from: now, interval: interval, dayCount: limit) {
+            guard records.count < limit, slotsWithoutNewVerse < slotsWithoutNewVerseLimit else { break }
+            let record = self.record(for: settings, date: date, favorites: favorites, database: database, defaults: defaults)
+            guard seen.insert(record.id).inserted else {
+                slotsWithoutNewVerse += 1
+                continue
+            }
+            slotsWithoutNewVerse = 0
+            if include(record) {
+                records.append(record)
+            }
+        }
+        return records
+    }
+
+    /// `record`'s verse carrying a live translation's reference and text, measured for the
+    /// Lock Screen from that text.
+    static func liveRecord(_ record: SharedVerseRecord, ref: String, text: String, translationCode: String) -> SharedVerseRecord {
+        textRecord(
+            id: record.id, translationCode: translationCode, bookId: record.bookId, bookName: record.bookName,
+            chapter: record.chapter, verse: record.verse, verseRef: ref, text: text
         )
-        return verses.isEmpty ? nil : verses[weeklyIndex(for: date, count: verses.count)]
     }
 
     static func referenceTranslationCode(for translationCode: String) -> String {
@@ -128,22 +203,10 @@ enum VerseSelectionService {
         if let record = database.verse(verseRef: builtInReference, translationCode: translationCode) {
             return record
         }
-        let text = "For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life."
-        return SharedVerseRecord(
-            id: 212,
-            translationId: 1,
-            translationCode: "KJV",
-            bookId: 43,
-            bookName: "John",
-            chapter: 3,
-            verse: 16,
+        return textRecord(
+            id: 212, translationId: 1, translationCode: "KJV", bookId: 43, bookName: "John", chapter: 3, verse: 16,
             verseRef: builtInReference,
-            text: text,
-            charCount: text.count,
-            wordCount: text.split(separator: " ").count,
-            fitCategory: LongVerseService.fitCategory(charCount: text.count).rawValue,
-            excerpt: LongVerseService.excerpt(from: text, maxChars: 132),
-            segmentCount: LongVerseService.segments(from: text, maxCharsPerSegment: 110).count
+            text: "For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life."
         )
     }
 
@@ -195,10 +258,11 @@ enum VerseSelectionService {
         return dates
     }
 
-    /// Weekly Theme shows a topic's first seven verses in order, one per day of the week.
-    static func weeklyIndex(for date: Date, count: Int) -> Int {
+    /// Weekly Plan's place in a source of `count` verses on `date`: the day of the week, plus
+    /// seven for each week the plan has moved on, wrapping at the end.
+    static func weeklyIndex(for date: Date, count: Int, weeksElapsed: Int = 0) -> Int {
         let dayOfWeek = (Calendar.current.ordinality(of: .day, in: .weekOfYear, for: date) ?? 1) - 1
-        return dayOfWeek % max(min(count, 7), 1)
+        return (weeksElapsed * 7 + dayOfWeek) % max(count, 1)
     }
 
     /// Whole weeks from the week containing `start` to the week containing `date`.
@@ -234,22 +298,31 @@ enum VerseSelectionService {
         database: ScriptureDatabase,
         defaults: UserDefaults
     ) -> SharedVerseRecord? {
-        var filter = ScriptureDatabase.VerseFilter(
-            books: dailyBooks(defaults),
-            maxCharCount: excludeLong ? excludeLongMaxCharCount : nil
-        )
+        let interval = rotationInterval(for: .daily, defaults: defaults)
+        return filteredRecord(dailyBooks(defaults), translationCode: translationCode, excludeLong: excludeLong, database: database) {
+            stableIndex(for: date, count: $0, interval: interval)
+        }
+    }
+
+    /// The verse at `index(count)` among the `count` verses of `translationCode` in `books`,
+    /// counted in SQL so a whole book never loads: only short verses with Exclude Long,
+    /// unless none are short.
+    private static func filteredRecord(
+        _ books: ScriptureDatabase.VerseFilter.Books,
+        translationCode: String,
+        excludeLong: Bool,
+        inReadingOrder: Bool = false,
+        database: ScriptureDatabase,
+        index: (Int) -> Int
+    ) -> SharedVerseRecord? {
+        var filter = ScriptureDatabase.VerseFilter(books: books, maxCharCount: excludeLong ? excludeLongMaxCharCount : nil)
         var count = database.verseCount(translationCode: translationCode, filter: filter)
-        if count == 0 {
-            filter = ScriptureDatabase.VerseFilter()
+        if count == 0, filter.maxCharCount != nil {
+            filter.maxCharCount = nil
             count = database.verseCount(translationCode: translationCode, filter: filter)
         }
         guard count > 0 else { return nil }
-        let interval = rotationInterval(for: .daily, defaults: defaults)
-        return database.verse(
-            translationCode: translationCode,
-            filter: filter,
-            offset: stableIndex(for: date, count: count, interval: interval)
-        )
+        return database.verse(translationCode: translationCode, filter: filter, offset: index(count), inReadingOrder: inReadingOrder)
     }
 
     private static func dailyBooks(_ defaults: UserDefaults) -> ScriptureDatabase.VerseFilter.Books {
@@ -265,25 +338,6 @@ enum VerseSelectionService {
         default:
             return .all
         }
-    }
-
-    /// With auto-repeat off, each week since the plan started moves one topic further
-    /// through the topic list.
-    private static func weeklyTopicSlug(
-        _ settings: WidgetSettings,
-        date: Date,
-        database: ScriptureDatabase,
-        defaults: UserDefaults
-    ) -> String {
-        let chosen = settings.topicSlug ?? "hope"
-        guard !bool(defaults, AppGroupSettings.Keys.weeklyAutoRepeat, default: true),
-              let start = defaults.object(forKey: AppGroupSettings.Keys.weeklyStartDate) as? Date else {
-            return chosen
-        }
-        let weeks = weeksBetween(start, date)
-        let slugs = database.topics().map(\.slug)
-        guard weeks > 0, let index = slugs.firstIndex(of: chosen) else { return chosen }
-        return slugs[(index + weeks) % slugs.count]
     }
 
     /// Chapter mode reads from verse 1, one verse per slot since the passage was set, then
@@ -381,16 +435,34 @@ enum VerseSelectionService {
         if let record = database.verse(id: favorite.verseId), record.translationCode == favorite.translationCode {
             return record
         }
-        let text = favorite.text
-        return SharedVerseRecord(
-            id: favorite.verseId,
-            translationId: 0,
-            translationCode: favorite.translationCode,
-            bookId: 0,
+        return textRecord(
+            id: favorite.verseId, translationCode: favorite.translationCode, bookId: 0,
             bookName: favorite.verseRef.components(separatedBy: " ").dropLast().joined(separator: " "),
-            chapter: 0,
-            verse: 0,
-            verseRef: favorite.verseRef,
+            chapter: 0, verse: 0, verseRef: favorite.verseRef, text: favorite.text
+        )
+    }
+
+    /// A verse record for text that isn't a database row, measured for the Lock Screen.
+    private static func textRecord(
+        id: Int,
+        translationId: Int = 0,
+        translationCode: String,
+        bookId: Int,
+        bookName: String,
+        chapter: Int,
+        verse: Int,
+        verseRef: String,
+        text: String
+    ) -> SharedVerseRecord {
+        SharedVerseRecord(
+            id: id,
+            translationId: translationId,
+            translationCode: translationCode,
+            bookId: bookId,
+            bookName: bookName,
+            chapter: chapter,
+            verse: verse,
+            verseRef: verseRef,
             text: text,
             charCount: text.count,
             wordCount: text.split(separator: " ").count,

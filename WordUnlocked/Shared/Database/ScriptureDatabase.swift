@@ -13,6 +13,8 @@ final class ScriptureDatabase {
             case oldTestament
             case newTestament
             case psalmsAndProverbs
+            case book(Int)
+            case chapter(bookId: Int, chapter: Int)
         }
 
         var books: Books = .all
@@ -154,14 +156,26 @@ final class ScriptureDatabase {
         return counts
     }
 
-    /// The verse at `offset`, in id order, among the verses matching `filter`.
-    func verse(translationCode: String, filter: VerseFilter = VerseFilter(), offset: Int) -> SharedVerseRecord? {
+    /// How many verses each book has in `translationCode`, by book id.
+    func bookVerseCounts(translationCode: String) -> [Int: Int] {
+        lock.lock(); defer { lock.unlock() }
+        var counts: [Int: Int] = [:]
+        query("SELECT v.book_id, COUNT(*) FROM verses v WHERE v.translation_code = \(quoted(translationCode)) GROUP BY v.book_id;") { statement in
+            counts[intColumn(statement, 0)] = intColumn(statement, 1)
+        }
+        return counts
+    }
+
+    /// The verse at `offset` among the verses matching `filter`, in id order or, with
+    /// `inReadingOrder`, by book, chapter and verse. Ids don't follow reading order: John
+    /// 3:16 is id 212.
+    func verse(translationCode: String, filter: VerseFilter = VerseFilter(), offset: Int, inReadingOrder: Bool = false) -> SharedVerseRecord? {
         lock.lock(); defer { lock.unlock() }
         return queryVerses(
             """
             SELECT \(Self.verseColumns) FROM verses v
             WHERE \(conditions(translationCode: translationCode, filter: filter))
-            ORDER BY v.id
+            ORDER BY \(inReadingOrder ? "v.book_id, v.chapter, v.verse" : "v.id")
             LIMIT 1 OFFSET \(max(offset, 0));
             """
         ).first
@@ -257,6 +271,10 @@ final class ScriptureDatabase {
             conditions.append("v.book_id >= 40")
         case .psalmsAndProverbs:
             conditions.append("v.book_id IN (19, 20)")
+        case .book(let bookId):
+            conditions.append("v.book_id = \(bookId)")
+        case .chapter(let bookId, let chapter):
+            conditions.append("v.book_id = \(bookId) AND v.chapter = \(chapter)")
         }
         if let maxCharCount = filter.maxCharCount {
             conditions.append("v.char_count <= \(maxCharCount)")

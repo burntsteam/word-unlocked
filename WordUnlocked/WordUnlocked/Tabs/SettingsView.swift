@@ -186,7 +186,7 @@ struct PrivacyPolicyView: View {
                 VStack(alignment: .leading, spacing: 6) {
                     Text("Recovery Version (RV)")
                         .font(.subheadline.weight(.semibold))
-                    Text("When RV is selected, a live request is made to api.lsm.org (Living Stream Ministry) to fetch the current verse. The text is cached locally on your device only — nothing is sent to any server operated by this app.")
+                    Text("When RV is selected, the verse you're reading is requested from api.lsm.org (Living Stream Ministry). Its text stays in memory while you read and is never stored on your device. Requests contain only the verse reference — nothing is sent to any server operated by this app.")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
@@ -195,7 +195,7 @@ struct PrivacyPolicyView: View {
                 VStack(alignment: .leading, spacing: 6) {
                     Text("English Standard Version (ESV)")
                         .font(.subheadline.weight(.semibold))
-                    Text("When ESV is selected, verses are fetched live from api.esv.org (Crossway) as you read. Up to 500 recently-viewed verses are cached on your device only — nothing is sent to any server operated by this app.")
+                    Text("When ESV is selected, the verses your mode shows next are downloaded from api.esv.org (Crossway) at most once every 48 hours, and up to 500 are kept on your device for the Lock Screen widget. Requests contain only verse references — nothing is sent to any server operated by this app.")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
@@ -212,7 +212,7 @@ struct PrivacyPolicyView: View {
             }
 
             Section("Local Storage") {
-                Text("Your settings and the most recently loaded verse are stored locally in iOS UserDefaults, shared only between this app and its Lock Screen widget on the same device. Nothing is uploaded or shared externally.")
+                Text("Your settings, favorites, and downloaded ESV verses are stored locally in iOS UserDefaults, shared only between this app and its Lock Screen widget on the same device. Nothing is uploaded or shared externally.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                     .padding(.vertical, 4)

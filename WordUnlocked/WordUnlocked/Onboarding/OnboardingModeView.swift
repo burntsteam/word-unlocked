@@ -44,7 +44,7 @@ private struct OnboardingModeCard: Identifiable {
 
 private let onboardingModeCards: [OnboardingModeCard] = [
     OnboardingModeCard(mode: .daily, title: "Daily Verse", description: "A new verse every day.", icon: "calendar"),
-    OnboardingModeCard(mode: .weeklyTheme, title: "Weekly Theme", description: "Seven verses around one theme.", icon: "7.square"),
+    OnboardingModeCard(mode: .weeklyTheme, title: "Weekly Plan", description: "A week of verses from a theme or book.", icon: "7.square"),
     OnboardingModeCard(mode: .topic, title: "Topic", description: "Focus on a subject you choose.", icon: "tag"),
     OnboardingModeCard(mode: .chapter, title: "Chapter", description: "Move through one chapter in order.", icon: "book.pages"),
     OnboardingModeCard(mode: .memorization, title: "Memorization", description: "Practice one verse in phases.", icon: "brain.head.profile"),

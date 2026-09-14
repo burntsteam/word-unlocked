@@ -13,44 +13,28 @@ final class WidgetTimelineService {
 
     func generateTimeline(now: Date = Date(), maxEntries: Int = .max) -> [VerseEntry] {
         let settings = readSettings()
-
-        switch settings.translationCode {
-        case "RV", "ESV":
-            // Live translations show their most recent cached verse (RV keeps one, ESV
-            // up to 500); the extension never fetches, and nothing is stored in bulk.
-            let cached = settings.translationCode == "RV" ? readRVCache() : readESVCache().last
-            let dates = VerseSelectionService.slotStartDates(from: now, interval: .daily, dayCount: 7).prefix(maxEntries)
-            return dates.map { cachedEntry(cached, date: $0, settings: settings) }
-        default:
-            let favorites = readFavorites()
-            let interval = VerseSelectionService.rotationInterval(for: settings.activeMode, defaults: defaults)
-            // A week of daily entries, or two days of shorter slots; the provider rebuilds at midnight.
-            let dayCount = interval == .daily ? 7 : 2
-            let dates = VerseSelectionService.slotStartDates(from: now, interval: interval, dayCount: dayCount).prefix(maxEntries)
-            return dates.enumerated().map { offset, date in
-                let verse = VerseSelectionService.record(
-                    for: settings, date: date, favorites: favorites, database: database, defaults: defaults
-                )
-                return makeEntry(date: date, verse: verse, settings: settings, offset: offset)
-            }
+        let favorites = readFavorites()
+        // ESV verses the app downloaded ahead, by the reference verse each stands in for. The
+        // extension never fetches, and Recovery Version text can't be stored at all, so any
+        // verse without downloaded text shows in its reference translation.
+        let esvVerses = settings.translationCode == "ESV"
+            ? Dictionary(LiveCachedVerse.storedESVVerses(in: defaults).map { ($0.fetchedRef, $0) }, uniquingKeysWith: { first, _ in first })
+            : [:]
+        let interval = VerseSelectionService.rotationInterval(for: settings.activeMode, defaults: defaults)
+        // A week of daily entries, or two days of shorter slots; the provider rebuilds at midnight.
+        let dayCount = interval == .daily ? 7 : 2
+        let dates = VerseSelectionService.slotStartDates(from: now, interval: interval, dayCount: dayCount).prefix(maxEntries)
+        return dates.enumerated().map { offset, date in
+            let record = VerseSelectionService.record(
+                for: settings, date: date, favorites: favorites, database: database, defaults: defaults
+            )
+            // A favorite saved with ESV text already carries it.
+            let downloaded = record.translationCode == "ESV" ? nil : esvVerses[record.verseRef]
+            let verse = downloaded.map {
+                VerseSelectionService.liveRecord(record, ref: $0.ref, text: $0.text, translationCode: "ESV")
+            } ?? record
+            return makeEntry(date: date, verse: verse, settings: settings, offset: offset)
         }
-    }
-
-    // Shows John 3:16 (KJV) until the app has cached a live verse.
-    private func cachedEntry(_ cached: LiveCachedVerse?, date: Date, settings: WidgetSettings) -> VerseEntry {
-        guard let cached else {
-            let fallback = VerseSelectionService.builtInVerse(translationCode: "KJV", database: database)
-            return makeEntry(date: date, verse: fallback, settings: settings, offset: 0)
-        }
-        return VerseEntry(
-            date: date,
-            verseText: cached.text,
-            verseRef: cached.ref,
-            translationCode: settings.showTranslationCode ? settings.translationCode : "",
-            theme: settings.themeId,
-            segmentInfo: nil,
-            mode: settings.activeMode.title
-        )
     }
 
     private func readSettings() -> WidgetSettings {
@@ -90,21 +74,6 @@ final class WidgetTimelineService {
     private func readFavorites() -> [Favorite] {
         guard let data = defaults.data(forKey: AppGroupSettings.Keys.favorites) else { return [] }
         return (try? JSONDecoder().decode([Favorite].self, from: data)) ?? []
-    }
-
-    private func readESVCache() -> [LiveCachedVerse] {
-        guard let data = defaults.data(forKey: AppGroupSettings.Keys.esvVerseCache) else { return [] }
-        return (try? JSONDecoder().decode([LiveCachedVerse].self, from: data)) ?? []
-    }
-
-    private func readRVCache() -> LiveCachedVerse? {
-        guard let data = defaults.data(forKey: AppGroupSettings.Keys.rvCachedVerse) else { return nil }
-        guard let cached = try? JSONDecoder().decode(RVCachedVerse.self, from: data) else {
-            // Corrupt data — remove it so the next successful fetch can repopulate.
-            defaults.removeObject(forKey: AppGroupSettings.Keys.rvCachedVerse)
-            return nil
-        }
-        return cached
     }
 
     private func makeEntry(date: Date, verse: SharedVerseRecord, settings: WidgetSettings, offset: Int) -> VerseEntry {
