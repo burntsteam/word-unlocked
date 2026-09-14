@@ -1,5 +1,46 @@
 # Handoff — Word Unlocked (Bible Widget App)
 
+## Update 2026-09-14
+
+Signing, the App Store Connect record, and GitHub secret scanning stay with the owner for
+later. Done this session:
+
+- **The commit email is help@rippre.com.** All 37 commits were rewritten and force-pushed:
+  author, committer, and the old address inside HANDOFF.md and docs/*.html. Trees and
+  messages were verified identical apart from that address, and this repo's `user.email` is
+  now help@rippre.com. Commit SHAs quoted further down this file are pre-rewrite. The old
+  commits may stay reachable on GitHub by SHA until GitHub garbage-collects them; GitHub
+  Support can purge them if that matters.
+- **Weekly Theme is now Weekly Plan:** seven verses a week, one a day, from a theme, a
+  chapter, a book, or the user's own list (added from search or favorites). Repeat keeps the
+  same seven every week; turning it off moves on seven verses a week and starts over at the
+  end. The raw value is still `weeklyTheme`. Chapter and book sources read in book, chapter
+  and verse order, because verse ids are not in reading order.
+- **ESV keeps as many verses on the phone as Crossway allows:** up to 500, and never more
+  than half of any book, counting ESV favorites. They are the verses the current settings
+  show next, so the Lock Screen widget now shows ESV offline; before, it repeated the last
+  verse fetched. **Each install downloads at most once every 48 hours**, in one request of up
+  to 300 verses (the API refuses request lines over 4,094 bytes). Being offline doesn't
+  start the 48-hour wait. A verse not downloaded yet shows in KJV, labelled KJV, with a note
+  saying when the next download can happen.
+- **The Recovery Version is no longer stored at all.** LSM's terms of use forbid storing any
+  RV text for offline use, and the app used to keep the last verse for the widget. RV now
+  loads into memory while reading and shows LSM's attribution beside the verse; the widget,
+  wallpaper export and RV favorites use KJV. "Used by permission" is gone from RV copy,
+  since LSM's terms forbid implying a relationship. The 48-hour rule applies to ESV only:
+  RV can't be stored, so it has to load whenever it's shown.
+- **Fetching is tested:** stubbed-network tests for both services, plus two live tests that
+  call the real APIs when run with `TEST_RUNNER_LIVE_API_TESTS=1`. ESV returned John 3:16
+  and Psalm 23:1, and RV returned John 3:16 with LSM's attribution. 72/72 tests pass, and
+  the Release build has 0 warnings.
+- The in-app privacy, Translations and Licenses text, the docs pages and the listing
+  describe the new storage. The privacy policy is dated September 14, 2026.
+- Checked in the simulator: 299 ESV verses downloaded in one request (John 5:4 is left out,
+  since the ESV omits it), RV text with LSM's attribution, and Weekly Plan's book and
+  My Verses sources through Start This Week. The 6.9" screenshots 03-onboarding-modes,
+  07-modes and 08-translations were retaken from a fresh install to show Weekly Plan and
+  the new RV label.
+
 ## Update 2026-09-12
 
 Done this session: **repo made public** (user's choice, history secret-scanned clean),
@@ -144,7 +185,7 @@ iOS 26.5 SDK, and the audit's findings were then all fixed, committed as the bat
 4. **GitHub Pages** — enable it (Settings → Pages → main, `/docs`), then put the
    resulting privacy/support URLs into App Store Connect.
 5. **Decide `privacy@rippre.com`** — the in-app policy (SettingsView.swift:232) still
-   shows it; the hosted pages use help@rippre.com. Align once the user decides
+   shows it; the hosted pages used a personal address. Align once the user decides
    whether they own/keep the rippre.com mailbox.
 6. **App Store Connect setup** — everything text-side is pre-written in
    `marketing/app-store-listing.md` (name/subtitle/promo/description/keywords/
@@ -182,9 +223,10 @@ iOS 26.5 SDK, and the audit's findings were then all fixed, committed as the bat
 ```bash
 cd "/Users/yg/Repositories/Bible Widget App/WordUnlocked"
 xcodebuild test -project WordUnlocked.xcodeproj -scheme WordUnlocked \
-  -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
+  -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 17 Pro Max'
 ```
-Expect: `Test run with 41 tests in 4 suites passed` + `** TEST SUCCEEDED **`.
+Expect: `Test run with 72 tests in 5 suites passed` + `** TEST SUCCEEDED **` (the two live
+API tests are skipped unless `TEST_RUNNER_LIVE_API_TESTS=1` is set).
 Widget: same command with `-scheme WordUnlockedWidget` and `build` → BUILD SUCCEEDED.
 
 ## Fastest path to "submitted"
