@@ -52,7 +52,7 @@ No account. No sign-up. No internet required. Just Scripture.
 
 WHY YOU'LL LOVE IT
 • Lock Screen & Home Screen widgets — a verse you see without opening anything
-• A fresh verse every day, or rotate by topic, weekly theme, or chapter
+• A fresh verse every day, or rotate by topic, weekly plan, or chapter
 • Seven translations — five completely offline, two live
 • KJV and WEB are built in and work 100% offline, no signal needed
 • Private by design — no accounts, no tracking, no ads
@@ -67,18 +67,18 @@ Read in the voice that fits you, and switch anytime:
 • American Standard Version (ASV) — 31,086 verses
 • Literal Standard Version (LSV) — 31,104 verses, word-for-word
 
-**Live (fetch from the web when you choose)**
+**Live (from the web when you choose)**
 • English Standard Version (ESV) — © Crossway, used by permission
-• Recovery Version (RV) — © Living Stream Ministry, used by permission
-ESV keeps up to 500 of your recently read verses available offline; the Recovery
-Version keeps your most recent verse on hand for the widget.
+• Recovery Version (RV) — © Living Stream Ministry
+ESV keeps up to 500 of the verses you'll see next on your phone, so the widget works
+offline. The Recovery Version loads while you read and isn't stored on your phone.
 
 VERSES THAT MEET THE MOMENT
 Pick the rhythm that fits your walk:
 • Daily Verse — a new passage each day
 • Topics — go straight to anxiety, fear, strength, faith, hope, peace,
   forgiveness, grief, patience, gratitude, and more
-• Weekly Theme — sit with one theme all week
+• Weekly Plan — seven verses a week from a theme, chapter, book, or your own list
 • Chapter — walk through a book, verse by verse
 • Memorization — focus on the verses you're committing to heart
 • Favorites — save the ones that stay with you
@@ -124,7 +124,7 @@ Welcome to Word Unlocked! Keep Scripture on your Lock Screen, all day.
 • Lock Screen and Home Screen widgets
 • Seven translations: five fully offline (KJV, WEB, BSB, ASV, LSV) plus ESV and the
   Recovery Version via live fetch
-• Rotate verses by day, topic, weekly theme, or chapter
+• Rotate verses by day, topic, weekly plan, or chapter
 • Memorization mode and Favorites
 • Set as Wallpaper
 • No account, no tracking — KJV and WEB work completely offline
@@ -154,6 +154,11 @@ Welcome to Word Unlocked! Keep Scripture on your Lock Screen, all day.
   a live translation's key is missing.
 - AS OF 2026-09-12: `LSM_APP_ID`, `LSM_TOKEN` and `ESV_API_KEY` are all set; the ESV
   key was verified with a live request to api.esv.org. All seven translations ship.
+- Licensing limits the app enforces (verified against both providers' terms 2026-09-14):
+  ESV keeps at most 500 verses on a device and never more than half of any book, and each
+  install downloads at most once every 48 hours (the key allows 5,000 requests a day).
+  LSM forbids storing any Recovery Version text, so RV is held in memory while reading,
+  shows LSM's attribution beside the verse, and the widget and wallpapers use KJV.
 
 **Future additions (not in v1.0):**
 - NIV, NKJV, NLT: These require per-publisher approval on the YouVersion Platform
