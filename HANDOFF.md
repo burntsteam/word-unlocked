@@ -1,9 +1,53 @@
 # Handoff — Word Unlocked (Bible Widget App)
 
+## Update 2026-09-22 — where the to-do list actually stands
+
+Nothing is in flight. `main` = `origin/main` = `b5ef1ce`, working tree clean; 72/72 tests
+and a 0-warning Release build as of the 2026-09-14 batch, and no code has changed since.
+
+- **GitHub secret scanning and push protection are ON.** Enabled 2026-09-22 via
+  `gh api -X PATCH repos/burntsteam/word-unlocked`; confirm any time with
+  `gh api repos/burntsteam/word-unlocked --jq .security_and_analysis`. The backfill scan
+  of the whole history reported **0 alerts**
+  (`gh api repos/burntsteam/word-unlocked/secret-scanning/alerts`). Push protection now
+  blocks a push carrying a recognised provider secret; if it ever fires, rewrite the
+  commit instead of taking the bypass.
+- **It does not cover this repo's two secrets.** GitHub refuses to enable
+  `secret_scanning_non_provider_patterns` (generic patterns) and
+  `secret_scanning_validity_checks` — the PATCH returns 200 and leaves both `disabled`,
+  because they need GitHub Advanced Security. Neither the ESV API key nor the LSM token
+  matches a known provider pattern, so **GitHub would not catch either one**. Keep running
+  the local scan before every push:
+
+  ```bash
+  cd "/Users/yg/Repositories/Bible Widget App"
+  KEY=$(grep -E '^ESV_API_KEY' WordUnlocked/Config/Secrets.xcconfig | sed 's/.*= *//')
+  git log -p origin/main..HEAD | grep -c "$KEY"   # expect 0
+  git grep -q -F "$KEY" HEAD && echo LEAK || echo clean
+  ```
+  (Repeat for `LSM_TOKEN`. `WordUnlocked/Config/Secrets.xcconfig` is gitignored and
+  untracked — verified again on 2026-09-22.)
+
+**Only the owner can finish these:**
+
+1. **Apple signing** — 0 valid codesigning identities in the keychain, no
+   `DEVELOPMENT_TEAM` on either target. Archiving is impossible until it's set.
+2. **The App Store Connect record** — every piece of text is pre-written in
+   `marketing/app-store-listing.md`, and the privacy/support URLs are live on Pages.
+
+**Optional, owner's call:**
+
+- Add help@rippre.com to GitHub → Settings → Emails so the rewritten commits link to the
+  account.
+- Ask GitHub Support to purge the pre-rewrite SHAs — the old commits (with the personal
+  address) stay fetchable by SHA until GitHub garbage-collects them.
+- Written LSM permission, if the Recovery Version should ever reach the Lock Screen; today
+  its terms forbid storing the text, so the widget falls back to KJV.
+
 ## Update 2026-09-14
 
-Signing, the App Store Connect record, and GitHub secret scanning stay with the owner for
-later. Done this session:
+Signing and the App Store Connect record stay with the owner for later (secret scanning was
+turned on afterwards, on 2026-09-22). Done this session:
 
 - **The commit email is help@rippre.com.** All 37 commits were rewritten and force-pushed:
   author, committer, and the old address inside HANDOFF.md and docs/*.html. Trees and
@@ -106,10 +150,10 @@ verse picker, and each has a test:
   afternoon. Slots now count local calendar days.
 
 Still the owner's call:
-- **GitHub secret scanning and push protection are off** (free for public repos:
-  Settings → Code security).
-- **Every commit's author email is the owner's personal address**, now public with the
-  repo. Removing it means rewriting history and force-pushing.
+- ~~**GitHub secret scanning and push protection are off**~~ — both enabled 2026-09-22;
+  see the update at the top of this file for what they do and don't catch.
+- ~~**Every commit's author email is the owner's personal address**~~ — rewritten to
+  help@rippre.com and force-pushed on 2026-09-14.
 
 Written 2026-09-01, end of the migration-audit + ship-readiness session. Everything
 below is committed and pushed: `main` = `d078d61`, in sync with
@@ -161,18 +205,24 @@ iOS 26.5 SDK, and the audit's findings were then all fixed, committed as the bat
   community names survived (verified by name against HEAD~1), sidecars
   `community_labels.json` + `node_descriptions.json` both tracked.
 
-## Blocked on the user (the actual to-do list)
+## The original to-do list (written 2026-09-01) — items 2-5 are done
+
+Kept for the detail in it; see the 2026-09-22 update above for what is still open.
 
 1. **Apple signing** — keychain has **0 valid codesigning identities** and no
    `DEVELOPMENT_TEAM` in the project. Sign into Xcode → Settings → Accounts on this
    Mac, pick the team (9 different team IDs exist across old projects — user must
    choose), then set the team on both targets. Archiving is impossible until then.
-2. **ESV API key** — decision made: get it LATER from api.esv.org (requires an
+2. ~~**ESV API key**~~ — DONE 2026-09-12; the key is in the gitignored `Secrets.xcconfig`.
+   Original note:
+   **ESV API key** — decision made: get it LATER from api.esv.org (requires an
    account; Claude cannot create one). When it arrives: append
    `ESV_API_KEY = <key>` to `WordUnlocked/Config/Secrets.xcconfig`, then follow the
    banner at the top of `marketing/app-store-listing.md` (Six→Seven, restore ESV
    bullet + `esv` keyword) and the HTML comments at the top of each `docs/*.html`.
-3. **App Store screenshots at 6.9"** — Apple requires 1320×2868 (iPhone 17 Pro Max).
+3. ~~**App Store screenshots at 6.9"**~~ — DONE; nine 1320x2868 shots are committed at
+   `marketing/screenshots/6.9/`. Original note:
+   **App Store screenshots at 6.9"** — Apple requires 1320×2868 (iPhone 17 Pro Max).
    Working captures from the walkthrough exist at
    `/private/tmp/claude-501/-Users-yg-Repositories-Bible-Widget-App/5c5a4907-0f56-4a02-bdeb-84307309dc63/scratchpad/shots/`
    (scratchpad = may be gone after reboot) but they are **6.3"** (iPhone 17 Pro,
@@ -182,12 +232,16 @@ iOS 26.5 SDK, and the audit's findings were then all fixed, committed as the bat
    walkthrough on the Pro Max: fresh install → onboarding (Next×5/Get Started) →
    Today / Translations / Modes / Search (+ theme picker page during onboarding).
    Captions to overlay are in the listing file.
-4. **GitHub Pages** — enable it (Settings → Pages → main, `/docs`), then put the
+4. ~~**GitHub Pages**~~ — DONE; live at https://burntsteam.github.io/word-unlocked/.
+   Original note:
+   **GitHub Pages** — enable it (Settings → Pages → main, `/docs`), then put the
    resulting privacy/support URLs into App Store Connect.
-5. **Decide `privacy@rippre.com`** — the in-app policy (SettingsView.swift:232) still
+5. ~~**Decide `privacy@rippre.com`**~~ — DONE; the contact address is help@rippre.com
+   everywhere, including the rewritten commit history. Original note:
+   **Decide `privacy@rippre.com`** — the in-app policy (SettingsView.swift:232) still
    shows it; the hosted pages used a personal address. Align once the user decides
    whether they own/keep the rippre.com mailbox.
-6. **App Store Connect setup** — everything text-side is pre-written in
+6. **App Store Connect setup** (still open) — everything text-side is pre-written in
    `marketing/app-store-listing.md` (name/subtitle/promo/description/keywords/
    what's-new/captions, all measured under their char limits).
 
