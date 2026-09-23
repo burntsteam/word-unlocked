@@ -44,6 +44,28 @@ and a 0-warning Release build as of the 2026-09-14 batch, and no code has change
 - Written LSM permission, if the Recovery Version should ever reach the Lock Screen; today
   its terms forbid storing the text, so the widget falls back to KJV.
 
+**Knowledge graph (graphify) as of 2026-09-22, HEAD `47818a0`:**
+
+- Rebuilt at `--scope all`: 735 nodes, 65 communities, **every community named** (87
+  curated names in `community_labels.json`) and **730 of 734 nodes described**
+  (`node_descriptions.json` went 0 → 730). Both sidecars are tracked, so a rebuild
+  restores them. The 19 description batches had sat unanswered since the graph was
+  first built; `/Users/yg/Repositories/scripts/graphify-describe-nodes.py` answered
+  them with the local model (`OPENAI_BASE_URL=http://localhost:11434/v1
+  DESCRIBE_MODEL=qwen3.6:35b-a3b`, ~10 min, no API cost), then
+  `graphify update . --scope all …` ingested them. Recipe and gotchas: engram
+  `01m35jdk86gaqfqqtdgr68mgxa`.
+- **graphify 0.17.1's `query` and `explain` never print node descriptions** and have no
+  flag for it. The text is on `graph.json` nodes and in the sidecar only. Don't expect
+  richer CLI output because the nodes are described.
+- Ingesting descriptions re-clusters and leaves a few communities bare; run
+  `scripts/graphify-label-communities.py` (same ollama env, `LABEL_MODEL=`) after, then
+  `graphify-sync-report.py` last. Never `graphify label`.
+- The tree will show `GRAPH_REPORT.md` and `community_labels.json` modified a few
+  seconds after *any* commit, including the one that absorbs them. That loop cannot
+  converge; it's the post-commit hook. Check that no curated name was dropped, then
+  either commit it or leave it.
+
 ## Update 2026-09-14
 
 Signing and the App Store Connect record stay with the owner for later (secret scanning was
@@ -253,16 +275,17 @@ Kept for the detail in it; see the 2026-09-22 update above for what is still ope
 - **graphify writes `.graphify/cache/` relative to CWD** — running from a subdir
   litters `WordUnlocked/.graphify/` etc. Now ignored via `**/.graphify/cache/`, but
   expect strays to appear; they are pure derived cache, safe to `rm -rf`.
-- **GRAPH_REPORT.md re-dirties itself asynchronously after every commit** — normal
-  churn per CLAUDE.md; commit it opportunistically or ignore it.
+- **GRAPH_REPORT.md and community_labels.json re-dirty themselves asynchronously after
+  every commit**, including the commit that absorbs them — normal churn per CLAUDE.md;
+  commit opportunistically (after a dropped-name check) or ignore it.
 - The graphify **restore/guard scripts live one level up** at
   `/Users/yg/Repositories/scripts/` (not in this repo). The pre-commit label guard IS
   installed here and finds them by walking up. (An earlier session note claiming the
   guard was missing was wrong.)
-- **This label sidecar has 60 communities, 7 curated names** (ASV/BSB/KJV/LSV import
-  pipelines, ESV API fetcher, Web seed fetcher, iOS app build tools). Counting
-  top-level JSON keys of `community_labels.json` gives 2 — the real data is under
-  `.labels`.
+- **The label sidecar's real data is under `.labels`** — counting top-level JSON keys
+  of `community_labels.json` gives 2. Each entry is `{"name", "members"}`; a curated
+  name is anything not matching `Community \d+`. (Was 7 names in 60 communities on
+  2026-09-01; 87 names, 65 communities, all named, as of 2026-09-22.)
 - **zsh eats `$c:Word...`** — `:W` parses as a parameter modifier; use `${c}:path`
   when scripting `git show`.
 - macOS has **no `timeout` command**; don't wrap network git calls with it.
