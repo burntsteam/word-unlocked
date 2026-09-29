@@ -75,16 +75,17 @@ offline. The Recovery Version loads while you read and isn't stored on your phon
 
 VERSES THAT MEET THE MOMENT
 Pick the rhythm that fits your walk:
-• Daily Verse — a new passage each day
+• Daily Verse — a well-loved verse each day
 • Topics — go straight to anxiety, fear, strength, faith, hope, peace,
   forgiveness, grief, patience, gratitude, and more
 • Weekly Plan — seven verses a week from a theme, chapter, book, or your own list
 • Chapter — walk through a book, verse by verse
-• Memorization — focus on the verses you're committing to heart
+• Memorization — learn a verse step by step, with less of it shown each day
 • Favorites — save the ones that stay with you
 
 MAKE IT YOURS
-• Clean, readable themes that look right on any wallpaper
+• Clean, readable themes for the Home Screen widget and wallpapers, including
+  one that follows Light and Dark Mode
 • Set as Wallpaper — turn a verse into a Lock Screen background that stays clear
   of the clock
 • Long verses are handled gracefully, so text never spills off the widget
@@ -98,8 +99,8 @@ Add the widget today and keep a verse in front of you — wherever the day takes
 you.
 
 — Public domain and openly licensed translations included. LSV © Covenant Press
-(CC BY-SA). ESV text © Crossway and Recovery Version text © Living Stream
-Ministry, both used by permission.
+(CC BY-SA). ESV text © Crossway, used by permission. Recovery Version text
+© Living Stream Ministry (lsm.org).
 
 ---
 

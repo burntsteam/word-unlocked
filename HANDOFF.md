@@ -1,5 +1,70 @@
 # Handoff — Word Unlocked (Bible Widget App)
 
+## Update 2026-09-28 — every finding from the 2026-09-27 audit is fixed
+
+The audit (7 high, 14 medium, 22 low; private report
+https://claude.ai/artifact/LpkyYd96PZpsEx3W6AAuwo) is fixed in one batch. Verified with
+Xcode 27.0 and the iOS 27.0 simulator SDK: 104 tests in 10 suites pass (the two live API
+tests skip by design), and the Debug simulator build and the unsigned Release device build
+both have 0 warnings.
+
+**Licensing and privacy**
+- **No more URL cache.** Both live services use `LiveAPISession.shared`, an ephemeral
+  session with `urlCache = nil`, so no Recovery Version text, ESV download or API key
+  reaches `Library/Caches/…/Cache.db`. The app clears the old shared cache at every launch,
+  and deletes any Recovery Version rows that debug builds before this one copied into its
+  database. Checked after a live Recovery Version request: `Cache.db` held 0 rows.
+- **The keys left Info.plist.** The app target's first build phase, "Embed API Keys",
+  writes the three values from the gitignored `Config/Secrets.xcconfig` into
+  `$(DERIVED_FILE_DIR)/LiveAPIKeys.swift`, XOR-masked so neither the ESV key nor the LSM
+  token is a plain string in the binary (checked: 0 matches in the built .app; the LSM app
+  ID is just the bundle id). The project references that file with
+  `sourceTree = DERIVED_FILE_DIR` — Xcode does not compile a script's output on its own.
+  An empty or `YOUR_…` value means not configured, and the translation stays hidden.
+  **Rotation plan:** if a key is revoked or its quota abused, issue a new one at
+  api.esv.org or with LSM, put it in `Secrets.xcconfig`, rebuild and ship; watch both
+  providers' usage pages after launch.
+- **ESV's 48 hours can't be skipped.** The time is recorded before the request goes out
+  and rolled back only when the request never left the device (offline, DNS, TLS,
+  certificate or ATS failures). The download runs in its own task, so leaving Today
+  mid-download no longer throws it away.
+- **Every verse is labelled with its own translation** (`Verse.translationCode`), so ESV
+  text never shows as KJV, and a favorite keeps the translation it was saved in.
+- Privacy wording in the app, on the three pages and in the listing now says what reaches
+  Crossway and LSM (IP address, app and OS version, the verses asked for). The listing no
+  longer says Recovery Version text is "used by permission".
+
+**What people see**
+- Daily Verse draws from the 665 curated verses in a shuffled order (matched by book,
+  chapter and verse in the other translations), keeping the testament filters.
+- Memorization shows its steps on Today and the widget: whole verse, blanks, first
+  letters, reference only, review — one step per local calendar day.
+- Five tabs (Translations moved into Settings), onboarding keeps Next visible, the active
+  mode's settings open, mode sheets save and close, Search reads "Psalm 23", "1 Kings 2",
+  "Jude 3" and ranges, Favorites has Edit, reorder, Share and Remove.
+- Widget: Segmented takes turns every 20 minutes within a verse's slot, Reference Only
+  shows the reference, Chapter's Show Progress adds "Verse 3 of 36", tapping a widget
+  opens Today, references are written out ("1 Kings 2:2"), and a timeline built before
+  first unlock is retried after 15 minutes instead of at midnight.
+- New "Automatic" theme follows Light and Dark Mode and is the default; three accents
+  were darkened to pass 4.5:1.
+- Favorites decode one by one and are rewritten only when a migration changed them; old
+  Recovery Version favorites become the KJV text of the same verse.
+- Seed scripts verify TLS and pin their sources by commit or SHA-256;
+  `fetch_esv_seed.py` is deleted. The current BSB source differs from the shipped seed
+  only at 2 Timothy 1:15 ("province" vs "Province"); the database was not regenerated.
+
+**Correction — the contact address is privacy@rippre.com.** Item 5 below used to say
+help@rippre.com is used everywhere. It isn't: the owner confirmed privacy@rippre.com on
+2026-09-12, and the 2026-09-14 history rewrite changed only the commit author email to
+help@rippre.com. The app and all three hosted pages publish privacy@rippre.com.
+
+The nine 6.9" screenshots in `marketing/screenshots/6.9/` were retaken from a fresh
+install on a dedicated iPhone 17 Pro Max simulator ("WordUnlocked Shots", iOS 27.0,
+status bar set to 9:41), so they show the five tabs and the new Today.
+
+**Still the owner's:** Apple signing and the App Store Connect record.
+
 ## Update 2026-09-22 — where the to-do list actually stands
 
 Nothing is in flight. `main` = `origin/main` = `b5ef1ce`, working tree clean; 72/72 tests
@@ -258,8 +323,9 @@ Kept for the detail in it; see the 2026-09-22 update above for what is still ope
    Original note:
    **GitHub Pages** — enable it (Settings → Pages → main, `/docs`), then put the
    resulting privacy/support URLs into App Store Connect.
-5. ~~**Decide `privacy@rippre.com`**~~ — DONE; the contact address is help@rippre.com
-   everywhere, including the rewritten commit history. Original note:
+5. ~~**Decide `privacy@rippre.com`**~~ — DONE; the contact address is privacy@rippre.com,
+   confirmed by the owner on 2026-09-12. Only the commit author email became
+   help@rippre.com (2026-09-14). Original note:
    **Decide `privacy@rippre.com`** — the in-app policy (SettingsView.swift:232) still
    shows it; the hosted pages used a personal address. Align once the user decides
    whether they own/keep the rippre.com mailbox.
@@ -291,19 +357,25 @@ Kept for the detail in it; see the 2026-09-22 update above for what is still ope
 - macOS has **no `timeout` command**; don't wrap network git calls with it.
 - Simulator point spaces used for taps: iPhone 17 Pro = 402×874, Pro Max = 440×956.
   Tab bar y≈839 (17 Pro); tabs at x≈62/127/201/275/340.
-- DEBUG-only dead path: `RVBibleService.fetch` tries `translationCode: "RV"` from the
-  seed DB, which has no RV rows (`rv_testing.json` is 665 verses, unused). Harmless;
-  release path unaffected.
+- ~~DEBUG-only dead path in `RVBibleService.fetch`~~ — removed 2026-09-28 along with the
+  local `seed_verses_rv_testing.json` (moved to the Trash; LSM's terms forbid keeping RV
+  text). The `.gitignore` line for it stays.
+- **A failing `xcodebuild test` then sits for up to 10 minutes** running
+  `simctl diagnose`. Pass `-collect-test-diagnostics never` to get the result at once.
+- **A Run Script's output is not compiled automatically**, even a `.swift` file listed
+  under Output Files: the target also needs a file reference to it (here
+  `sourceTree = DERIVED_FILE_DIR`) in its Sources phase.
 
 ## How to verify the world is still green
 
 ```bash
 cd "/Users/yg/Repositories/Bible Widget App/WordUnlocked"
 xcodebuild test -project WordUnlocked.xcodeproj -scheme WordUnlocked \
-  -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 17 Pro Max'
+  -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 17 Pro Max' \
+  -collect-test-diagnostics never
 ```
-Expect: `Test run with 72 tests in 5 suites passed` + `** TEST SUCCEEDED **` (the two live
-API tests are skipped unless `TEST_RUNNER_LIVE_API_TESTS=1` is set).
+Expect: `Test run with 104 tests in 10 suites passed` + `** TEST SUCCEEDED **` (the two
+live API tests are skipped unless `TEST_RUNNER_LIVE_API_TESTS=1` is set).
 Widget: same command with `-scheme WordUnlockedWidget` and `build` → BUILD SUCCEEDED.
 
 ## Fastest path to "submitted"
