@@ -10,17 +10,14 @@ thresholds 70/130/210).
 
 Usage:  python3 scripts/fetch_bsb_seed.py
 """
-import json, os, re, ssl, tempfile, urllib.request
+import json, os, re, tempfile
+
+from _download import fetch_verified
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RES = os.path.join(ROOT, "WordUnlocked", "Resources")
 SRC_URL = "https://bereanbible.com/bsb.txt"
-
-try:                                    # python.org builds ship without CA certs
-    import certifi
-    CTX = ssl.create_default_context(cafile=certifi.where())
-except Exception:
-    CTX = ssl._create_unverified_context()
+SRC_SHA256 = "2ac3af1de52d4e68261cba91d85c320b7eadc6560e830d99e591767b8ff5ca96"  # pinned 2026-09-27
 TRANSLATION_ID = 3
 ID_BASE = 3_000_000
 
@@ -60,13 +57,7 @@ def main():
     byname["psalm"] = byname["psalms"]  # BSB uses the singular "Psalm"
 
     cache = os.path.join(tempfile.gettempdir(), "bsb.txt")
-    if os.path.exists(cache) and os.path.getsize(cache) > 1_000_000:
-        raw = open(cache, encoding="utf-8-sig").read()
-    else:
-        with urllib.request.urlopen(SRC_URL, timeout=90, context=CTX) as r:
-            data = r.read()
-        open(cache, "wb").write(data)
-        raw = data.decode("utf-8-sig")
+    raw = fetch_verified(SRC_URL, SRC_SHA256, cache).decode("utf-8-sig")
 
     out, vid = [], ID_BASE
     ref_re = re.compile(r"^(.+?)\s+(\d+):(\d+)$")

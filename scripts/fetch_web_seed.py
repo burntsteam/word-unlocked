@@ -10,11 +10,14 @@ versification (~31,095 verses, a few fewer than KJV's 31,102).
 
 Usage:  python3 scripts/fetch_web_seed.py
 """
-import json, os, re, tempfile, urllib.request
+import json, os, re, tempfile
+
+from _download import fetch_verified
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RES = os.path.join(ROOT, "WordUnlocked", "Resources")
 SRC_URL = "https://api.getbible.net/v2/web.json"
+SRC_SHA256 = "731ddc05b7570ac0c525a74e4a49d6da4f922aec18e7e982514a4f88432ad1ac"  # pinned 2026-09-27
 
 
 def words(t): return [w for w in t.split(" ") if w != ""]
@@ -53,13 +56,7 @@ def clean(t):
 
 def main():
     cache = os.path.join(tempfile.gettempdir(), "getbible_web.json")
-    if os.path.exists(cache) and os.path.getsize(cache) > 1_000_000:
-        web = json.loads(open(cache, encoding="utf-8").read())
-    else:
-        with urllib.request.urlopen(SRC_URL, timeout=60) as r:
-            data = r.read()
-        open(cache, "wb").write(data)
-        web = json.loads(data.decode("utf-8"))
+    web = json.loads(fetch_verified(SRC_URL, SRC_SHA256, cache, timeout=60).decode("utf-8"))
 
     books_data = web["books"]
     app_books = {b["id"]: b for b in json.load(open(os.path.join(RES, "seed_books.json")))}

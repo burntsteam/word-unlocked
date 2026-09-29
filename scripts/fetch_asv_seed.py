@@ -11,17 +11,14 @@ thresholds 70/130/210).
 
 Usage:  python3 scripts/fetch_asv_seed.py
 """
-import json, os, re, ssl, tempfile, urllib.request
+import json, os, re, tempfile
+
+from _download import fetch_verified
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RES = os.path.join(ROOT, "WordUnlocked", "Resources")
 SRC_URL = "https://api.getbible.net/v2/asv.json"
-
-try:                                    # python.org builds ship without CA certs
-    import certifi
-    CTX = ssl.create_default_context(cafile=certifi.where())
-except Exception:
-    CTX = ssl._create_unverified_context()
+SRC_SHA256 = "58c2413d5813d960b7a088825724abb473f39ea320a4be725cf42424357e98c8"  # pinned 2026-09-27
 TRANSLATION_ID = 4
 ID_BASE = 4_000_000
 
@@ -64,14 +61,7 @@ def main():
     app_books = {b["id"]: b for b in json.load(open(os.path.join(RES, "seed_books.json")))}
 
     cache = os.path.join(tempfile.gettempdir(), "getbible_asv.json")
-    if os.path.exists(cache) and os.path.getsize(cache) > 1_000_000:
-        asv = json.loads(open(cache, encoding="utf-8").read())
-    else:
-        req = urllib.request.Request(SRC_URL, headers={"User-Agent": "wordunlocked-seed"})
-        with urllib.request.urlopen(req, timeout=90, context=CTX) as r:
-            data = r.read()
-        open(cache, "wb").write(data)
-        asv = json.loads(data.decode("utf-8"))
+    asv = json.loads(fetch_verified(SRC_URL, SRC_SHA256, cache).decode("utf-8"))
 
     books_data = asv["books"]
     assert len(books_data) == 66 and sorted(b["nr"] for b in books_data) == list(range(1, 67))
