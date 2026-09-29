@@ -18,11 +18,25 @@ struct LockScreenWidgetGuideView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 
+    @ScaledMetric(relativeTo: .subheadline) private var stepBadgeSize: CGFloat = 26
+
+    /// A verse as the widget shows it, for the example below.
+    private static let example = VerseEntry(
+        date: Date(),
+        verseText: "Knowing this, that the trying of your faith worketh patience.",
+        verseRef: "James 1:3",
+        shortRef: "Jas 1:3",
+        translationCode: "KJV",
+        theme: WidgetTheme.automaticId,
+        note: nil
+    )
+
     private var header: some View {
         VStack(alignment: .leading, spacing: 8) {
             Image(systemName: "rectangle.inset.filled")
                 .font(.largeTitle)
                 .foregroundStyle(.tint)
+                .accessibilityHidden(true)
             Text("Scripture on your Lock Screen")
                 .font(.title2.weight(.bold))
             Text("The Lock Screen widget is the quickest way to keep a verse in view. Add it once and it updates through the day — offline, no account.")
@@ -32,28 +46,18 @@ struct LockScreenWidgetGuideView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    // Highlights the Rectangular widget (the default) with a small mock of it.
+    // Highlights the Rectangular widget (the default), drawn by the widget's own view.
     private var recommendedCard: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(spacing: 6) {
-                Image(systemName: "star.fill").font(.caption2)
+                Image(systemName: "star.fill")
+                    .font(.caption2)
+                    .accessibilityHidden(true)
                 Text("RECOMMENDED").font(.caption.weight(.bold)).tracking(1)
             }
             .foregroundStyle(.tint)
 
-            VStack(alignment: .leading, spacing: 3) {
-                HStack {
-                    Text("Jas 1:3").font(.system(size: 11, weight: .semibold)).foregroundStyle(.secondary)
-                    Spacer()
-                    Text("KJV").font(.system(size: 10, weight: .medium)).foregroundStyle(.tertiary)
-                }
-                Text("\u{201C}Knowing this, that the trying of your faith worketh patience.\u{201D}")
-                    .font(.system(size: 13))
-                    .lineLimit(3)
-            }
-            .padding(12)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+            LockScreenWidgetPreview(entry: Self.example)
 
             Text("The Rectangular widget shows the most text. Inline and Circular are also available.")
                 .font(.footnote)
@@ -71,7 +75,7 @@ struct LockScreenWidgetGuideView: View {
                     Text("\(index + 1)")
                         .font(.subheadline.weight(.bold))
                         .foregroundStyle(.white)
-                        .frame(width: 26, height: 26)
+                        .frame(width: stepBadgeSize, height: stepBadgeSize)
                         .background(Color.accentColor, in: Circle())
                     Text(text)
                         .font(.callout)

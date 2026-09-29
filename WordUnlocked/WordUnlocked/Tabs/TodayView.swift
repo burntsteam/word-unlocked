@@ -3,41 +3,33 @@ import SwiftUI
 struct TodayView: View {
     @EnvironmentObject var settingsStore: SettingsStore
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var rvService = RVBibleService.shared
     @StateObject private var esvService = ESVBibleService.shared
+    @ScaledMetric(relativeTo: .body) private var favoriteButtonSize: CGFloat = 44
 
-    // Drives verse reference selection (always KJV-backed for mode logic).
-    // Held as @State so it is recomputed only when verse-selection-relevant
-    // settings change (see verseSelectionKey), not on every body re-render
-    // triggered by the live services publishing fetch progress.
+    // Recomputed only when something that picks the verse changes (see refreshKey), not on
+    // every redraw while a live translation loads.
     @State private var currentVerse: Verse
+    @State private var lockScreenEntry: VerseEntry?
+    @State private var showsWholeVerse = false
+    // Moves on at each rotation slot, so the card changes with the widget while the app is open.
+    @State private var clock = Date()
 
     init() {
-        // Seed from the persisted App Group settings so the first render is
-        // correct before the injected @EnvironmentObject becomes available.
-        // .onAppear re-syncs with the live store immediately after.
-        let store = SettingsStore()
-        _currentVerse = State(
-            initialValue: VerseSelectionService.verse(
-                for: store.currentSettings(),
-                favorites: store.favorites
-            )
-        )
+        // Read from the App Group, which never writes, so the first frame is right before
+        // the environment's store is available.
+        let defaults = AppGroupSettings.defaults
+        _currentVerse = State(initialValue: VerseSelectionService.verse(
+            for: WidgetSettings(defaults: defaults),
+            favorites: Favorite.saved(in: defaults)
+        ))
     }
 
-    // Recompute the verse from the live environment store.
-    private func computeCurrentVerse() -> Verse {
-        VerseSelectionService.verse(
-            for: settingsStore.currentSettings(),
-            favorites: settingsStore.favorites
-        )
-    }
-
-    // Changes to any field below alter VerseSelectionService.verse() output.
-    // Used as the .onChange key so currentVerse refreshes on real settings
-    // changes (and at each new rotation slot) without recomputing on live-service publishes.
-    private var verseSelectionKey: String {
-        let favoriteIds = settingsStore.favorites.map { String($0.verseId) }.joined(separator: ",")
+    /// Changes whenever the verse, or how the widget shows it, could change.
+    private var refreshKey: String {
+        let favorites = settingsStore.favorites.map { "\($0.verseId)\($0.translationCode)" }.joined(separator: ",")
+        let plan = settingsStore.memorizationPlan.map { "\($0.id)|\($0.startDate)|\($0.durationDays)|\($0.difficulty)" } ?? ""
         return [
             settingsStore.activeMode.rawValue,
             settingsStore.selectedTranslation,
@@ -46,8 +38,12 @@ struct TodayView: View {
             settingsStore.chapterBookId.map(String.init) ?? "",
             settingsStore.chapterNumber.map(String.init) ?? "",
             settingsStore.memorizationPlanId.map(String.init) ?? "",
-            favoriteIds,
-            VerseSelectionService.selectionStamp(for: settingsStore.activeMode)
+            String(settingsStore.showProgress),
+            String(settingsStore.showTranslationCode),
+            favorites,
+            plan,
+            String(esvService.verses.count),
+            VerseSelectionService.selectionStamp(for: settingsStore.activeMode, date: clock)
         ].joined(separator: "|")
     }
 
@@ -58,80 +54,60 @@ struct TodayView: View {
             .joined(separator: "|")
     }
 
-    // Translations whose text comes from an API rather than the bundled database.
+    private var theme: WidgetTheme {
+        ThemeService.theme(id: settingsStore.selectedTheme, colorScheme: colorScheme)
+    }
+
+    // MARK: Which text shows, and in which translation
+
     private var isLiveTranslation: Bool {
         VerseSelectionService.liveTranslationCodes.contains(settingsStore.selectedTranslation)
     }
 
-    // The live translation's text for the current reference, when the app has it: ESV
-    // downloaded ahead of time, or a Recovery Version verse loaded into memory.
-    private var liveVerse: (ref: String, text: String)? {
+    /// Whether the verse on screen is the reference text a live translation replaces. A
+    /// favorite keeps the translation it was saved in.
+    private var standsInForLiveText: Bool {
+        isLiveTranslation
+            && currentVerse.translationCode == VerseSelectionService.referenceTranslationCode(for: settingsStore.selectedTranslation)
+    }
+
+    /// The live translation's text for this verse, when the app has it: ESV downloaded ahead
+    /// of time, or a Recovery Version verse loaded into memory.
+    private var liveText: String? {
+        guard standsInForLiveText else { return nil }
         switch settingsStore.selectedTranslation {
-        case "RV":
-            return rvService.verse(for: currentVerse.verseRef).map { ($0.ref, $0.text) }
-        case "ESV":
-            return esvService.cachedVerse(for: currentVerse.verseRef).map { ($0.ref, $0.text) }
-        default:
-            return nil
+        case "RV": return rvService.verse(for: currentVerse.verseRef)?.text
+        case "ESV": return esvService.cachedVerse(for: currentVerse.verseRef)?.text
+        default: return nil
         }
     }
 
-    private var isLiveFetching: Bool {
-        switch settingsStore.selectedTranslation {
-        case "RV": return rvService.isFetching
-        case "ESV": return esvService.isFetching
-        default: return false
-        }
+    private var verseText: String {
+        liveText ?? currentVerse.text
     }
 
-    // Show the live verse when it matches the current reference; otherwise
-    // currentVerse (King James-backed) drives the display so ref and text agree.
-    private var displayRef: String {
-        liveVerse?.ref ?? currentVerse.verseRef
+    /// The translation of the text actually on screen.
+    private var shownTranslation: String {
+        liveText != nil ? settingsStore.selectedTranslation : currentVerse.translationCode
     }
 
-    private var displayText: String {
-        liveVerse?.text ?? currentVerse.text
-    }
-
-    // The public-domain translation shown when a live translation's text isn't
-    // available (offline or not yet fetched). currentVerse is King James-backed.
-    private static let offlineFallbackCode = "KJV"
-
-    // True when a live translation is selected but its text isn't on screen — the
-    // bundled public-domain verse is showing instead. Excludes the in-flight
-    // fetch window so the label doesn't flip while loading.
-    private var liveFallbackActive: Bool {
-        isLiveTranslation && !isLiveFetching && liveVerse == nil
-    }
-
-    // Translation label for the text actually on screen. Reports the
-    // public-domain code when live text isn't available, so a King James verse
-    // is never mislabeled.
-    private var displayTranslation: String {
-        liveFallbackActive ? Self.offlineFallbackCode : settingsStore.selectedTranslation
-    }
-
-    // What the Lock Screen widget and a saved wallpaper show. Recovery Version text can't be
-    // stored, so those use the reference translation.
-    private var storableVerse: (ref: String, text: String, translation: String) {
-        settingsStore.selectedTranslation == "RV"
-            ? (currentVerse.verseRef, currentVerse.text, Self.offlineFallbackCode)
-            : (displayRef, displayText, displayTranslation)
-    }
-
-    // The attribution a live verse needs, or why the King James Version shows instead.
-    private var liveTranslationNote: String? {
+    /// The attribution a live verse needs, or why the King James Version shows instead.
+    private var liveNote: String? {
+        guard standsInForLiveText else { return nil }
         switch settingsStore.selectedTranslation {
         case "RV":
             if let verse = rvService.verse(for: currentVerse.verseRef) {
                 return "\(verse.attribution)\n\nRecovery Version text isn't stored on your device, so the Lock Screen widget and wallpapers use the King James Version."
             }
-            return liveFallbackActive
-                ? "Showing the King James Version until the Recovery Version loads, which needs an internet connection."
-                : nil
+            if rvService.isFetching {
+                return "Loading the Recovery Version…"
+            }
+            return "Showing the King James Version until the Recovery Version loads, which needs an internet connection."
         case "ESV":
-            guard liveFallbackActive else { return nil }
+            guard liveText == nil else { return nil }
+            if esvService.isFetching {
+                return "Downloading ESV verses…"
+            }
             if let next = esvService.nextFetchDate, next > Date() {
                 return "Showing the King James Version. ESV verses download at most once every 48 hours, so this one can download after \(next.formatted(date: .abbreviated, time: .shortened))."
             }
@@ -141,46 +117,76 @@ struct TodayView: View {
         }
     }
 
-    private var theme: WidgetTheme {
-        ThemeService.theme(id: settingsStore.selectedTheme)
+    /// What a saved wallpaper shows. Recovery Version text can't be stored, so wallpapers use
+    /// the King James text it stands in for.
+    private var wallpaperVerse: (ref: String, text: String, translation: String) {
+        settingsStore.selectedTranslation == "RV"
+            ? (currentVerse.displayReference, currentVerse.text, currentVerse.translationCode)
+            : (currentVerse.displayReference, verseText, shownTranslation)
     }
 
-    private var chapterProgressText: String? {
-        guard settingsStore.activeMode == .chapter else { return nil }
-        return "\(currentVerse.bookName) \(currentVerse.chapter) · verse \(currentVerse.verse)"
+    // MARK: Memorization
+
+    private var memorizationPlan: MemorizationPlan? {
+        guard settingsStore.activeMode == .memorization,
+              let plan = settingsStore.memorizationPlan,
+              plan.id == settingsStore.memorizationPlanId else { return nil }
+        return plan
     }
+
+    /// The text the card shows: the verse, or the memorization step's version of it. Nil
+    /// asks for the verse from memory.
+    private var cardText: String? {
+        guard let plan = memorizationPlan, !showsWholeVerse else { return verseText }
+        return MemorizationService.text(verseText, in: MemorizationService.phase(of: plan), difficulty: plan.difficulty)
+    }
+
+    private var isHidingPartOfTheVerse: Bool {
+        guard let plan = memorizationPlan else { return false }
+        return [.partialBlank, .firstLetters, .referenceOnly].contains(MemorizationService.phase(of: plan))
+    }
+
+    // MARK: Body
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 activeVerseCard
-                if let liveTranslationNote {
-                    Text(liveTranslationNote)
+                if let liveNote {
+                    Text(liveNote)
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .padding(.horizontal, 4)
                 }
                 widgetPreviewSection
                 navigationActions
-                Text("Lock Screen widgets have limited space. Word Unlocked may use excerpts, segmented rotation, or references for longer verses based on your fitting setting.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-                    .padding(.horizontal, 4)
             }
             .padding()
         }
         .navigationTitle("Today")
-        .onAppear {
-            currentVerse = computeCurrentVerse()
+        .onAppear(perform: refresh)
+        .onChange(of: refreshKey) { _, _ in
+            refresh()
         }
-        .onChange(of: verseSelectionKey) { _, _ in
-            currentVerse = computeCurrentVerse()
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active {
+                clock = Date()
+            }
+        }
+        .task(id: refreshKey) {
+            let interval = VerseSelectionService.rotationInterval(for: settingsStore.activeMode)
+            guard let next = VerseSelectionService.slotStartDates(from: Date(), interval: interval, dayCount: 2).dropFirst().first else { return }
+            try? await Task.sleep(for: .seconds(max(next.timeIntervalSinceNow, 1)))
+            guard !Task.isCancelled else { return }
+            clock = Date()
         }
         .task(id: liveRequestKey) {
             guard scenePhase == .active else { return }
             switch settingsStore.selectedTranslation {
             case "RV":
-                await rvService.fetch(reference: currentVerse.verseRef)
+                if standsInForLiveText {
+                    await rvService.fetch(reference: currentVerse.verseRef)
+                }
             case "ESV":
                 await esvService.refreshIfDue(settings: settingsStore.currentSettings(), favorites: settingsStore.favorites)
             default:
@@ -189,53 +195,62 @@ struct TodayView: View {
         }
     }
 
+    private func refresh() {
+        currentVerse = VerseSelectionService.verse(for: settingsStore.currentSettings(), favorites: settingsStore.favorites)
+        lockScreenEntry = WidgetTimelineService.shared.entries(maxEntries: 1).first
+        showsWholeVerse = false
+    }
+
     private var activeVerseCard: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            HStack(alignment: .top) {
-                VStack(alignment: .leading, spacing: 10) {
-                    HStack(spacing: 8) {
-                        Text(displayRef)
+        VStack(alignment: .leading, spacing: 16) {
+            ZStack(alignment: .topTrailing) {
+                VStack(alignment: .leading, spacing: 18) {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(currentVerse.displayReference)
                             .font(.title2.weight(.bold))
-                        if isLiveFetching {
-                            ProgressView().scaleEffect(0.7)
+                            .padding(.trailing, favoriteButtonSize)
+                        InfoRow(
+                            mode: settingsStore.activeMode,
+                            translation: shownTranslation,
+                            themeName: WidgetTheme.name(forId: settingsStore.selectedTheme),
+                            theme: theme
+                        )
+                    }
+
+                    if let cardText {
+                        Text(cardText)
+                            .font(.system(.title3, design: theme.fontDesign).weight(.light))
+                            .lineSpacing(6)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    } else {
+                        Text("Recite it from memory, then tap Show Verse to check.")
+                            .font(.system(.body, design: theme.fontDesign))
+                            .foregroundStyle(theme.colors.secondaryText)
+                    }
+
+                    if let progress = progressText {
+                        HStack(spacing: 6) {
+                            RoundedRectangle(cornerRadius: 2, style: .continuous)
+                                .fill(theme.colors.accent)
+                                .frame(width: 3, height: 14)
+                                .accessibilityHidden(true)
+                            Text(progress)
+                                .font(.footnote.weight(.medium))
+                                .foregroundStyle(theme.colors.accent)
                         }
                     }
-                    InfoRow(
-                        modeTitle: settingsStore.activeMode.title,
-                        translation: displayTranslation,
-                        themeName: theme.name
-                    )
                 }
+                .accessibilityElement(children: .combine)
 
-                Spacer()
-
-                Button {
-                    toggleFavorite()
-                } label: {
-                    Image(systemName: settingsStore.isFavorite(currentVerse) ? "heart.fill" : "heart")
-                        .font(.body.weight(.semibold))
-                        .foregroundStyle(settingsStore.isFavorite(currentVerse) ? theme.colors.accent : theme.colors.text.opacity(0.5))
-                        .frame(width: 40, height: 40)
-                        .background(theme.colors.text.opacity(0.08))
-                        .clipShape(Circle())
-                }
-                .accessibilityLabel(settingsStore.isFavorite(currentVerse) ? "Remove favorite" : "Add favorite")
+                favoriteButton
             }
 
-            Text(displayText)
-                .font(.system(.title3, design: theme.fontDesign).weight(.light))
-                .lineSpacing(6)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-            if let chapterProgressText {
-                HStack(spacing: 6) {
-                    RoundedRectangle(cornerRadius: 2, style: .continuous)
-                        .fill(theme.colors.accent)
-                        .frame(width: 3, height: 14)
-                    Text(chapterProgressText)
-                        .font(.footnote.weight(.medium))
-                        .foregroundStyle(theme.colors.accent)
+            if isHidingPartOfTheVerse {
+                Button(showsWholeVerse ? "Hide Verse" : "Show Verse") {
+                    showsWholeVerse.toggle()
                 }
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(theme.colors.accent)
             }
         }
         .padding(22)
@@ -246,20 +261,56 @@ struct TodayView: View {
         .shadow(color: .black.opacity(0.07), radius: 10, x: 0, y: 4)
     }
 
+    /// Chapter progress, or the memorization step, shown under the verse.
+    private var progressText: String? {
+        if let plan = memorizationPlan {
+            let phase = MemorizationService.phase(of: plan)
+            return "Step \(phase.rawValue) of 5 · \(phase.caption)"
+        }
+        guard settingsStore.activeMode == .chapter, let note = lockScreenEntry?.note else { return nil }
+        return "\(currentVerse.bookName) \(currentVerse.chapter) · \(note)"
+    }
+
+    private var isFavorite: Bool {
+        settingsStore.isFavorite(currentVerse)
+    }
+
+    private var favoriteButton: some View {
+        Button {
+            toggleFavorite()
+        } label: {
+            Image(systemName: isFavorite ? "heart.fill" : "heart")
+                .font(.body.weight(.semibold))
+                .foregroundStyle(isFavorite ? theme.colors.accent : theme.colors.secondaryText)
+                .frame(width: favoriteButtonSize, height: favoriteButtonSize)
+                .background(theme.colors.text.opacity(0.08), in: Circle())
+        }
+        .accessibilityLabel(isFavorite ? "Remove from Favorites" : "Add to Favorites")
+    }
+
     private var widgetPreviewSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Widget Preview")
+            Text("Lock Screen widget")
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(.secondary)
 
+            if let lockScreenEntry {
+                LockScreenWidgetPreview(entry: lockScreenEntry)
+            }
+
+            Text("Home Screen widget")
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(.secondary)
+                .padding(.top, 6)
+
             MiniWidgetPreview(
-                ref: storableVerse.ref,
-                text: storableVerse.text,
+                ref: wallpaperVerse.ref,
+                text: wallpaperVerse.text,
                 theme: theme,
-                translation: storableVerse.translation
+                translation: wallpaperVerse.translation
             )
 
-            Text("Long verse handling: \(settingsStore.longVerseStrategy.summary)")
+            Text("Themes style the Home Screen widget and wallpapers; Lock Screen widgets take on your Lock Screen's look. Long verses on the Lock Screen: \(settingsStore.longVerseStrategy.summary)")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
         }
@@ -272,7 +323,7 @@ struct TodayView: View {
             } label: {
                 ActionArea(
                     title: "Add Lock Screen Widget",
-                    subtitle: "Recommended — scripture on your Lock Screen",
+                    subtitle: "Recommended: scripture on your Lock Screen",
                     systemImage: "rectangle.inset.filled",
                     accentColor: theme.colors.accent
                 )
@@ -280,15 +331,15 @@ struct TodayView: View {
 
             NavigationLink {
                 WallpaperExportView(
-                    ref: storableVerse.ref,
-                    text: storableVerse.text,
-                    translation: storableVerse.translation,
+                    ref: wallpaperVerse.ref,
+                    text: wallpaperVerse.text,
+                    translation: wallpaperVerse.translation,
                     theme: theme
                 )
             } label: {
                 ActionArea(
                     title: "Set as Wallpaper",
-                    subtitle: "Verse image that clears the clock",
+                    subtitle: "A verse image that stays clear of the clock",
                     systemImage: "photo.on.rectangle.angled",
                     accentColor: theme.colors.accent
                 )
@@ -310,62 +361,89 @@ struct TodayView: View {
             } label: {
                 ActionArea(
                     title: "Change Theme",
-                    subtitle: "Current: \(theme.name)",
+                    subtitle: "Current: \(WidgetTheme.name(forId: settingsStore.selectedTheme))",
                     systemImage: "paintpalette.fill",
                     accentColor: theme.colors.accent
                 )
             }
         }
+        .buttonStyle(.plain)
     }
 
     private func toggleFavorite() {
         if let favorite = settingsStore.favorites.first(where: { $0.verseId == currentVerse.id }) {
             settingsStore.removeFavorite(favorite)
-        } else if settingsStore.selectedTranslation == "ESV", let live = liveVerse,
+        } else if settingsStore.selectedTranslation == "ESV", let text = liveText,
                   ESVBibleService.canSaveFavorite(bookId: currentVerse.bookId, favorites: settingsStore.favorites) {
-            settingsStore.addFavorite(verseId: currentVerse.id, verseRef: live.ref, text: live.text, translationCode: "ESV")
+            settingsStore.addFavorite(verseId: currentVerse.id, verseRef: currentVerse.displayReference, text: text, translationCode: "ESV")
         } else {
             // Recovery Version text can't be stored, and ESV text past Crossway's limits isn't
-            // kept, so those favorites keep the reference translation's text.
+            // kept, so those favorites keep the King James text on screen underneath.
             settingsStore.addFavorite(verse: currentVerse)
         }
     }
 }
 
+/// The mode, translation and theme, in chips that wrap onto their own lines when the text is large.
 private struct InfoRow: View {
-    let modeTitle: String
+    let mode: WidgetSettings.VerseMode
     let translation: String
     let themeName: String
+    let theme: WidgetTheme
 
     var body: some View {
-        HStack(spacing: 6) {
-            Chip(text: modeTitle, systemImage: "rectangle.3.group")
-            Chip(text: translation)
-            Chip(text: themeName)
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: 6) { chips }
+            VStack(alignment: .leading, spacing: 6) { chips }
         }
-        .lineLimit(1)
-        .minimumScaleFactor(0.8)
+    }
+
+    @ViewBuilder
+    private var chips: some View {
+        Chip(text: mode.title, systemImage: mode.symbolName, theme: theme)
+        Chip(text: translation, theme: theme)
+        Chip(text: themeName, theme: theme)
     }
 }
 
 private struct Chip: View {
     let text: String
     var systemImage: String? = nil
+    let theme: WidgetTheme
 
     var body: some View {
         HStack(spacing: 3) {
             if let icon = systemImage {
                 Image(systemName: icon)
                     .font(.caption2)
+                    .accessibilityHidden(true)
             }
             Text(text)
                 .font(.caption.weight(.medium))
         }
-        .foregroundStyle(.secondary)
+        .foregroundStyle(theme.colors.text.opacity(0.78))
         .padding(.horizontal, 8)
         .padding(.vertical, 4)
-        .background(.thinMaterial)
-        .clipShape(Capsule())
+        .background(theme.colors.text.opacity(0.08), in: Capsule())
+    }
+}
+
+/// The Lock Screen widget as it will look: the widget's own view, in white on a dark screen.
+struct LockScreenWidgetPreview: View {
+    let entry: VerseEntry
+
+    var body: some View {
+        RectangularWidgetView(entry: entry)
+            .frame(width: 172, height: 76)
+            .foregroundStyle(.white)
+            .environment(\.colorScheme, .dark)
+            .background(.white.opacity(0.1), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 20)
+            .background(
+                LinearGradient(colors: [Color(hex: "#2B3A55"), Color(hex: "#111827")], startPoint: .top, endPoint: .bottom),
+                in: RoundedRectangle(cornerRadius: 16, style: .continuous)
+            )
     }
 }
 
@@ -384,13 +462,14 @@ private struct MiniWidgetPreview: View {
                 Spacer()
                 Text(translation)
                     .font(.caption2.weight(.bold))
-                    .foregroundStyle(theme.colors.text.opacity(0.5))
+                    .foregroundStyle(theme.colors.secondaryText)
             }
             .padding(.bottom, 8)
 
             theme.colors.accent.opacity(0.2)
                 .frame(height: 1)
                 .padding(.bottom, 10)
+                .accessibilityHidden(true)
 
             Text(text)
                 .font(.system(.footnote, design: theme.fontDesign).weight(.light))
@@ -407,6 +486,7 @@ private struct MiniWidgetPreview: View {
             RoundedRectangle(cornerRadius: 12, style: .continuous)
                 .stroke(theme.colors.accent.opacity(0.25), lineWidth: 1)
         )
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -424,6 +504,7 @@ private struct ActionArea: View {
                 .frame(width: 36, height: 36)
                 .background(accentColor)
                 .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
@@ -432,13 +513,13 @@ private struct ActionArea: View {
                 Text(subtitle)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
-                    .lineLimit(1)
             }
 
             Spacer()
             Image(systemName: "chevron.right")
                 .font(.footnote.weight(.semibold))
                 .foregroundStyle(.tertiary)
+                .accessibilityHidden(true)
         }
         .padding(16)
         .background(.background)
@@ -448,5 +529,6 @@ private struct ActionArea: View {
             RoundedRectangle(cornerRadius: 14, style: .continuous)
                 .stroke(.quaternary, lineWidth: 0.5)
         )
+        .contentShape(Rectangle())
     }
 }

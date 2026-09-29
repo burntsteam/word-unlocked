@@ -9,6 +9,9 @@ struct WeeklyThemeModeView: View {
     @State private var customVerses: [Verse] = []
     @State private var previewVerses: [(dayNumber: Int, verse: Verse)] = []
     @State private var hasLoaded = false
+    // What was saved when the sheet opened: saving restarts the plan only when it changed.
+    @State private var savedPlan = WeeklyPlan()
+    @State private var savedAutoRepeat = true
 
     private var chapterCount: Int {
         books.first { $0.id == plan.bookId }?.chapterCount ?? 1
@@ -45,36 +48,34 @@ struct WeeklyThemeModeView: View {
 
             Section("This Week") {
                 if previewVerses.isEmpty {
-                    Text(plan.source == .custom ? "Add verses to see this week's plan." : "Loading...")
+                    Text(plan.source == .custom ? "Add verses to see this week's plan." : "No verses found for this choice.")
                         .foregroundStyle(.secondary)
                 } else {
                     ForEach(previewVerses, id: \.dayNumber) { preview in
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Day \(preview.dayNumber): \(preview.verse.verseRef)")
+                            Text("Day \(preview.dayNumber): \(preview.verse.displayReference)")
                                 .font(.headline)
                             Text(preview.verse.text)
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
                         }
+                        .accessibilityElement(children: .combine)
                     }
                 }
             }
 
-            Section("Start") {
+            Section {
                 Toggle("Repeat every week", isOn: $autoRepeat)
-
+            } footer: {
                 Text("Repeat shows the same seven verses every week. Turn it off to move on to the next seven each week, starting over at the end.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-
-                Button {
-                    start()
-                } label: {
-                    Label("Start This Week", systemImage: "calendar.badge.checkmark")
-                        .frame(maxWidth: .infinity)
-                }
-                .disabled(plan.source == .custom && plan.customVerseIds.isEmpty)
             }
+
+            ModeSaveSection(
+                mode: .weeklyTheme,
+                isDisabled: plan.source == .custom && plan.customVerseIds.isEmpty,
+                footnote: "Saving a new plan starts it this week.",
+                save: start
+            )
         }
         .navigationTitle("Weekly Plan")
         .onAppear(perform: load)
@@ -89,6 +90,7 @@ struct WeeklyThemeModeView: View {
     private var themeSection: some View {
         Section("Theme") {
             ForEach(topics, id: \.slug) { topic in
+                let isSelected = plan.topicSlug == topic.slug
                 Button {
                     plan.topicSlug = topic.slug
                 } label: {
@@ -103,14 +105,16 @@ struct WeeklyThemeModeView: View {
 
                         Spacer()
 
-                        if plan.topicSlug == topic.slug {
+                        if isSelected {
                             Image(systemName: "checkmark.circle.fill")
                                 .foregroundStyle(.tint)
+                                .accessibilityHidden(true)
                         }
                     }
                     .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
+                .accessibilityAddTraits(isSelected ? .isSelected : [])
             }
         }
     }
@@ -135,7 +139,7 @@ struct WeeklyThemeModeView: View {
         Section {
             ForEach(customVerses) { verse in
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(verse.verseRef)
+                    Text(verse.displayReference)
                         .font(.headline)
                     Text(verse.text)
                         .font(.caption)
@@ -169,6 +173,8 @@ struct WeeklyThemeModeView: View {
         if AppGroupSettings.defaults.object(forKey: AppGroupSettings.Keys.weeklyAutoRepeat) != nil {
             autoRepeat = AppGroupSettings.defaults.bool(forKey: AppGroupSettings.Keys.weeklyAutoRepeat)
         }
+        savedPlan = plan
+        savedAutoRepeat = autoRepeat
         loadPreview()
     }
 
@@ -190,12 +196,16 @@ struct WeeklyThemeModeView: View {
         }
     }
 
+    /// Saves the plan. A new plan, or one saved while another mode is active, starts this
+    /// week; saving the running plan unchanged keeps its place.
     private func start() {
+        let isNewPlan = settingsStore.activeMode != .weeklyTheme || plan != savedPlan || autoRepeat != savedAutoRepeat
         plan.save(to: AppGroupSettings.defaults)
         AppGroupSettings.defaults.set(autoRepeat, forKey: AppGroupSettings.Keys.weeklyAutoRepeat)
         settingsStore.topicSlug = plan.topicSlug
-        settingsStore.startPlan(for: .weeklyTheme)
-        settingsStore.activeMode = .weeklyTheme
+        if isNewPlan {
+            settingsStore.startPlan(for: .weeklyTheme)
+        }
     }
 }
 
@@ -244,7 +254,12 @@ private struct WeeklyVersePicker: View {
             }
             try? await Task.sleep(for: .milliseconds(250))
             guard !Task.isCancelled else { return }
-            results = DatabaseService.shared.search(query: query, translationCode: searchTranslationCode, limit: 20)
+            let code = searchTranslationCode
+            let found = await Task.detached(priority: .userInitiated) {
+                DatabaseService.shared.search(query: query, translationCode: code, limit: 20)
+            }.value
+            guard !Task.isCancelled else { return }
+            results = found
         }
     }
 
@@ -259,7 +274,7 @@ private struct WeeklyVersePicker: View {
         } label: {
             HStack(spacing: 12) {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(verse.verseRef)
+                    Text(verse.displayReference)
                         .font(.headline)
                     Text(verse.text)
                         .font(.caption)
@@ -275,6 +290,6 @@ private struct WeeklyVersePicker: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(isAdded ? "Remove \(verse.verseRef)" : "Add \(verse.verseRef)")
+        .accessibilityLabel(isAdded ? "Remove \(verse.displayReference)" : "Add \(verse.displayReference)")
     }
 }

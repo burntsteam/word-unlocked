@@ -46,5 +46,31 @@ extension MemorizationPlan.Phase {
         case .review: "Review"
         }
     }
+
+    /// A short line for Today and the widget saying what this phase asks of you.
+    var caption: String {
+        switch self {
+        case .fullVerse: "Read it through"
+        case .partialBlank: "Fill in the blanks"
+        case .firstLetters: "First letters"
+        case .referenceOnly: "Recite it from memory"
+        case .review: "Review"
+        }
+    }
 }
 
+extension MemorizationPlan {
+    /// A plan for `verseId` from its first step. A plan is known by its verse's id.
+    init(verseId: Int, durationDays: Int, difficulty: Difficulty, startDate: Date = Date()) {
+        self.init(
+            id: verseId, verseId: verseId, startDate: startDate, durationDays: durationDays,
+            difficulty: difficulty, currentPhase: .fullVerse, enabled: true
+        )
+    }
+
+    /// The plan saved in `defaults`, if there is one that can be read.
+    static func saved(in defaults: UserDefaults) -> MemorizationPlan? {
+        guard let data = defaults.data(forKey: AppGroupSettings.Keys.memorizationPlan) else { return nil }
+        return try? JSONDecoder().decode(MemorizationPlan.self, from: data)
+    }
+}

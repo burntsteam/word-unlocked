@@ -8,9 +8,8 @@ import WidgetKit
 // once every 48 hours: one request for the verses its settings show next that it lacks.
 @MainActor
 final class ESVBibleService: ObservableObject {
-    // ESV_API_KEY is supplied at build time via Config/Secrets.xcconfig.
-    static let shared = ESVBibleService(
-        apiKey: Bundle.main.infoDictionary?["ESVApiKey"] as? String ?? "")
+    // ESV_API_KEY comes from Config/Secrets.xcconfig through the generated LiveAPIKeys.
+    static let shared = ESVBibleService(apiKey: LiveAPIKeys.esvAPIKey)
 
     /// Crossway's cap on ESV verses kept on a device.
     nonisolated static let maxStoredVerses = 500
@@ -27,7 +26,7 @@ final class ESVBibleService: ObservableObject {
     private let apiKey: String
     private let defaults: UserDefaults
     private let session: URLSession
-    private var isRefreshing = false
+    private var refreshTask: Task<Void, Never>?
 
     // Without a key there is nothing to download, so the UI hides the translation.
     static var isConfigured: Bool { shared.isConfigured }
@@ -35,7 +34,7 @@ final class ESVBibleService: ObservableObject {
 
     // Takes its key, store and session so tests can run it unconfigured, or against a
     // stubbed network and a scratch store instead of the App Group the widget reads.
-    init(apiKey: String, defaults: UserDefaults = AppGroupSettings.defaults, session: URLSession = .shared) {
+    init(apiKey: String, defaults: UserDefaults = AppGroupSettings.defaults, session: URLSession = LiveAPISession.shared) {
         self.apiKey = apiKey
         self.defaults = defaults
         self.session = session
@@ -63,14 +62,24 @@ final class ESVBibleService: ObservableObject {
     }
 
     /// Downloads what `settings` show next, once 48 hours have passed since the last download.
+    /// The download runs to the end even when the caller goes away: leaving Today mid-request
+    /// must not throw away verses Crossway has already been asked for.
     func refreshIfDue(settings: WidgetSettings, favorites: [Favorite], now: Date = Date()) async {
-        guard isConfigured, !isRefreshing, isFetchDue(at: now) else { return }
-        isRefreshing = true
-        defer { isRefreshing = false }
-        let plan = await Task.detached(priority: .utility) {
-            Self.plannedVerses(settings: settings, favorites: favorites, from: now)
-        }.value
-        await update(with: plan, now: now)
+        if let refreshTask {
+            await refreshTask.value
+            return
+        }
+        guard isConfigured, isFetchDue(at: now) else { return }
+        let defaults = defaults
+        let task = Task {
+            let plan = await Task.detached(priority: .utility) {
+                Self.plannedVerses(settings: settings, favorites: favorites, from: now, defaults: defaults)
+            }.value
+            await update(with: plan, now: now)
+        }
+        refreshTask = task
+        await task.value
+        refreshTask = nil
     }
 
     /// Downloads, in one request, the verses of `plan` not already here, then keeps just the
@@ -80,14 +89,17 @@ final class ESVBibleService: ObservableObject {
         guard isConfigured, isFetchDue(at: now) else { return }
         let stored = Dictionary(verses.map { ($0.fetchedRef, $0) }, uniquingKeysWith: { first, _ in first })
         let missing = Array(plan.filter { stored[$0.verseRef] == nil }.prefix(Self.maxVersesPerRequest))
-        guard !missing.isEmpty, let request = Self.request(for: missing, apiKey: apiKey) else { return }
+        guard !missing.isEmpty, let request = Self.request(for: missing, apiKey: apiKey), !Task.isCancelled else { return }
 
         isFetching = true
         defer { isFetching = false }
         error = nil
+        // The 48 hours count from the moment the request may reach Crossway, so a download
+        // that is interrupted, or never answered, still waits its turn.
+        let previousFetchDate = lastFetchDate
+        recordFetch(at: now)
         do {
             let (data, response) = try await session.data(for: request)
-            recordFetch(at: now)
             switch (response as? HTTPURLResponse)?.statusCode ?? 0 {
             case 200...299:
                 let downloaded = try Self.verses(from: data, requested: missing)
@@ -100,10 +112,10 @@ final class ESVBibleService: ObservableObject {
                 error = "Could not download ESV verses."
             }
         } catch let urlError as URLError {
-            guard urlError.code != .cancelled else { return }
-            if !Self.failedBeforeReachingServer(urlError) {
-                recordFetch(at: now)
+            if Self.failedBeforeReachingServer(urlError) {
+                restoreFetchDate(previousFetchDate)
             }
+            guard urlError.code != .cancelled else { return }
             error = "Could not download ESV verses. Check your connection."
         } catch is CancellationError {
         } catch {
@@ -114,6 +126,14 @@ final class ESVBibleService: ObservableObject {
 
     private func recordFetch(at date: Date) {
         defaults.set(date, forKey: AppGroupSettings.Keys.esvLastFetchDate)
+    }
+
+    private func restoreFetchDate(_ date: Date?) {
+        if let date {
+            recordFetch(at: date)
+        } else {
+            defaults.removeObject(forKey: AppGroupSettings.Keys.esvLastFetchDate)
+        }
     }
 
     private func store(_ newVerses: [LiveCachedVerse]) {
@@ -245,10 +265,16 @@ extension ESVBibleService {
             .joined(separator: " ")
     }
 
-    /// Failures that mean the request never left the device, so they don't start the 48-hour wait.
+    /// Failures that mean the request never reached Crossway, so they don't start the 48-hour
+    /// wait: no connection, or a secure connection that couldn't be set up, as on a captive
+    /// Wi-Fi portal. The request is only sent once the connection is secure.
     nonisolated static func failedBeforeReachingServer(_ error: URLError) -> Bool {
         [.notConnectedToInternet, .cannotFindHost, .cannotConnectToHost, .dnsLookupFailed,
-         .internationalRoamingOff, .dataNotAllowed, .callIsActive].contains(error.code)
+         .internationalRoamingOff, .dataNotAllowed, .callIsActive,
+         .secureConnectionFailed, .serverCertificateUntrusted, .serverCertificateHasBadDate,
+         .serverCertificateNotYetValid, .serverCertificateHasUnknownRoot,
+         .clientCertificateRejected, .clientCertificateRequired,
+         .appTransportSecurityRequiresSecureConnection].contains(error.code)
     }
 }
 

@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct OnboardingWidgetInstructionsView: View {
-    let onContinue: () -> Void
-
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
@@ -18,10 +16,6 @@ struct OnboardingWidgetInstructionsView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-
-                Button("Next", action: onContinue)
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.large)
             }
             .padding(24)
         }
@@ -42,13 +36,14 @@ private let widgetInstructionSteps: [WidgetInstructionStep] = [
     WidgetInstructionStep(number: 3, icon: "lock", text: "Choose Lock Screen."),
     WidgetInstructionStep(number: 4, icon: "rectangle.grid.1x2", text: "Tap the widget area."),
     WidgetInstructionStep(number: 5, icon: "magnifyingglass", text: "Find Word Unlocked."),
-    WidgetInstructionStep(number: 6, icon: "rectangle.3.group", text: "Choose Inline, Circular, or Rectangular."),
+    WidgetInstructionStep(number: 6, icon: "rectangle.3.group", text: "Choose the Rectangular widget, which shows the most text. Inline and Circular are there too."),
     WidgetInstructionStep(number: 7, icon: "plus.circle", text: "Add the widget."),
     WidgetInstructionStep(number: 8, icon: "checkmark", text: "Tap Done to save the Lock Screen.")
 ]
 
 private struct WidgetInstructionRow: View {
     let step: WidgetInstructionStep
+    @ScaledMetric(relativeTo: .subheadline) private var badgeSize: CGFloat = 32
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
@@ -59,12 +54,14 @@ private struct WidgetInstructionRow: View {
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(.tint)
             }
-            .frame(width: 32, height: 32)
+            .frame(width: badgeSize, height: badgeSize)
+            .accessibilityHidden(true)
 
             Image(systemName: step.icon)
                 .font(.body.weight(.semibold))
                 .foregroundStyle(.secondary)
-                .frame(width: 24, height: 32)
+                .frame(minWidth: 24, minHeight: badgeSize)
+                .accessibilityHidden(true)
 
             Text(step.text)
                 .font(.body)
@@ -79,5 +76,7 @@ private struct WidgetInstructionRow: View {
             RoundedRectangle(cornerRadius: 8, style: .continuous)
                 .stroke(Color.secondary.opacity(0.15), lineWidth: 1)
         )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Step \(step.number): \(step.text)")
     }
 }

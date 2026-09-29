@@ -1,35 +1,33 @@
 import SwiftUI
 
 struct OnboardingCompleteView: View {
-    @Binding var hasCompletedOnboarding: Bool
-
     var body: some View {
-        VStack(spacing: 26) {
-            Spacer()
+        // Centred when it fits; at the largest text sizes it scrolls instead of clipping.
+        ViewThatFits(in: .vertical) {
+            content
+            ScrollView { content }
+        }
+    }
 
+    private var content: some View {
+        VStack(spacing: 26) {
             Image(systemName: "checkmark.circle.fill")
                 .font(.system(size: 72, weight: .semibold))
                 .foregroundStyle(.green)
+                .accessibilityHidden(true)
 
             VStack(spacing: 12) {
                 Text("You're all set!")
                     .font(.largeTitle.weight(.bold))
                     .multilineTextAlignment(.center)
+                    .accessibilityAddTraits(.isHeader)
 
-                Text("Word Unlocked is ready with your selected translation, verse mode, and theme. You can change any setting later from the app.")
+                Text("Word Unlocked is ready with your translation, verse mode, and theme. You can change any of them later in the app.")
                     .font(.body)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
             }
-
-            Spacer()
-
-            Button("Get Started") {
-                hasCompletedOnboarding = true
-            }
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
         }
         .padding(24)
     }
@@ -45,9 +43,11 @@ struct OnboardingHeader: View {
             Image(systemName: systemImage)
                 .font(.system(size: 48, weight: .semibold))
                 .foregroundStyle(.tint)
+                .accessibilityHidden(true)
             Text(title)
                 .font(.largeTitle.weight(.bold))
                 .multilineTextAlignment(.center)
+                .accessibilityAddTraits(.isHeader)
             Text(subtitle)
                 .font(.body)
                 .foregroundStyle(.secondary)
@@ -61,23 +61,19 @@ struct OnboardingPageLayout: View {
     let title: String
     let subtitle: String
     let detail: String
-    let buttonTitle: String
-    let action: () -> Void
 
     var body: some View {
-        VStack(spacing: 26) {
-            Spacer()
-            OnboardingHeader(systemImage: systemImage, title: title, subtitle: subtitle)
-            Text(detail)
-                .font(.body)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal)
-            Spacer()
-            Button(buttonTitle, action: action)
-                .buttonStyle(.borderedProminent)
-                .controlSize(.large)
+        ScrollView {
+            VStack(spacing: 26) {
+                OnboardingHeader(systemImage: systemImage, title: title, subtitle: subtitle)
+                Text(detail)
+                    .font(.body)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+            }
+            .padding(24)
+            .padding(.top, 80)
         }
-        .padding(24)
     }
 }

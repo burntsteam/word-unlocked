@@ -107,6 +107,7 @@ struct WallpaperExportView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
                     ForEach(WallpaperBackground.presets) { preset in
+                        let isSelected = background == preset
                         Button {
                             background = preset
                         } label: {
@@ -116,14 +117,16 @@ struct WallpaperExportView: View {
                                     .frame(width: 54, height: 78)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                            .stroke(background == preset ? Color.accentColor : .clear, lineWidth: 3)
+                                            .stroke(isSelected ? Color.accentColor : .clear, lineWidth: 3)
                                     )
+                                    .accessibilityHidden(true)
                                 Text(preset.name)
-                                    .font(.caption2)
-                                    .foregroundStyle(background == preset ? .primary : .secondary)
+                                    .font(.caption)
+                                    .foregroundStyle(isSelected ? .primary : .secondary)
                             }
                         }
                         .buttonStyle(.plain)
+                        .accessibilityAddTraits(isSelected ? .isSelected : [])
                     }
                 }
                 .padding(.vertical, 4)
@@ -286,10 +289,16 @@ struct WallpaperCanvas: View {
             ZStack(alignment: .bottom) {
                 background.gradient
 
-                // Bottom scrim guarantees legible white text over any gradient.
+                // The scrim reaches full strength by 0.4h, above the highest the verse can
+                // start (0.41h), so white text keeps at least 6:1 over the lightest preset
+                // color. It fades in below the clock, leaving the top of the image as chosen.
                 LinearGradient(
-                    colors: [.clear, .black.opacity(0.5)],
-                    startPoint: .center,
+                    stops: [
+                        .init(color: .clear, location: 0.22),
+                        .init(color: .black.opacity(0.45), location: 0.4),
+                        .init(color: .black.opacity(0.55), location: 1)
+                    ],
+                    startPoint: .top,
                     endPoint: .bottom
                 )
 
@@ -316,7 +325,7 @@ struct WallpaperCanvas: View {
                     if !translation.isEmpty {
                         Text(translation)
                             .font(.system(size: h * 0.015, weight: .medium, design: fontDesign))
-                            .foregroundStyle(.white.opacity(0.7))
+                            .foregroundStyle(.white.opacity(0.85))
                     }
                 }
                 .shadow(color: .black.opacity(0.35), radius: h * 0.006, x: 0, y: 1)

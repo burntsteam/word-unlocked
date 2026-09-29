@@ -9,10 +9,6 @@ enum TranslationService {
         allTranslations.filter(\.offlineAvailable)
     }
 
-    static func translation(code: String) -> Translation {
-        allTranslations.first { $0.code == code } ?? allTranslations[0]
-    }
-
     private static func translation(from record: SharedTranslationRecord) -> Translation {
         Translation(
             id: record.id,

@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct DailyVerseModeView: View {
-    @EnvironmentObject var settingsStore: SettingsStore
     @State private var includeOldTestament = true
     @State private var includeNewTestament = true
     @State private var psalmsProverbsOnly = false
@@ -11,46 +10,33 @@ struct DailyVerseModeView: View {
 
     var body: some View {
         Form {
-            Section("Translation") {
-                Picker("Translation", selection: $settingsStore.selectedTranslation) {
-                    ForEach(TranslationService.availableOffline) { translation in
-                        Text("\(translation.code) - \(translation.displayName)").tag(translation.code)
-                    }
-                }
-            }
-
-            Section("Verse Scope") {
+            Section {
+                // At least one testament stays on, and Psalms and Proverbs Only takes over from both.
                 Toggle("Include Old Testament", isOn: $includeOldTestament)
+                    .disabled(psalmsProverbsOnly || !includeNewTestament)
                 Toggle("Include New Testament", isOn: $includeNewTestament)
+                    .disabled(psalmsProverbsOnly || !includeOldTestament)
                 Toggle("Psalms and Proverbs Only", isOn: $psalmsProverbsOnly)
-
-                Text("The widget uses this saved scope when choosing Daily Verse entries.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+            } header: {
+                Text("Verse Scope")
+            } footer: {
+                Text("Daily Verse picks from well-known verses in the part of the Bible you choose, in a new order each time through.")
             }
 
-            Section("Update Interval") {
+            Section {
                 Picker("Update", selection: $updateInterval) {
                     ForEach(intervalOptions) { interval in
                         Text(interval.title).tag(interval)
                     }
                 }
                 .pickerStyle(.segmented)
-
+            } header: {
+                Text("Update Interval")
+            } footer: {
                 Text("Every 8 Hours changes the verse at midnight, 8 AM and 4 PM.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
             }
 
-            Section {
-                Button {
-                    savePreferences()
-                    settingsStore.activeMode = .daily
-                } label: {
-                    Label("Set as Active Mode", systemImage: "checkmark.circle")
-                        .frame(maxWidth: .infinity)
-                }
-            }
+            ModeSaveSection(mode: .daily, save: savePreferences)
         }
         .navigationTitle("Daily Verse")
         .onAppear(perform: loadPreferences)
@@ -63,6 +49,10 @@ struct DailyVerseModeView: View {
         }
         if defaults.object(forKey: AppGroupSettings.Keys.dailyIncludeNewTestament) != nil {
             includeNewTestament = defaults.bool(forKey: AppGroupSettings.Keys.dailyIncludeNewTestament)
+        }
+        if !includeOldTestament && !includeNewTestament {
+            includeOldTestament = true
+            includeNewTestament = true
         }
         if defaults.object(forKey: AppGroupSettings.Keys.dailyPsalmsProverbsOnly) != nil {
             psalmsProverbsOnly = defaults.bool(forKey: AppGroupSettings.Keys.dailyPsalmsProverbsOnly)

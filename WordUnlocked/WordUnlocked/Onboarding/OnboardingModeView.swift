@@ -2,7 +2,9 @@ import SwiftUI
 
 struct OnboardingModeView: View {
     @EnvironmentObject var settingsStore: SettingsStore
-    let onContinue: () -> Void
+
+    // Memorization and Favorites need a chosen or saved verse first, so they're set up later in Modes.
+    private let modes: [WidgetSettings.VerseMode] = [.daily, .weeklyTheme, .topic, .chapter]
 
     var body: some View {
         ScrollView {
@@ -14,57 +16,43 @@ struct OnboardingModeView: View {
                 )
 
                 VStack(spacing: 10) {
-                    ForEach(onboardingModeCards) { card in
+                    ForEach(modes) { mode in
+                        let isSelected = settingsStore.activeMode == mode
                         Button {
-                            settingsStore.activeMode = card.mode
+                            settingsStore.activeMode = mode
                         } label: {
-                            ModeChoiceCard(card: card, isSelected: settingsStore.activeMode == card.mode)
+                            ModeChoiceCard(mode: mode, isSelected: isSelected)
                         }
                         .buttonStyle(.plain)
+                        .accessibilityAddTraits(isSelected ? .isSelected : [])
                     }
                 }
 
-                Button("Next", action: onContinue)
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.large)
+                Text("You can pick the topic, passage or plan in Modes, and set up Memorization or Favorites once you've chosen a verse.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
             }
             .padding(24)
         }
     }
 }
 
-private struct OnboardingModeCard: Identifiable {
-    let mode: WidgetSettings.VerseMode
-    let title: String
-    let description: String
-    let icon: String
-
-    var id: WidgetSettings.VerseMode { mode }
-}
-
-private let onboardingModeCards: [OnboardingModeCard] = [
-    OnboardingModeCard(mode: .daily, title: "Daily Verse", description: "A new verse every day.", icon: "calendar"),
-    OnboardingModeCard(mode: .weeklyTheme, title: "Weekly Plan", description: "A week of verses from a theme or book.", icon: "7.square"),
-    OnboardingModeCard(mode: .topic, title: "Topic", description: "Focus on a subject you choose.", icon: "tag"),
-    OnboardingModeCard(mode: .chapter, title: "Chapter", description: "Move through one chapter in order.", icon: "book.pages"),
-    OnboardingModeCard(mode: .memorization, title: "Memorization", description: "Practice one verse in phases.", icon: "brain.head.profile"),
-    OnboardingModeCard(mode: .favorites, title: "Favorites", description: "Rotate saved verses.", icon: "heart")
-]
-
 private struct ModeChoiceCard: View {
-    let card: OnboardingModeCard
+    let mode: WidgetSettings.VerseMode
     let isSelected: Bool
 
     var body: some View {
         HStack(spacing: 12) {
-            Image(systemName: card.icon)
+            Image(systemName: mode.symbolName)
                 .frame(width: 28)
                 .foregroundStyle(isSelected ? Color.accentColor : Color.secondary)
+                .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: 3) {
-                Text(card.title)
+                Text(mode.title)
                     .font(.headline)
-                Text(card.description)
+                Text(mode.summary)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -74,6 +62,7 @@ private struct ModeChoiceCard: View {
             if isSelected {
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundStyle(.tint)
+                    .accessibilityHidden(true)
             }
         }
         .padding()

@@ -12,13 +12,15 @@ struct TopicModeView: View {
         Form {
             Section("Topics") {
                 ForEach(topics, id: \.slug) { topic in
+                    let isSelected = selectedTopicSlug == topic.slug
                     Button {
                         selectedTopicSlug = topic.slug
                     } label: {
                         HStack(spacing: 12) {
                             Image(systemName: topic.symbolName)
                                 .frame(width: 28)
-                                .foregroundStyle(selectedTopicSlug == topic.slug ? Color.accentColor : Color.secondary)
+                                .foregroundStyle(isSelected ? Color.accentColor : Color.secondary)
+                                .accessibilityHidden(true)
 
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(topic.name)
@@ -30,38 +32,34 @@ struct TopicModeView: View {
 
                             Spacer()
 
-                            if selectedTopicSlug == topic.slug {
+                            if isSelected {
                                 Image(systemName: "checkmark.circle.fill")
                                     .foregroundStyle(.tint)
+                                    .accessibilityHidden(true)
                             }
                         }
+                        .contentShape(Rectangle())
                     }
                     .buttonStyle(.plain)
+                    .accessibilityAddTraits(isSelected ? .isSelected : [])
                 }
-            }
-
-            Section("Rotation Speed") {
-                Picker("Speed", selection: $rotationSpeed) {
-                    ForEach(speedOptions) { speed in
-                        Text(speed == .daily ? "Daily" : "\(speed.hours)h").tag(speed)
-                    }
-                }
-                .pickerStyle(.segmented)
-
-                Text("12h and 6h change the verse through the day, starting at midnight.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
             }
 
             Section {
-                Button {
-                    AppGroupSettings.defaults.set(rotationSpeed.rawValue, forKey: AppGroupSettings.Keys.topicRotationSpeed)
-                    settingsStore.topicSlug = selectedTopicSlug
-                    settingsStore.activeMode = .topic
-                } label: {
-                    Label("Set as Active Mode", systemImage: "checkmark.circle")
-                        .frame(maxWidth: .infinity)
+                Picker("Speed", selection: $rotationSpeed) {
+                    ForEach(speedOptions) { speed in
+                        Text(speed.title).tag(speed)
+                    }
                 }
+            } header: {
+                Text("Rotation Speed")
+            } footer: {
+                Text("Every 12 Hours and Every 6 Hours change the verse through the day, starting at midnight.")
+            }
+
+            ModeSaveSection(mode: .topic) {
+                AppGroupSettings.defaults.set(rotationSpeed.rawValue, forKey: AppGroupSettings.Keys.topicRotationSpeed)
+                settingsStore.topicSlug = selectedTopicSlug
             }
         }
         .navigationTitle("Topic")

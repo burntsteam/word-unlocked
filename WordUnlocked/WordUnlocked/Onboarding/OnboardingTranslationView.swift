@@ -2,7 +2,6 @@ import SwiftUI
 
 struct OnboardingTranslationView: View {
     @EnvironmentObject var settingsStore: SettingsStore
-    let onContinue: () -> Void
 
     var body: some View {
         ScrollView {
@@ -27,9 +26,10 @@ struct OnboardingTranslationView: View {
                     }
                 }
 
-                Button("Next", action: onContinue)
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.large)
+                Text("The English Standard Version and the Recovery Version are also available, from Settings, with an internet connection.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
             }
             .padding(24)
         }
@@ -71,6 +71,7 @@ private struct TranslationChoiceCard: View {
                 Circle()
                     .fill(translation.isAvailable ? Color.green : Color.gray)
                     .frame(width: 10, height: 10)
+                    .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(translation.code)
@@ -78,9 +79,10 @@ private struct TranslationChoiceCard: View {
                     Text(translation.name)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
+                    // Secondary, not green: green text is under 3:1 on white, and the dot says it.
                     Text(translation.detail)
                         .font(.caption.weight(.semibold))
-                        .foregroundStyle(translation.isAvailable ? Color.green : Color.secondary)
+                        .foregroundStyle(.secondary)
                 }
 
                 Spacer()
@@ -88,6 +90,7 @@ private struct TranslationChoiceCard: View {
                 if isSelected {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(.tint)
+                        .accessibilityHidden(true)
                 }
             }
             .padding()
@@ -101,5 +104,6 @@ private struct TranslationChoiceCard: View {
         }
         .buttonStyle(.plain)
         .disabled(!translation.isAvailable)
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 }

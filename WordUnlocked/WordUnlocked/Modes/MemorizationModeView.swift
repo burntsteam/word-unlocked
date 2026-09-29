@@ -5,28 +5,18 @@ struct MemorizationModeView: View {
     @State private var searchText = ""
     @State private var searchResults: [Verse] = []
     @State private var searchedText = ""
-    @State private var selectedVerseId: Int?
+    @State private var selectedVerse: Verse?
+    @State private var isTodaysVerse = false
     @State private var durationDays = 7
     @State private var difficulty: MemorizationPlan.Difficulty = .medium
-
-    private var fallbackVerse: Verse {
-        VerseSelectionService.verse(for: settingsStore.currentSettings(), favorites: settingsStore.favorites)
-    }
 
     private var searchTranslationCode: String {
         VerseSelectionService.referenceTranslationCode(for: settingsStore.selectedTranslation)
     }
 
-    private var selectedVerse: Verse {
-        if let selectedVerseId, let verse = DatabaseService.shared.verse(id: selectedVerseId) {
-            return verse
-        }
-        return searchResults.first ?? fallbackVerse
-    }
-
     var body: some View {
         Form {
-            Section("Verse Search") {
+            Section("Find a Verse") {
                 TextField("Search reference or words", text: $searchText)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
@@ -37,21 +27,36 @@ struct MemorizationModeView: View {
                         .foregroundStyle(.secondary)
                 } else {
                     ForEach(searchResults) { verse in
+                        let isSelected = selectedVerse?.id == verse.id
                         Button {
-                            selectedVerseId = verse.id
+                            selectedVerse = verse
+                            isTodaysVerse = false
                         } label: {
-                            VerseSearchRow(
-                                verse: verse,
-                                isSelected: selectedVerseId == verse.id
-                            )
+                            VerseSearchRow(verse: verse, isSelected: isSelected)
                         }
                         .buttonStyle(.plain)
+                        .accessibilityAddTraits(isSelected ? .isSelected : [])
                     }
                 }
             }
 
-            Section("Plan") {
-                Picker("Duration", selection: $durationDays) {
+            Section {
+                if let selectedVerse {
+                    Text(selectedVerse.displayReference)
+                        .font(.headline)
+                    Text(selectedVerse.text)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                } else {
+                    Text("Search above and tap a verse to choose it.")
+                        .foregroundStyle(.secondary)
+                }
+            } header: {
+                Text(isTodaysVerse ? "Verse to Learn: Today's Verse" : "Verse to Learn")
+            }
+
+            Section {
+                Picker("Length", selection: $durationDays) {
                     ForEach([3, 5, 7, 14], id: \.self) { days in
                         Text("\(days) days").tag(days)
                     }
@@ -64,66 +69,63 @@ struct MemorizationModeView: View {
                     }
                 }
                 .pickerStyle(.segmented)
+            } header: {
+                Text("Plan")
+            } footer: {
+                Text("Each day shows less of the verse: all of it, then some words blanked out, then first letters, then only the reference, then all of it again to review. Difficulty sets how many words are blanked.")
             }
 
-            if let plan = settingsStore.memorizationPlan {
+            if let plan = settingsStore.memorizationPlan, let verse = DatabaseService.shared.verse(id: plan.verseId) {
+                let phase = MemorizationService.phase(of: plan)
                 Section("Current Plan") {
-                    LabeledContent("Verse ID", value: "\(plan.verseId)")
-                    LabeledContent("Duration", value: "\(plan.durationDays) days")
+                    LabeledContent("Verse", value: verse.displayReference)
+                    LabeledContent("Length", value: "\(plan.durationDays) days")
                     LabeledContent("Difficulty", value: plan.difficulty.title)
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Phase \(plan.currentPhase.rawValue) of 5 - \(plan.currentPhase.title)")
+                        Text("Step \(phase.rawValue) of 5: \(phase.title)")
                             .font(.headline)
-                        ProgressView(value: Double(plan.currentPhase.rawValue), total: 5)
+                        ProgressView(value: Double(phase.rawValue), total: 5)
+                            .accessibilityHidden(true)
                     }
+                    .accessibilityElement(children: .combine)
                 }
             }
 
-            Section("Selected Verse") {
-                Text(selectedVerse.verseRef)
-                    .font(.headline)
-                Text(selectedVerse.text)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-            }
-
-            Section {
-                Button {
-                    let plan = MemorizationPlan(
-                        id: selectedVerse.id,
-                        verseId: selectedVerse.id,
-                        startDate: Date(),
-                        durationDays: durationDays,
-                        difficulty: difficulty,
-                        currentPhase: .fullVerse,
-                        enabled: true
-                    )
-                    settingsStore.save(plan: plan)
-                    settingsStore.activeMode = .memorization
-                } label: {
-                    Label("Start New Plan", systemImage: "brain.head.profile")
-                        .frame(maxWidth: .infinity)
-                }
-            }
+            ModeSaveSection(
+                mode: .memorization,
+                isDisabled: selectedVerse == nil,
+                footnote: "Saving a different verse, length or difficulty, or coming back from another mode, starts the plan again from today.",
+                save: savePlan
+            )
         }
         .navigationTitle("Memorization")
         .task(id: searchText) {
             await search(searchText)
         }
-        .onAppear {
-            if let plan = settingsStore.memorizationPlan {
-                selectedVerseId = plan.verseId
-                durationDays = plan.durationDays
-                difficulty = plan.difficulty
-            }
-            if var plan = settingsStore.memorizationPlan {
-                let calculated = MemorizationService.currentPhase(plan: plan)
-                if plan.currentPhase != calculated {
-                    plan.currentPhase = calculated
-                    settingsStore.save(plan: plan)
-                }
-            }
+        .onAppear(perform: load)
+    }
+
+    private func load() {
+        guard selectedVerse == nil else { return }
+        if let plan = settingsStore.memorizationPlan {
+            selectedVerse = DatabaseService.shared.verse(id: plan.verseId)
+            durationDays = plan.durationDays
+            difficulty = plan.difficulty
+        } else {
+            selectedVerse = VerseSelectionService.verse(for: settingsStore.currentSettings(), favorites: settingsStore.favorites)
+            isTodaysVerse = true
         }
+    }
+
+    /// Starts a plan for the chosen verse, unless it is the plan already running unchanged.
+    private func savePlan() {
+        guard let verse = selectedVerse else { return }
+        if let current = settingsStore.memorizationPlan,
+           settingsStore.activeMode == .memorization,
+           current.verseId == verse.id, current.durationDays == durationDays, current.difficulty == difficulty {
+            return
+        }
+        settingsStore.save(plan: MemorizationPlan(verseId: verse.id, durationDays: durationDays, difficulty: difficulty))
     }
 
     // Debounced and limited to the rows shown, so typing never waits on a scan of
@@ -137,7 +139,12 @@ struct MemorizationModeView: View {
         }
         try? await Task.sleep(for: .milliseconds(250))
         guard !Task.isCancelled else { return }
-        searchResults = DatabaseService.shared.search(query: query, translationCode: searchTranslationCode, limit: 8)
+        let code = searchTranslationCode
+        let results = await Task.detached(priority: .userInitiated) {
+            DatabaseService.shared.search(query: query, translationCode: code, limit: 8)
+        }.value
+        guard !Task.isCancelled else { return }
+        searchResults = results
         searchedText = text
     }
 }
@@ -149,7 +156,7 @@ private struct VerseSearchRow: View {
     var body: some View {
         HStack(spacing: 12) {
             VStack(alignment: .leading, spacing: 4) {
-                Text(verse.verseRef)
+                Text(verse.displayReference)
                     .font(.headline)
                 Text(verse.text)
                     .font(.caption)
@@ -162,7 +169,9 @@ private struct VerseSearchRow: View {
             if isSelected {
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundStyle(.tint)
+                    .accessibilityHidden(true)
             }
         }
+        .contentShape(Rectangle())
     }
 }

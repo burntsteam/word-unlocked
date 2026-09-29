@@ -7,11 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BFAA000001000000000000054 /* LiveAPISession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000054 /* LiveAPISession.swift */; };
+		BFAA000001000000000000059 /* LiveAPIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000059 /* LiveAPIKeys.swift */; };
+		BFAA000001000000000000055 /* ReferenceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000055 /* ReferenceParser.swift */; };
+		BFAA000001000000000000056 /* WidgetTimelineService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000002B /* WidgetTimelineService.swift */; };
+		BFAA000001000000000000057 /* WidgetEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000002000000000000001 /* WidgetEntry.swift */; };
+		BFAA000001000000000000058 /* RectangularWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000002000000000000005 /* RectangularWidgetView.swift */; };
+		BFAA000002000000000000013 /* MemorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000021 /* MemorizationService.swift */; };
+		BFAA000002000000000000014 /* MemorizationPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000001B /* MemorizationPlan.swift */; };
 		000000000000000000000801 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000701 /* Assets.xcassets */; };
 		000000000000000000000802 /* WordUnlockedWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 000000000000000000000302 /* WordUnlockedWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		000000000000000000000803 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 000000000000000000000704 /* libsqlite3.tbd */; };
 		000000000000000000000804 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 000000000000000000000704 /* libsqlite3.tbd */; };
 		06E2840C4B595FCE3F4D6960 /* VerseSelectionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A6016EFB3D8FDE4C1D098D /* VerseSelectionServiceTests.swift */; };
+		BFSTFILE0000000000000001 /* TestDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE0000000000000001 /* TestDefaults.swift */; };
+		BFSTFILE0000000000000002 /* WidgetTimelineServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE0000000000000002 /* WidgetTimelineServiceTests.swift */; };
+		BFSTFILE0000000000000003 /* ReferenceParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE0000000000000003 /* ReferenceParserTests.swift */; };
+		BFSTFILE0000000000000004 /* SettingsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE0000000000000004 /* SettingsStoreTests.swift */; };
+		BFSTFILE0000000000000005 /* MemorizationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE0000000000000005 /* MemorizationServiceTests.swift */; };
 		3B8112C28434CA4EBA244B2E /* ESVBibleServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF76D99129DEF1E81AA0B3EE /* ESVBibleServiceTests.swift */; };
 		BFRVSTESTS00000000000001 /* RVBibleServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AARVSTESTS00000000000001 /* RVBibleServiceTests.swift */; };
 		652778B52FC37E2A34356F39 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A548CA74BB8134FE37975A /* Foundation.framework */; };
@@ -81,11 +94,6 @@
 		BFAA000002000000000000010 /* ThemeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000027 /* ThemeColors.swift */; };
 		BFAA000002000000000000011 /* ScriptureDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000029 /* ScriptureDatabase.swift */; };
 		BFAA000002000000000000012 /* SharedModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000100000000000002A /* SharedModels.swift */; };
-		BFAARES00000000000000001 /* seed_books.json in Resources */ = {isa = PBXBuildFile; fileRef = AARES000000000000000001 /* seed_books.json */; };
-		BFAARES00000000000000002 /* seed_topics.json in Resources */ = {isa = PBXBuildFile; fileRef = AARES000000000000000002 /* seed_topics.json */; };
-		BFAARES00000000000000003 /* seed_translations.json in Resources */ = {isa = PBXBuildFile; fileRef = AARES000000000000000003 /* seed_translations.json */; };
-		BFAARES00000000000000004 /* seed_verse_topics.json in Resources */ = {isa = PBXBuildFile; fileRef = AARES000000000000000004 /* seed_verse_topics.json */; };
-		BFAARES00000000000000006 /* seed_weekly_plans.json in Resources */ = {isa = PBXBuildFile; fileRef = AARES000000000000000006 /* seed_weekly_plans.json */; };
 		BFAARES00000000000000011 /* wordunlocked_seed.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = AARES000000000000000011 /* wordunlocked_seed.sqlite3 */; };
 		BFAAPRIV0000000000000001 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = AAPRIV000000000000000001 /* PrivacyInfo.xcprivacy */; };
 		BFAAPRIV0000000000000002 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = AAPRIV000000000000000002 /* PrivacyInfo.xcprivacy */; };
@@ -126,6 +134,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AA000001000000000000054 /* LiveAPISession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveAPISession.swift; sourceTree = "<group>"; };
+		AA000001000000000000059 /* LiveAPIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveAPIKeys.swift; sourceTree = DERIVED_FILE_DIR; };
+		AA000001000000000000055 /* ReferenceParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceParser.swift; sourceTree = "<group>"; };
 		000000000000000000000301 /* WordUnlocked.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordUnlocked.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		000000000000000000000302 /* WordUnlockedWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WordUnlockedWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		000000000000000000000701 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -203,6 +214,11 @@
 		DF76D99129DEF1E81AA0B3EE /* ESVBibleServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ESVBibleServiceTests.swift; sourceTree = "<group>"; };
 		AARVSTESTS00000000000001 /* RVBibleServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RVBibleServiceTests.swift; sourceTree = "<group>"; };
 		F1A6016EFB3D8FDE4C1D098D /* VerseSelectionServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VerseSelectionServiceTests.swift; sourceTree = "<group>"; };
+		TESTFILE0000000000000001 /* TestDefaults.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TestDefaults.swift; sourceTree = "<group>"; };
+		TESTFILE0000000000000002 /* WidgetTimelineServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WidgetTimelineServiceTests.swift; sourceTree = "<group>"; };
+		TESTFILE0000000000000003 /* ReferenceParserTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReferenceParserTests.swift; sourceTree = "<group>"; };
+		TESTFILE0000000000000004 /* SettingsStoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsStoreTests.swift; sourceTree = "<group>"; };
+		TESTFILE0000000000000005 /* MemorizationServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemorizationServiceTests.swift; sourceTree = "<group>"; };
 		RC00000000000000000000004 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = Config/Secrets.xcconfig; sourceTree = "<group>"; };
 		RC00000000000000000000005 /* RVBibleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVBibleService.swift; sourceTree = "<group>"; };
 		RC0000000000000000000000C /* HomeScreenWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenWidgetView.swift; sourceTree = "<group>"; };
@@ -366,6 +382,9 @@
 				AA000001000000000000023 /* TranslationService.swift */,
 				RC00000000000000000000005 /* RVBibleService.swift */,
 				AA000001000000000000053 /* ESVBibleService.swift */,
+				AA000001000000000000054 /* LiveAPISession.swift */,
+				AA000001000000000000055 /* ReferenceParser.swift */,
+				AA000001000000000000059 /* LiveAPIKeys.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -447,6 +466,11 @@
 				AARVSTESTS00000000000001 /* RVBibleServiceTests.swift */,
 				05E120D30113BD4580549691 /* SharedModelsTests.swift */,
 				F1A6016EFB3D8FDE4C1D098D /* VerseSelectionServiceTests.swift */,
+				TESTFILE0000000000000001 /* TestDefaults.swift */,
+				TESTFILE0000000000000002 /* WidgetTimelineServiceTests.swift */,
+				TESTFILE0000000000000003 /* ReferenceParserTests.swift */,
+				TESTFILE0000000000000004 /* SettingsStoreTests.swift */,
+				TESTFILE0000000000000005 /* MemorizationServiceTests.swift */,
 			);
 			name = WordUnlockedTests;
 			path = WordUnlockedTests;
@@ -467,6 +491,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 000000000000000000000502 /* Build configuration list for PBXNativeTarget "WordUnlocked" */;
 			buildPhases = (
+				SCRIPTAPIKEYS0000000000001 /* Embed API Keys */,
 				000000000000000000000201 /* Sources */,
 				000000000000000000000202 /* Frameworks */,
 				000000000000000000000203 /* Resources */,
@@ -571,11 +596,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				000000000000000000000801 /* Assets.xcassets in Resources */,
-				BFAARES00000000000000001 /* seed_books.json in Resources */,
-				BFAARES00000000000000002 /* seed_topics.json in Resources */,
-				BFAARES00000000000000003 /* seed_translations.json in Resources */,
-				BFAARES00000000000000004 /* seed_verse_topics.json in Resources */,
-				BFAARES00000000000000006 /* seed_weekly_plans.json in Resources */,
 				BFAARES00000000000000011 /* wordunlocked_seed.sqlite3 in Resources */,
 				BFAAPRIV0000000000000001 /* PrivacyInfo.xcprivacy in Resources */,
 			);
@@ -597,6 +617,30 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		SCRIPTAPIKEYS0000000000001 /* Embed API Keys */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Embed API Keys";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/LiveAPIKeys.swift",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "# Writes the API keys from Config/Secrets.xcconfig into LiveAPIKeys.swift, masked so they\n# are neither in Info.plist nor readable as plain strings in the app binary. Without the\n# xcconfig the keys are empty, and the live translations stay hidden.\nset -euo pipefail\n\nencode() {\n  local value=\"$1\" bytes=\"\" i code\n  case \"$value\" in YOUR_*) value=\"\" ;; esac\n  for (( i = 0; i < ${#value}; i++ )); do\n    printf -v code '%d' \"'${value:i:1}\"\n    bytes+=\"$(( code ^ ((i * 131 + 71) % 251) )), \"\n  done\n  printf '[%s]' \"${bytes%, }\"\n}\n\ncontent=\"// Generated by the Embed API Keys build phase from Config/Secrets.xcconfig. Do not edit.\nenum LiveAPIKeys {\n    static let esvAPIKey = decode($(encode \"${ESV_API_KEY:-}\"))\n    static let lsmAppID = decode($(encode \"${LSM_APP_ID:-}\"))\n    static let lsmToken = decode($(encode \"${LSM_TOKEN:-}\"))\n\n    private static func decode(_ bytes: [UInt8]) -> String {\n        String(decoding: bytes.enumerated().map { \\$0.element ^ UInt8((\\$0.offset * 131 + 71) % 251) }, as: UTF8.self)\n    }\n}\"\n\nout=\"${SCRIPT_OUTPUT_FILE_0}\"\nif [ \"$(cat \"$out\" 2>/dev/null || true)\" != \"$content\" ]; then\n  printf '%s\\n' \"$content\" > \"$out\"\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		000000000000000000000201 /* Sources */ = {
@@ -649,6 +693,12 @@
 				BFAA000001000000000000027 /* ThemeColors.swift in Sources */,
 				BFAA000001000000000000029 /* ScriptureDatabase.swift in Sources */,
 				BFAA00000100000000000002A /* SharedModels.swift in Sources */,
+				BFAA000001000000000000054 /* LiveAPISession.swift in Sources */,
+				BFAA000001000000000000059 /* LiveAPIKeys.swift in Sources */,
+				BFAA000001000000000000055 /* ReferenceParser.swift in Sources */,
+				BFAA000001000000000000056 /* WidgetTimelineService.swift in Sources */,
+				BFAA000001000000000000057 /* WidgetEntry.swift in Sources */,
+				BFAA000001000000000000058 /* RectangularWidgetView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -677,6 +727,8 @@
 				BFAA000002000000000000010 /* ThemeColors.swift in Sources */,
 				BFAA000002000000000000011 /* ScriptureDatabase.swift in Sources */,
 				BFAA000002000000000000012 /* SharedModels.swift in Sources */,
+				BFAA000002000000000000013 /* MemorizationService.swift in Sources */,
+				BFAA000002000000000000014 /* MemorizationPlan.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -689,6 +741,11 @@
 				BFRVSTESTS00000000000001 /* RVBibleServiceTests.swift in Sources */,
 				84A43594085EDA6386EBC706 /* SharedModelsTests.swift in Sources */,
 				06E2840C4B595FCE3F4D6960 /* VerseSelectionServiceTests.swift in Sources */,
+				BFSTFILE0000000000000001 /* TestDefaults.swift in Sources */,
+				BFSTFILE0000000000000002 /* WidgetTimelineServiceTests.swift in Sources */,
+				BFSTFILE0000000000000003 /* ReferenceParserTests.swift in Sources */,
+				BFSTFILE0000000000000004 /* SettingsStoreTests.swift in Sources */,
+				BFSTFILE0000000000000005 /* MemorizationServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,17 +10,17 @@ struct FavoritesModeView: View {
 
     var body: some View {
         Form {
-            Section("Favorites Count") {
+            Section {
                 LabeledContent("Saved Verses", value: "\(settingsStore.favorites.count)")
-
+            } header: {
+                Text("Favorites")
+            } footer: {
                 if settingsStore.favorites.isEmpty {
-                    Text("Save at least one verse before using Favorites mode.")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
+                    Text("Save at least one verse, from Today or Search, before using Favorites mode.")
                 }
             }
 
-            Section("Rotation") {
+            Section {
                 Picker("Speed", selection: $rotationSpeed) {
                     ForEach(speedOptions) { speed in
                         Text(speed.title).tag(speed)
@@ -29,27 +29,16 @@ struct FavoritesModeView: View {
 
                 Toggle("Shuffle", isOn: $shuffleFavorites)
                 Toggle("Exclude Long Verses", isOn: $excludeLongVerses)
-
-                Text("Favorites mode uses these saved choices when selecting verses for the widget timeline.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+            } header: {
+                Text("Rotation")
+            } footer: {
+                Text("Shuffle shows every favorite once before any comes back, in a new order each time through.")
             }
 
-            Section {
-                Button {
-                    savePreferences()
-                    settingsStore.activeMode = .favorites
-                } label: {
-                    Label("Set as Active Mode", systemImage: "checkmark.circle")
-                        .frame(maxWidth: .infinity)
-                }
-                .disabled(settingsStore.favorites.isEmpty)
-            }
+            ModeSaveSection(mode: .favorites, isDisabled: settingsStore.favorites.isEmpty, save: savePreferences)
 
-            Section("Saved Verses") {
-                if settingsStore.favorites.isEmpty {
-                    ContentUnavailableView("No Favorites", systemImage: "heart")
-                } else {
+            if !settingsStore.favorites.isEmpty {
+                Section("Saved Verses") {
                     ForEach(settingsStore.favorites) { favorite in
                         VStack(alignment: .leading, spacing: 4) {
                             Text(favorite.verseRef)
@@ -59,6 +48,7 @@ struct FavoritesModeView: View {
                                 .foregroundStyle(.secondary)
                                 .lineLimit(2)
                         }
+                        .accessibilityElement(children: .combine)
                     }
                 }
             }

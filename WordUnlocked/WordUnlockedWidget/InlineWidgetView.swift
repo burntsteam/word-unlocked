@@ -3,14 +3,15 @@ import WidgetKit
 
 struct InlineWidgetView: View {
     let entry: VerseEntry
-    
+
     var body: some View {
-        let shortText = entry.verseText.count > 35 
-            ? String(entry.verseText.prefix(35)) + "…" 
-            : entry.verseText
-        Text("\(entry.verseRef) · \(shortText)")
-            .font(.system(size: 12, weight: .regular))
-            .lineLimit(1)
-            .minimumScaleFactor(0.5)
+        // One line above the clock: the reference, its translation, then as much of the verse
+        // as fits, cut at a word.
+        let reference = entry.translationCode.isEmpty ? entry.shortRef : "\(entry.shortRef) \(entry.translationCode)"
+        if let text = entry.verseText {
+            Text("\(reference) · \(LongVerseService.excerpt(from: text, maxChars: 40))")
+        } else {
+            Text(reference)
+        }
     }
 }

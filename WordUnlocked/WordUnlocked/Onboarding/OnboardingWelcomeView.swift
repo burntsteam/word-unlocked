@@ -1,16 +1,12 @@
 import SwiftUI
 
 struct OnboardingWelcomeView: View {
-    let onContinue: () -> Void
-
     var body: some View {
         OnboardingPageLayout(
             systemImage: "book.fill",
             title: "Word Unlocked",
-            subtitle: "Put scripture on your Lock Screen. Offline and private.",
-            detail: "Choose how verses rotate, pick a readable theme, and keep the widget ready without accounts or network access.",
-            buttonTitle: "Next",
-            action: onContinue
+            subtitle: "Put scripture on your Lock Screen. Private, with no account.",
+            detail: "Choose how verses rotate and pick a look for your widget. Five translations are built in and work without a connection."
         )
     }
 }

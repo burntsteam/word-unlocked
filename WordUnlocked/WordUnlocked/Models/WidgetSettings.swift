@@ -39,8 +39,33 @@ struct WidgetSettings: Codable {
     static var defaultSettings: WidgetSettings {
         WidgetSettings(widgetKind: .rectangular, activeMode: .daily, translationCode: "KJV",
                        topicSlug: nil, chapterBookId: nil, chapterNumber: nil, memorizationPlanId: nil,
-                       themeId: "minimal-light", longVerseStrategy: .smartFit,
+                       themeId: WidgetTheme.automaticId, longVerseStrategy: .smartFit,
                        showTranslationCode: true, showProgress: true)
+    }
+}
+
+extension WidgetSettings {
+    /// The settings saved in `defaults`, with the default for anything not saved. Reading
+    /// never writes, so the app, its previews and the widget can all call it.
+    init(defaults: UserDefaults) {
+        let base = WidgetSettings.defaultSettings
+        typealias Keys = AppGroupSettings.Keys
+        func bool(_ key: String, _ fallback: Bool) -> Bool {
+            defaults.object(forKey: key) == nil ? fallback : defaults.bool(forKey: key)
+        }
+        self.init(
+            widgetKind: .rectangular,
+            activeMode: defaults.string(forKey: Keys.activeMode).flatMap(VerseMode.init(rawValue:)) ?? base.activeMode,
+            translationCode: defaults.string(forKey: Keys.selectedTranslation) ?? base.translationCode,
+            topicSlug: defaults.string(forKey: Keys.topicSlug) ?? base.topicSlug,
+            chapterBookId: defaults.object(forKey: Keys.chapterBookId) as? Int ?? base.chapterBookId,
+            chapterNumber: defaults.object(forKey: Keys.chapterNumber) as? Int ?? base.chapterNumber,
+            memorizationPlanId: defaults.object(forKey: Keys.memorizationPlanId) as? Int ?? base.memorizationPlanId,
+            themeId: defaults.string(forKey: Keys.selectedTheme) ?? base.themeId,
+            longVerseStrategy: defaults.string(forKey: Keys.longVerseStrategy).flatMap(LongVerseStrategy.init(rawValue:)) ?? base.longVerseStrategy,
+            showTranslationCode: bool(Keys.showTranslationCode, base.showTranslationCode),
+            showProgress: bool(Keys.showProgress, base.showProgress)
+        )
     }
 }
 
@@ -79,7 +104,7 @@ extension WidgetSettings.VerseMode: CaseIterable, Identifiable {
         case .daily: "sun.max"
         case .weeklyTheme: "calendar"
         case .topic: "tag"
-        case .chapter: "book"
+        case .chapter: "book.pages"
         case .memorization: "brain.head.profile"
         case .favorites: "heart"
         }
@@ -87,12 +112,12 @@ extension WidgetSettings.VerseMode: CaseIterable, Identifiable {
 
     var summary: String {
         switch self {
-        case .daily: "A fresh verse selected each day."
-        case .weeklyTheme: "Seven verses a week from a theme, book, or your list."
-        case .topic: "Verses chosen from a topic you select."
-        case .chapter: "Move through one chapter in order."
-        case .memorization: "Phase-based prompts for committing a verse to memory."
-        case .favorites: "Rotate through verses you have saved."
+        case .daily: "A well-known verse, new each day."
+        case .weeklyTheme: "Seven verses a week from a theme, book, or your own list."
+        case .topic: "Verses on a subject you choose."
+        case .chapter: "Read one chapter, verse by verse."
+        case .memorization: "Learn one verse, with less of it shown each day."
+        case .favorites: "Your saved verses, one at a time."
         }
     }
 }
@@ -114,7 +139,7 @@ extension WidgetSettings.LongVerseStrategy: CaseIterable, Identifiable {
         switch self {
         case .smartFit: "Use the full verse when it fits and shorten only when needed."
         case .excerpt: "Show the strongest readable opening within the widget limit."
-        case .segmented: "Split longer verses across the next scheduled entries."
+        case .segmented: "Split longer verses into parts that take turns on the Lock Screen."
         case .referenceOnly: "Show the reference when a verse is too long."
         case .excludeLong: "Choose a shorter verse for Lock Screen display."
         }

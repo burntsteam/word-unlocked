@@ -5,7 +5,7 @@ import Foundation
 // The pure index functions behind verse selection, then selection itself against the
 // bundled database. The suite runs inside the app (TEST_HOST), which provisions that
 // database into the App Group container on first use; nothing here writes to it, and
-// mode settings go into throwaway UserDefaults suites.
+// mode settings go into throwaway UserDefaults suites (TestDefaults.swift).
 @Suite("VerseSelectionService")
 struct VerseSelectionServiceTests {
 
@@ -172,6 +172,43 @@ struct VerseSelectionServiceTests {
         #expect(Set(verses.map(\.id)).count == verses.count)
     }
 
+    @Test(arguments: ["KJV", "WEB"])
+    func dailyVersesComeFromTheCuratedListInAShuffledOrder(translationCode: String) {
+        let calendar = Calendar.current
+        let start = calendar.date(from: DateComponents(year: 2026, month: 9, day: 1))!
+        let verses = (0..<14).map { offset in
+            VerseSelectionService.record(
+                for: settings(.daily, translation: translationCode),
+                date: calendar.date(byAdding: .day, value: offset, to: start)!,
+                defaults: emptyDefaults()
+            )
+        }
+
+        #expect(verses.allSatisfy { $0.translationCode == translationCode })
+        #expect(verses.allSatisfy(isCurated))
+        #expect(Set(verses.map(\.id)).count == verses.count)
+        // Not the Bible in reading order: a fortnight of daily verses comes from all over it.
+        #expect(Set(verses.map { "\($0.bookId):\($0.chapter)" }).count >= 10)
+    }
+
+    @Test func dailyTestamentChoicesNarrowTheCuratedList() {
+        let calendar = Calendar.current
+        let start = calendar.date(from: DateComponents(year: 2026, month: 9, day: 1))!
+        func books(_ values: [String: Any]) -> Set<Int> {
+            withScratchDefaults(values) { defaults in
+                Set((0..<14).map { offset in
+                    VerseSelectionService.record(
+                        for: settings(.daily), date: calendar.date(byAdding: .day, value: offset, to: start)!, defaults: defaults
+                    ).bookId
+                })
+            }
+        }
+
+        #expect(books([AppGroupSettings.Keys.dailyIncludeNewTestament: false]).allSatisfy { $0 < 40 })
+        #expect(books([AppGroupSettings.Keys.dailyIncludeOldTestament: false]).allSatisfy { $0 >= 40 })
+        #expect(books([AppGroupSettings.Keys.dailyPsalmsProverbsOnly: true]).isSubset(of: [19, 20]))
+    }
+
     @Test(arguments: ["ESV", "RV"])
     func liveTranslationsRotateThroughTheKJVReferenceSet(translationCode: String) {
         let calendar = Calendar.current
@@ -269,17 +306,32 @@ struct VerseSelectionServiceTests {
         #expect(VerseSelectionService.upcomingRecords(for: memorization, from: now, limit: 500, defaults: emptyDefaults()).map(\.id) == [212])
     }
 
-    @Test func liveRecordCarriesTheLiveTextMeasuredForTheLockScreen() {
+    @Test func liveTextKeepsItsVerseAndIsMeasuredForTheLockScreen() {
         let kjv = VerseSelectionService.builtInVerse(translationCode: "KJV")
         let text = "“For God so loved the world, that he gave his only Son, that whoever believes in him should not perish but have eternal life."
 
-        let esv = VerseSelectionService.liveRecord(kjv, ref: "John 3:16", text: text, translationCode: "ESV")
+        let esv = VerseSelectionService.record(kjv, withText: text, translationCode: "ESV")
 
         #expect(esv.id == kjv.id)
         #expect(esv.bookId == 43)
+        // The reference stays the database's key, which the ESV store looks verses up by.
+        #expect(esv.verseRef == "John 3:16")
+        #expect(esv.displayReference == "John 3:16")
         #expect(esv.translationCode == "ESV")
         #expect(esv.text == text)
         #expect(esv.charCount == text.count)
+    }
+
+    @Test func aFavoriteSavedWithESVTextShowsThatTextOnItsOwnVerse() {
+        let saved = Favorite(verseId: 212, verseRef: "John 3:16", text: "Stub ESV text", translationCode: "ESV")
+
+        let verse = VerseSelectionService.record(for: settings(.favorites, translation: "KJV"), favorites: [saved], defaults: emptyDefaults())
+
+        #expect(verse.id == 212)
+        #expect(verse.bookId == 43)
+        #expect(verse.displayReference == "John 3:16")
+        #expect(verse.text == "Stub ESV text")
+        #expect(verse.translationCode == "ESV")
     }
 
     @Test func favoritesWithoutShuffleWalkSavedOrderAndCanSkipLongVerses() {
@@ -400,16 +452,8 @@ private func chapterVerse(
     }
 }
 
-// A suite nothing writes to, so daily-scope choices saved in the App Group can't leak in.
-private func emptyDefaults() -> UserDefaults {
-    UserDefaults(suiteName: "VerseSelectionServiceTests.\(UUID().uuidString)")!
-}
-
-// A throwaway suite holding `values`, removed once `body` returns.
-private func withScratchDefaults<T>(_ values: [String: Any], _ body: (UserDefaults) -> T) -> T {
-    let name = "VerseSelectionServiceTests.\(UUID().uuidString)"
-    let defaults = UserDefaults(suiteName: name)!
-    defer { UserDefaults.standard.removePersistentDomain(forName: name) }
-    values.forEach { defaults.set($0.value, forKey: $0.key) }
-    return body(defaults)
+/// Whether `verse` is one of the curated, well-known verses the KJV seed lists first.
+private func isCurated(_ verse: SharedVerseRecord) -> Bool {
+    ScriptureDatabase.shared.verse(bookId: verse.bookId, chapter: verse.chapter, verse: verse.verse, translationCode: "KJV")
+        .map { $0.id < 1_000_000 } ?? false
 }

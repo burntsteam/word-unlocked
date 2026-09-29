@@ -36,18 +36,19 @@ struct ChapterModeView: View {
                 }
             }
 
-            Section("Chapter") {
+            Section {
                 Stepper(
                     "Chapter \(chapterNumber)",
                     value: $chapterNumber,
                     in: 1...max(selectedBook.chapterCount, 1)
                 )
+            } header: {
+                Text("Chapter")
+            } footer: {
                 Text("\(selectedBook.name) has \(selectedBook.chapterCount) chapters.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
             }
 
-            Section("Rotation") {
+            Section {
                 Picker("Speed", selection: $rotationSpeed) {
                     ForEach(speedOptions) { speed in
                         Text(speed.title).tag(speed)
@@ -61,24 +62,18 @@ struct ChapterModeView: View {
                 }
 
                 Toggle("Show Progress", isOn: $showProgress)
-
-                Text("Reading starts at verse 1 when you set a new passage. After the last verse, Repeat starts the chapter again, Next Chapter keeps reading, and Stop stays on the last verse.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+            } header: {
+                Text("Rotation")
+            } footer: {
+                Text("Reading starts at verse 1 when you set a new passage. After the last verse, Repeat starts the chapter again, Next Chapter keeps reading, and Stop stays on the last verse. Show Progress puts your place in the chapter on Today and the widget.")
             }
 
-            Section {
-                Button {
-                    AppGroupSettings.defaults.set(rotationSpeed.rawValue, forKey: AppGroupSettings.Keys.chapterRotationSpeed)
-                    AppGroupSettings.defaults.set(endBehavior.rawValue, forKey: AppGroupSettings.Keys.chapterEndBehavior)
-                    settingsStore.chapterBookId = selectedBookId
-                    settingsStore.chapterNumber = min(chapterNumber, selectedBook.chapterCount)
-                    settingsStore.showProgress = showProgress
-                    settingsStore.activeMode = .chapter
-                } label: {
-                    Label("Set as Active Mode", systemImage: "checkmark.circle")
-                        .frame(maxWidth: .infinity)
-                }
+            ModeSaveSection(mode: .chapter) {
+                AppGroupSettings.defaults.set(rotationSpeed.rawValue, forKey: AppGroupSettings.Keys.chapterRotationSpeed)
+                AppGroupSettings.defaults.set(endBehavior.rawValue, forKey: AppGroupSettings.Keys.chapterEndBehavior)
+                settingsStore.chapterBookId = selectedBookId
+                settingsStore.chapterNumber = min(chapterNumber, selectedBook.chapterCount)
+                settingsStore.showProgress = showProgress
             }
         }
         .navigationTitle("Chapter")

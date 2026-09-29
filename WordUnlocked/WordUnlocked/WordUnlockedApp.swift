@@ -5,6 +5,10 @@ struct WordUnlockedApp: App {
     @StateObject private var settingsStore = SettingsStore()
     @AppStorage("hasCompletedOnboarding", store: AppGroupSettings.defaults) private var hasCompletedOnboarding = false
 
+    init() {
+        LiveAPISession.removeCachedResponses()
+    }
+
     var body: some Scene {
         WindowGroup {
             if hasCompletedOnboarding {

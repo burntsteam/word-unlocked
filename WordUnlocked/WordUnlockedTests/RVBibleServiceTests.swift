@@ -61,10 +61,8 @@ struct RVBibleServiceTests {
 
     @Test(.enabled(if: liveAPITestsEnabled))
     func liveFetchReturnsTheRecoveryVersionOfJohn316() async throws {
-        let info = Bundle.main.infoDictionary
-        let token = try #require(info?["LSMToken"] as? String)
-        try #require(!token.isEmpty)
-        let service = RVBibleService(appId: info?["LSMAppId"] as? String ?? "", token: token)
+        try #require(!LiveAPIKeys.lsmToken.isEmpty)
+        let service = RVBibleService(appId: LiveAPIKeys.lsmAppID, token: LiveAPIKeys.lsmToken)
 
         await service.fetch(reference: "John 3:16")
 

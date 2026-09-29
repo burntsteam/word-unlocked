@@ -113,6 +113,10 @@ struct LongVerseServiceTests {
         #expect(LongVerseService.firstLetters(from: "For God so loved") == "F G S L")
     }
 
+    @Test func firstLettersSkipOpeningQuotationMarks() {
+        #expect(LongVerseService.firstLetters(from: "\u{201C}For God so loved\u{201D}") == "F G S L")
+    }
+
     @Test func firstLettersOfEmptyStringIsEmpty() {
         #expect(LongVerseService.firstLetters(from: "") == "")
     }

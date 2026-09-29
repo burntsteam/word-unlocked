@@ -5,96 +5,57 @@ struct TranslationsView: View {
     @StateObject private var rvService = RVBibleService.shared
     @StateObject private var esvService = ESVBibleService.shared
 
+    /// A translation's full name, for the offline ones from the database.
+    static func name(of code: String) -> String {
+        switch code {
+        case "RV": return "Recovery Version"
+        case "ESV": return "English Standard Version"
+        default: return TranslationService.allTranslations.first { $0.code == code }?.displayName ?? code
+        }
+    }
+
     var body: some View {
         List {
             Section("Translations") {
-                // KJV — always offline
-                Button {
-                    settingsStore.selectedTranslation = "KJV"
-                } label: {
+                ForEach(TranslationService.availableOffline.filter(\.enabled)) { translation in
                     TranslationRow(
-                        code: "KJV",
-                        name: "King James Version",
-                        badge: "Offline",
-                        badgeColor: .green,
-                        isSelected: settingsStore.selectedTranslation == "KJV"
-                    )
+                        code: translation.code,
+                        name: translation.displayName,
+                        detail: "Offline",
+                        dotColor: .green,
+                        isSelected: settingsStore.selectedTranslation == translation.code,
+                        isBusy: false
+                    ) {
+                        settingsStore.selectedTranslation = translation.code
+                    }
                 }
-                .buttonStyle(.plain)
 
-                // WEB — always offline
-                Button {
-                    settingsStore.selectedTranslation = "WEB"
-                } label: {
-                    TranslationRow(
-                        code: "WEB",
-                        name: "World English Bible",
-                        badge: "Offline",
-                        badgeColor: .green,
-                        isSelected: settingsStore.selectedTranslation == "WEB"
-                    )
-                }
-                .buttonStyle(.plain)
-
-                // BSB — modern, public domain, always offline
-                Button {
-                    settingsStore.selectedTranslation = "BSB"
-                } label: {
-                    TranslationRow(
-                        code: "BSB",
-                        name: "Berean Standard Bible",
-                        badge: "Offline",
-                        badgeColor: .green,
-                        isSelected: settingsStore.selectedTranslation == "BSB"
-                    )
-                }
-                .buttonStyle(.plain)
-
-                // ASV — classic, public domain, always offline
-                Button {
-                    settingsStore.selectedTranslation = "ASV"
-                } label: {
-                    TranslationRow(
-                        code: "ASV",
-                        name: "American Standard Version",
-                        badge: "Offline",
-                        badgeColor: .green,
-                        isSelected: settingsStore.selectedTranslation == "ASV"
-                    )
-                }
-                .buttonStyle(.plain)
-
-                // LSV — literal, CC BY-SA, always offline
-                Button {
-                    settingsStore.selectedTranslation = "LSV"
-                } label: {
-                    TranslationRow(
-                        code: "LSV",
-                        name: "Literal Standard Version",
-                        badge: "Offline",
-                        badgeColor: .green,
-                        isSelected: settingsStore.selectedTranslation == "LSV"
-                    )
-                }
-                .buttonStyle(.plain)
-
-                // Recovery Version — live API only; LSM's terms forbid storing the text
-                RVTranslationRow(
+                // Recovery Version: live API only; LSM's terms forbid storing the text.
+                TranslationRow(
+                    code: "RV",
+                    name: Self.name(of: "RV"),
+                    detail: "Needs internet · not stored",
+                    dotColor: .blue,
                     isSelected: settingsStore.selectedTranslation == "RV",
-                    isFetching: rvService.isFetching,
-                    error: rvService.error
+                    isBusy: rvService.isFetching,
+                    error: settingsStore.selectedTranslation == "RV" ? rvService.error : nil
                 ) {
                     settingsStore.selectedTranslation = "RV"
                 }
 
-                // English Standard Version — downloaded ahead, up to 500 verses on the device.
-                // Hidden entirely when ESV_API_KEY is unset: without it nothing can download.
+                // English Standard Version: downloaded ahead, up to 500 verses on the device.
+                // Hidden when ESV_API_KEY is unset: without it nothing can download.
                 if ESVBibleService.isConfigured {
-                    ESVTranslationRow(
+                    TranslationRow(
+                        code: "ESV",
+                        name: Self.name(of: "ESV"),
+                        detail: esvService.verses.isEmpty
+                            ? "Needs internet"
+                            : "\(esvService.verses.count) verse\(esvService.verses.count == 1 ? "" : "s") on this device",
+                        dotColor: .purple,
                         isSelected: settingsStore.selectedTranslation == "ESV",
-                        storedCount: esvService.verses.count,
-                        isFetching: esvService.isFetching,
-                        error: esvService.error
+                        isBusy: esvService.isFetching,
+                        error: settingsStore.selectedTranslation == "ESV" ? esvService.error : nil
                     ) {
                         settingsStore.selectedTranslation = "ESV"
                         Task {
@@ -112,11 +73,11 @@ struct TranslationsView: View {
                             .foregroundStyle(.secondary)
                         Text(RVBibleService.defaultAttribution)
                             .font(.caption)
-                            .foregroundStyle(.tertiary)
+                            .foregroundStyle(.secondary)
                     }
                     .padding(.vertical, 4)
                 } header: {
-                    Text("About Recovery Version")
+                    Text("About the Recovery Version")
                 }
             }
 
@@ -128,13 +89,13 @@ struct TranslationsView: View {
                             .foregroundStyle(.secondary)
                         Text("Scripture quotations are from the ESV® Bible, © 2001 by Crossway. Used by permission. All rights reserved.")
                             .font(.caption)
-                            .foregroundStyle(.tertiary)
+                            .foregroundStyle(.secondary)
                         Link("Learn more at esv.org", destination: URL(string: "https://www.esv.org")!)
                             .font(.caption)
                     }
                     .padding(.vertical, 4)
                 } header: {
-                    Text("About English Standard Version")
+                    Text("About the English Standard Version")
                 }
             }
 
@@ -150,127 +111,54 @@ struct TranslationsView: View {
     }
 }
 
+/// One translation. The whole row selects it.
 private struct TranslationRow: View {
     let code: String
     let name: String
-    let badge: String
-    let badgeColor: Color
+    let detail: String
+    let dotColor: Color
     let isSelected: Bool
+    let isBusy: Bool
+    var error: String?
+    let select: () -> Void
 
     var body: some View {
-        HStack {
-            Circle()
-                .fill(badgeColor)
-                .frame(width: 10, height: 10)
-
+        Button(action: select) {
             VStack(alignment: .leading, spacing: 4) {
-                Text(code).font(.headline)
-                Text(name).font(.subheadline).foregroundStyle(.secondary)
-            }
+                HStack(spacing: 12) {
+                    Circle()
+                        .fill(dotColor)
+                        .frame(width: 10, height: 10)
+                        .accessibilityHidden(true)
 
-            Spacer()
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(code).font(.headline)
+                        Text(name).font(.subheadline).foregroundStyle(.secondary)
+                        Text(detail).font(.caption).foregroundStyle(.secondary)
+                    }
 
-            if isSelected {
-                Image(systemName: "checkmark.circle.fill").foregroundStyle(.tint)
-            } else {
-                Text(badge)
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(badgeColor)
-            }
-        }
-    }
-}
+                    Spacer()
 
-private struct RVTranslationRow: View {
-    let isSelected: Bool
-    let isFetching: Bool
-    let error: String?
-    let onSelect: () -> Void
+                    if isBusy {
+                        ProgressView()
+                            .accessibilityLabel("Loading")
+                    } else if isSelected {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundStyle(.tint)
+                            .accessibilityHidden(true)
+                    }
+                }
 
-    var body: some View {
-        HStack {
-            Circle()
-                .fill(Color.blue)
-                .frame(width: 10, height: 10)
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text("RV").font(.headline)
-                Text("Recovery Version").font(.subheadline).foregroundStyle(.secondary)
-                Label("Requires internet · not stored", systemImage: "wifi")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
-
-            Spacer()
-
-            if isFetching {
-                ProgressView().scaleEffect(0.8)
-            } else if isSelected {
-                Image(systemName: "checkmark.circle.fill").foregroundStyle(.tint)
-            } else {
-                Button("Select", action: onSelect)
-                    .font(.caption.weight(.semibold))
-                    .buttonStyle(.bordered)
-                    .controlSize(.small)
-            }
-        }
-
-        if let error {
-            Text(error)
-                .font(.caption)
-                .foregroundStyle(.red)
-                .padding(.top, 2)
-        }
-    }
-}
-
-private struct ESVTranslationRow: View {
-    let isSelected: Bool
-    let storedCount: Int
-    let isFetching: Bool
-    let error: String?
-    let onSelect: () -> Void
-
-    var body: some View {
-        HStack {
-            Circle()
-                .fill(Color.purple)
-                .frame(width: 10, height: 10)
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text("ESV").font(.headline)
-                Text("English Standard Version").font(.subheadline).foregroundStyle(.secondary)
-                if storedCount > 0 {
-                    Text("\(storedCount) verse\(storedCount == 1 ? "" : "s") on this device")
+                if let error {
+                    Text(error)
                         .font(.caption)
-                        .foregroundStyle(.secondary)
-                } else {
-                    Label("Requires internet", systemImage: "wifi")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(.red)
                 }
             }
-
-            Spacer()
-
-            if isFetching {
-                ProgressView().scaleEffect(0.8)
-            } else if isSelected {
-                Image(systemName: "checkmark.circle.fill").foregroundStyle(.tint)
-            } else {
-                Button("Select", action: onSelect)
-                    .font(.caption.weight(.semibold))
-                    .buttonStyle(.bordered)
-                    .controlSize(.small)
-            }
+            .contentShape(Rectangle())
         }
-
-        if let error {
-            Text(error)
-                .font(.caption)
-                .foregroundStyle(.red)
-                .padding(.top, 2)
-        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 }
 
@@ -305,8 +193,12 @@ struct BibleLicensesView: View {
                 LicenseRow(
                     title: "Literal Standard Version",
                     code: "LSV",
-                    license: "© 2020 Covenant Press. CC BY-SA 4.0.",
-                    attribution: "The Holy Bible, Literal Standard Version (LSV), © 2020 Covenant Press and the Covenant Christian Coalition. Licensed under Creative Commons Attribution-ShareAlike; bundled for offline use with attribution."
+                    license: "© 2020 Covenant Press. Licensed under CC BY-SA 4.0.",
+                    attribution: "The Holy Bible, Literal Standard Version (LSV), © 2020 Covenant Press and the Covenant Christian Coalition. Changes: footnotes and section headings are removed, and long verses may be shortened or split to fit the widget.",
+                    links: [
+                        ("Creative Commons BY-SA 4.0", "https://creativecommons.org/licenses/by-sa/4.0/"),
+                        ("LSV source text", "https://github.com/BibleCorps/ENG-B-LSV2022-CC-CCC")
+                    ]
                 )
             }
 
@@ -321,10 +213,9 @@ struct BibleLicensesView: View {
                     title: "English Standard Version",
                     code: "ESV",
                     license: "© 2001 by Crossway. All rights reserved.",
-                    attribution: "Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), © 2001 by Crossway, a publishing ministry of Good News Publishers. Used by permission. Up to 500 verses, and never more than half of a book, are kept on the device as the ESV API terms allow; the full text is not stored."
+                    attribution: "Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), © 2001 by Crossway, a publishing ministry of Good News Publishers. Used by permission. Up to 500 verses, and never more than half of a book, are kept on the device as the ESV API terms allow; the full text is not stored.",
+                    links: [("English Standard Version at esv.org", "https://www.esv.org")]
                 )
-                Link("English Standard Version — esv.org", destination: URL(string: "https://www.esv.org")!)
-                    .font(.subheadline)
             }
         }
         .navigationTitle("Licenses")
@@ -336,6 +227,7 @@ private struct LicenseRow: View {
     let code: String
     let license: String
     let attribution: String
+    var links: [(title: String, url: String)] = []
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -348,9 +240,15 @@ private struct LicenseRow: View {
                     .padding(.vertical, 4)
                     .background(.thinMaterial)
                     .clipShape(Capsule())
+                    .accessibilityHidden(true)
             }
             Text(license)
             Text(attribution).foregroundStyle(.secondary)
+            ForEach(links, id: \.url) { link in
+                if let url = URL(string: link.url) {
+                    Link(link.title, destination: url)
+                }
+            }
         }
         .font(.subheadline)
     }

@@ -2,47 +2,42 @@ import SwiftUI
 
 struct OnboardingView: View {
     @AppStorage("hasCompletedOnboarding", store: AppGroupSettings.defaults) private var hasCompletedOnboarding = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var page = 0
 
     private let pageCount = 6
 
     var body: some View {
         TabView(selection: $page) {
-            OnboardingWelcomeView {
-                page = 1
-            }
-            .tag(0)
-
-            OnboardingTranslationView {
-                page = 2
-            }
-            .tag(1)
-
-            OnboardingModeView {
-                page = 3
-            }
-            .tag(2)
-
-            OnboardingThemeView {
-                page = 4
-            }
-            .tag(3)
-
-            OnboardingWidgetInstructionsView {
-                page = 5
-            }
-            .tag(4)
-
-            OnboardingCompleteView(hasCompletedOnboarding: $hasCompletedOnboarding)
-                .tag(5)
+            OnboardingWelcomeView().tag(0)
+            OnboardingTranslationView().tag(1)
+            OnboardingModeView().tag(2)
+            OnboardingThemeView().tag(3)
+            OnboardingWidgetInstructionsView().tag(4)
+            OnboardingCompleteView().tag(5)
         }
-        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-        // safeAreaInset rather than an overlay: the dots reserve their own layout space, so
-        // a page whose content scrolls (the translation list) stops sliding underneath them.
+        .tabViewStyle(.page(indexDisplayMode: .never))
+        // The dots and the button sit below every page, so the way forward is always in view
+        // and a long page scrolls above them.
         .safeAreaInset(edge: .bottom) {
-            OnboardingProgressDots(currentPage: page, pageCount: pageCount)
-                .padding(.top, 12)
-                .padding(.bottom, 28)
+            VStack(spacing: 14) {
+                OnboardingProgressDots(currentPage: page, pageCount: pageCount)
+                Button(page == pageCount - 1 ? "Get Started" : "Next") {
+                    if page == pageCount - 1 {
+                        hasCompletedOnboarding = true
+                    } else {
+                        withAnimation(reduceMotion ? nil : .default) {
+                            page += 1
+                        }
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.top, 12)
+            .padding(.bottom, 8)
+            .background(.bar)
         }
     }
 }
@@ -60,6 +55,7 @@ private struct OnboardingProgressDots: View {
                     .scaleEffect(index == currentPage ? 1.15 : 1)
             }
         }
-        .accessibilityLabel("Onboarding page \(currentPage + 1) of \(pageCount)")
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Page \(currentPage + 1) of \(pageCount)")
     }
 }

@@ -20,14 +20,8 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>ESVApiKey</key>
-	<string>$(ESV_API_KEY)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
-	<key>LSMAppId</key>
-	<string>$(LSM_APP_ID)</string>
-	<key>LSMToken</key>
-	<string>$(LSM_TOKEN)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSPhotoLibraryAddUsageDescription</key>

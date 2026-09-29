@@ -3,24 +3,20 @@ import Foundation
 
 struct VerseProvider: TimelineProvider {
     func placeholder(in context: Context) -> VerseEntry {
-        VerseEntry(date: Date(),
-                   verseText: "For God so loved the world, that he gave his only begotten Son...",
-                   verseRef: "John 3:16",
-                   translationCode: "KJV",
-                   theme: "minimal-light",
-                   segmentInfo: nil,
-                   mode: "daily")
+        .placeholder
     }
-    
+
     func getSnapshot(in context: Context, completion: @escaping (VerseEntry) -> Void) {
-        completion(WidgetTimelineService.shared.generateTimeline(maxEntries: 1).first ?? placeholder(in: context))
+        let entry = WidgetTimelineService.shared.entries(maxEntries: 1).first ?? .placeholder
+        // Each request opens the database afresh: the app may have replaced the file since.
+        ScriptureDatabase.shared.closeConnection()
+        completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<VerseEntry>) -> Void) {
-        let now = Date()
-        let entries = WidgetTimelineService.shared.generateTimeline(now: now)
-        let calendar = Calendar.current
-        let nextMidnight = calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: now)) ?? now.addingTimeInterval(86_400)
-        completion(Timeline(entries: entries, policy: .after(nextMidnight)))
+        let timeline = WidgetTimelineService.shared.timeline(now: Date())
+        ScriptureDatabase.shared.closeConnection()
+        let entries = timeline.entries.isEmpty ? [.placeholder] : timeline.entries
+        completion(Timeline(entries: entries, policy: .after(timeline.reloadDate)))
     }
 }

@@ -157,12 +157,12 @@ enum VerseSelectionService {
         return records
     }
 
-    /// `record`'s verse carrying a live translation's reference and text, measured for the
-    /// Lock Screen from that text.
-    static func liveRecord(_ record: SharedVerseRecord, ref: String, text: String, translationCode: String) -> SharedVerseRecord {
+    /// `record`'s verse carrying other text, such as a live translation's or a memorization
+    /// phase's, measured for the Lock Screen from that text. It keeps the record's reference.
+    static func record(_ record: SharedVerseRecord, withText text: String, translationCode: String) -> SharedVerseRecord {
         textRecord(
-            id: record.id, translationCode: translationCode, bookId: record.bookId, bookName: record.bookName,
-            chapter: record.chapter, verse: record.verse, verseRef: ref, text: text
+            id: record.id, translationId: record.translationId, translationCode: translationCode, bookId: record.bookId,
+            bookName: record.bookName, chapter: record.chapter, verse: record.verse, verseRef: record.verseRef, text: text
         )
     }
 
@@ -234,11 +234,19 @@ enum VerseSelectionService {
             + calendar.component(.hour, from: date) / interval.hours
     }
 
-    // Local calendar days since 2001. Calendar.ordinality(of: .day, in: .era) turns over at
-    // midnight UTC rather than local midnight, so it can't number local days.
+    /// The start of the rotation slot holding `date`.
+    static func slotStart(containing date: Date, interval: WidgetSettings.RotationInterval) -> Date {
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: date) / interval.hours * interval.hours
+        return calendar.date(bySettingHour: hour, minute: 0, second: 0, of: date) ?? calendar.startOfDay(for: date)
+    }
+
+    // Local calendar days since 1 January 2001, counted between local midnights, so the day
+    // number is the same wherever the phone is. Calendar.ordinality(of: .day, in: .era) turns
+    // over at midnight UTC rather than local midnight, so it can't number local days.
     private static func dayNumber(for date: Date, calendar: Calendar) -> Int {
-        let epoch = calendar.startOfDay(for: Date(timeIntervalSinceReferenceDate: 0))
-        return calendar.dateComponents([.day], from: epoch, to: calendar.startOfDay(for: date)).day ?? 0
+        let epoch = calendar.date(from: DateComponents(year: 2001, month: 1, day: 1)) ?? Date(timeIntervalSinceReferenceDate: 0)
+        return calendar.dateComponents([.day], from: calendar.startOfDay(for: epoch), to: calendar.startOfDay(for: date)).day ?? 0
     }
 
     /// `now`, then the start of every later slot through `dayCount` days: where widget
@@ -291,6 +299,9 @@ enum VerseSelectionService {
         return order
     }
 
+    /// Daily Verse shows the curated, well-known verses in a new shuffled order each time
+    /// through, one per slot, within the chosen part of the Bible. When no curated verse
+    /// falls in that part, it takes any verse there.
     private static func dailyRecord(
         translationCode: String,
         date: Date,
@@ -299,9 +310,21 @@ enum VerseSelectionService {
         defaults: UserDefaults
     ) -> SharedVerseRecord? {
         let interval = rotationInterval(for: .daily, defaults: defaults)
-        return filteredRecord(dailyBooks(defaults), translationCode: translationCode, excludeLong: excludeLong, database: database) {
-            stableIndex(for: date, count: $0, interval: interval)
+        let books = dailyBooks(defaults)
+        let position = abs(slot(for: date, interval: interval))
+        var filter = ScriptureDatabase.VerseFilter(books: books, maxCharCount: excludeLong ? excludeLongMaxCharCount : nil)
+        var count = database.curatedVerseCount(translationCode: translationCode, filter: filter)
+        if count == 0, filter.maxCharCount != nil {
+            filter.maxCharCount = nil
+            count = database.curatedVerseCount(translationCode: translationCode, filter: filter)
         }
+        guard count > 0 else {
+            return filteredRecord(books, translationCode: translationCode, excludeLong: excludeLong, database: database) {
+                stableIndex(for: date, count: $0, interval: interval)
+            }
+        }
+        let order = shuffledOrder(count: count, seed: position / count)
+        return database.curatedVerse(translationCode: translationCode, filter: filter, offset: order[position % count])
     }
 
     /// The verse at `index(count)` among the `count` verses of `translationCode` in `books`,
@@ -429,11 +452,13 @@ enum VerseSelectionService {
         return database.verse(bookId: record.bookId, chapter: record.chapter, verse: record.verse, translationCode: translationCode) ?? record
     }
 
-    /// A favorite's database verse, or — for live translations, whose text isn't
-    /// stored locally — the text that was saved with it.
+    /// A favorite's database verse. A favorite saved from a live translation keeps the text
+    /// saved with it, placed on its reference verse so it keeps its book, chapter and verse.
     private static func favoriteRecord(_ favorite: Favorite, database: ScriptureDatabase) -> SharedVerseRecord {
-        if let record = database.verse(id: favorite.verseId), record.translationCode == favorite.translationCode {
-            return record
+        if let record = database.verse(id: favorite.verseId) {
+            return record.translationCode == favorite.translationCode
+                ? record
+                : Self.record(record, withText: favorite.text, translationCode: favorite.translationCode)
         }
         return textRecord(
             id: favorite.verseId, translationCode: favorite.translationCode, bookId: 0,

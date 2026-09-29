@@ -59,16 +59,30 @@ struct WidgetTheme: Identifiable, Codable, Equatable {
         WidgetTheme(id: "minimal-light", name: "Minimal Light", backgroundHex: "#F8F7F2", textHex: "#1F2933", accentHex: "#476C5E", fontDesign: .default),
         WidgetTheme(id: "minimal-dark", name: "Minimal Dark", backgroundHex: "#101418", textHex: "#F2F5F7", accentHex: "#8DD7C7", fontDesign: .default),
         WidgetTheme(id: "parchment", name: "Parchment", backgroundHex: "#F2E6C9", textHex: "#3B2F24", accentHex: "#8B5E34", fontDesign: .serif),
-        WidgetTheme(id: "soft-sunrise", name: "Soft Sunrise", backgroundHex: "#F7E8DF", textHex: "#2E3138", accentHex: "#C86548", fontDesign: .rounded),
+        WidgetTheme(id: "soft-sunrise", name: "Soft Sunrise", backgroundHex: "#F7E8DF", textHex: "#2E3138", accentHex: "#A0513A", fontDesign: .rounded),
         WidgetTheme(id: "midnight", name: "Midnight", backgroundHex: "#111827", textHex: "#E5EEF6", accentHex: "#7AA2F7", fontDesign: .default),
         WidgetTheme(id: "cathedral", name: "Cathedral", backgroundHex: "#18251F", textHex: "#EEF2E6", accentHex: "#D3AA58", fontDesign: .serif),
-        WidgetTheme(id: "monochrome", name: "Monochrome", backgroundHex: "#F1F1EF", textHex: "#181818", accentHex: "#6B7280", fontDesign: .monospaced),
+        WidgetTheme(id: "monochrome", name: "Monochrome", backgroundHex: "#F1F1EF", textHex: "#181818", accentHex: "#656B78", fontDesign: .monospaced),
         WidgetTheme(id: "classic-serif", name: "Classic Serif", backgroundHex: "#FBF8F1", textHex: "#22211F", accentHex: "#5B6C3B", fontDesign: .serif),
-        WidgetTheme(id: "modern-sans", name: "Modern Sans", backgroundHex: "#EEF6F8", textHex: "#1E2A30", accentHex: "#2A7D8F", fontDesign: .default),
+        WidgetTheme(id: "modern-sans", name: "Modern Sans", backgroundHex: "#EEF6F8", textHex: "#1E2A30", accentHex: "#277686", fontDesign: .default),
         WidgetTheme(id: "discipline", name: "Discipline", backgroundHex: "#F4F0E8", textHex: "#232323", accentHex: "#9B3D30", fontDesign: .monospaced)
     ]
 
-    static func theme(id: String) -> WidgetTheme {
+    /// The saved choice that follows the system: Minimal Light in light mode, Minimal Dark in dark mode.
+    static let automaticId = "automatic"
+
+    /// The theme `id` names, with Automatic resolved for `colorScheme`.
+    static func theme(id: String, colorScheme: ColorScheme) -> WidgetTheme {
+        guard id == automaticId else { return theme(id: id) }
+        return theme(id: colorScheme == .dark ? "minimal-dark" : "minimal-light")
+    }
+
+    /// The name to show for a saved theme choice, Automatic included.
+    static func name(forId id: String) -> String {
+        id == automaticId ? "Automatic" : theme(id: id).name
+    }
+
+    private static func theme(id: String) -> WidgetTheme {
         allThemes.first { $0.id == id } ?? allThemes[0]
     }
 

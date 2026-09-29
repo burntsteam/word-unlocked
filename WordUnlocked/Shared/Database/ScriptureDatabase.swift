@@ -37,9 +37,8 @@ final class ScriptureDatabase {
         openDatabase()
         provisionDatabaseIfNeeded()
         createSchema()
-        #if DEBUG
-        seedRVTestingIfNeeded()
-        #endif
+        removeRecoveryVersionRows()
+        excludeFromBackup()
     }
 
     private static let isAppExtension: Bool = Bundle.main.bundleURL.pathExtension == "appex"
@@ -117,14 +116,41 @@ final class ScriptureDatabase {
         return records
     }
 
-    func hasVerses(translationCode: String) -> Bool {
-        lock.lock(); defer { lock.unlock() }
-        return scalarInt("SELECT COUNT(*) FROM verses WHERE translation_code = \(quoted(translationCode)) LIMIT 1;") > 0
-    }
-
     func verseCount(translationCode: String, filter: VerseFilter = VerseFilter()) -> Int {
         lock.lock(); defer { lock.unlock() }
         return scalarInt("SELECT COUNT(*) FROM verses v WHERE \(conditions(translationCode: translationCode, filter: filter));")
+    }
+
+    /// The KJV seed lists its curated, well-known verses first: ids below this are that list,
+    /// and the whole KJV follows from 1,000,001 (every other translation from 2,000,001 up).
+    private static let curatedVerseIdLimit = 1_000_000
+
+    /// How many of the curated verses `translationCode` has that match `filter`.
+    func curatedVerseCount(translationCode: String, filter: VerseFilter = VerseFilter()) -> Int {
+        lock.lock(); defer { lock.unlock() }
+        return scalarInt("SELECT COUNT(*) \(curatedJoin(translationCode: translationCode, filter: filter));")
+    }
+
+    /// The curated verse at `offset` among those matching `filter`, in `translationCode`, in
+    /// the curated list's order. Other translations are matched on book, chapter and verse.
+    func curatedVerse(translationCode: String, filter: VerseFilter = VerseFilter(), offset: Int) -> SharedVerseRecord? {
+        lock.lock(); defer { lock.unlock() }
+        return queryVerses(
+            """
+            SELECT \(Self.verseColumns) \(curatedJoin(translationCode: translationCode, filter: filter))
+            ORDER BY ref.id
+            LIMIT 1 OFFSET \(max(offset, 0));
+            """
+        ).first
+    }
+
+    private func curatedJoin(translationCode: String, filter: VerseFilter) -> String {
+        """
+        FROM verses ref
+        INNER JOIN verses v ON v.book_id = ref.book_id AND v.chapter = ref.chapter AND v.verse = ref.verse
+        WHERE ref.translation_code = 'KJV' AND ref.id < \(Self.curatedVerseIdLimit)
+          AND \(conditions(translationCode: translationCode, filter: filter))
+        """
     }
 
     struct ChapterVerseCount: Equatable {
@@ -309,6 +335,38 @@ final class ScriptureDatabase {
         return database
     }
 
+    /// Whether the database can be read now. Before the first unlock after a restart the
+    /// widget can't open the file, and the app hasn't provisioned it before its first launch.
+    var isAvailable: Bool {
+        lock.lock(); defer { lock.unlock() }
+        return connection() != nil
+    }
+
+    /// Closes the handle, so the next query opens the file afresh. The widget calls this
+    /// after each timeline, because the app may have swapped in a new database since.
+    func closeConnection() {
+        lock.lock(); defer { lock.unlock() }
+        if let database {
+            sqlite3_close(database)
+            self.database = nil
+        }
+    }
+
+    /// Debug builds before 28 September 2026 copied Recovery Version test verses into this
+    /// database. LSM's terms forbid keeping any of its text, so they are removed.
+    private func removeRecoveryVersionRows() {
+        guard scalarInt("SELECT COUNT(*) FROM verses WHERE translation_code = 'RV';") > 0 else { return }
+        execute("DELETE FROM verses WHERE translation_code = 'RV';")
+    }
+
+    /// The database is a copy of one bundled with the app, so it stays out of backups.
+    private func excludeFromBackup() {
+        var url = databaseURL
+        var values = URLResourceValues()
+        values.isExcludedFromBackup = true
+        try? url.setResourceValues(values)
+    }
+
     private func createSchema() {
         execute(
             """
@@ -409,62 +467,6 @@ final class ScriptureDatabase {
         openDatabase()
     }
 
-    #if DEBUG
-    private func seedRVTestingIfNeeded() {
-        guard !hasVerses(translationCode: "RV") else { return }
-        let rows = loadSeedRows(named: "seed_verses_rv_testing")
-        guard !rows.isEmpty else { return }
-        lock.lock(); defer { lock.unlock() }
-        rows.forEach { row in
-            let bookId = intValue(row, "book_id")
-            execute(
-                """
-                INSERT OR IGNORE INTO verses
-                    (id, translation_id, translation_code, book_id, book_name, chapter, verse, verse_ref, text, char_count, word_count, fit_category, excerpt, segment_count)
-                VALUES
-                    (\(intValue(row, "id")), \(intValue(row, "translation_id")), \(quoted("RV")),
-                     \(bookId), \(quoted(stringValue(row, "book_name"))), \(intValue(row, "chapter")),
-                     \(intValue(row, "verse")), \(quoted(stringValue(row, "verse_ref"))), \(quoted(stringValue(row, "text"))),
-                     \(intValue(row, "char_count")), \(intValue(row, "word_count")), \(quoted(stringValue(row, "fit_category"))),
-                     \(quoted(stringValue(row, "excerpt"))), \(intValue(row, "segment_count")));
-                """
-            )
-        }
-    }
-
-    private func loadSeedRows(named resourceName: String) -> [[String: Any]] {
-        guard let url = Bundle.main.url(forResource: resourceName, withExtension: "json"),
-              let data = try? Data(contentsOf: url),
-              let object = try? JSONSerialization.jsonObject(with: data),
-              let rows = object as? [[String: Any]] else {
-            return []
-        }
-        return rows
-    }
-
-    private func intValue(_ row: [String: Any], _ key: String) -> Int {
-        if let value = row[key] as? Int {
-            return value
-        }
-        if let value = row[key] as? NSNumber {
-            return value.intValue
-        }
-        if let value = row[key] as? String, let intValue = Int(value) {
-            return intValue
-        }
-        return 0
-    }
-
-    private func stringValue(_ row: [String: Any], _ key: String) -> String {
-        if let value = row[key] as? String {
-            return value
-        }
-        if let value = row[key] as? NSNumber {
-            return value.stringValue
-        }
-        return ""
-    }
-    #endif
 
     private func queryVerses(_ sql: String) -> [SharedVerseRecord] {
         var records: [SharedVerseRecord] = []

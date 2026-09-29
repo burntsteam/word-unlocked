@@ -4,6 +4,9 @@ struct ThemeColors: Equatable {
     let background: Color
     let text: Color
     let accent: Color
+
+    /// Quieter text, such as a translation code, that still reads at 4.5:1 on every theme.
+    var secondaryText: Color { text.opacity(0.72) }
 }
 
 extension Color {

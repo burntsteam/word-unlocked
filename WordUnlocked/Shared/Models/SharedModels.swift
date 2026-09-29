@@ -63,3 +63,20 @@ struct SharedTopicRecord: Codable, Equatable {
     let summary: String
 }
 
+
+/// A verse's reference as people write it: the book's full name, so "1 Kings 2:2" rather
+/// than the database's "1Kgs 2:2", and "Psalm" for a single psalm.
+enum VerseReference {
+    static func display(bookName: String, chapter: Int, verse: Int, fallback: String) -> String {
+        guard !bookName.isEmpty, chapter > 0, verse > 0 else { return fallback }
+        return "\(bookName == "Psalms" ? "Psalm" : bookName) \(chapter):\(verse)"
+    }
+}
+
+extension SharedVerseRecord {
+    /// The reference to show people. `verseRef` stays the database's key, which the ESV
+    /// store and Recovery Version requests use.
+    var displayReference: String {
+        VerseReference.display(bookName: bookName, chapter: chapter, verse: verse, fallback: verseRef)
+    }
+}

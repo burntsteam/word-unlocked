@@ -101,36 +101,60 @@ final class SettingsStore: ObservableObject {
         }
     }
 
-    init(defaults: UserDefaults = AppGroupSettings.defaults) {
+    init(defaults: UserDefaults = AppGroupSettings.defaults, database: ScriptureDatabase = .shared) {
         self.defaults = defaults
-        let base = WidgetSettings.defaultSettings
+        let saved = WidgetSettings(defaults: defaults)
 
-        selectedTranslation = defaults.string(forKey: AppGroupSettings.Keys.selectedTranslation) ?? base.translationCode
-        activeMode = WidgetSettings.VerseMode(rawValue: defaults.string(forKey: AppGroupSettings.Keys.activeMode) ?? base.activeMode.rawValue) ?? base.activeMode
-        selectedTheme = defaults.string(forKey: AppGroupSettings.Keys.selectedTheme) ?? base.themeId
-        longVerseStrategy = WidgetSettings.LongVerseStrategy(rawValue: defaults.string(forKey: AppGroupSettings.Keys.longVerseStrategy) ?? base.longVerseStrategy.rawValue) ?? base.longVerseStrategy
-        topicSlug = defaults.string(forKey: AppGroupSettings.Keys.topicSlug) ?? base.topicSlug
-        chapterBookId = defaults.object(forKey: AppGroupSettings.Keys.chapterBookId) as? Int ?? base.chapterBookId
-        chapterNumber = defaults.object(forKey: AppGroupSettings.Keys.chapterNumber) as? Int ?? base.chapterNumber
-        memorizationPlanId = defaults.object(forKey: AppGroupSettings.Keys.memorizationPlanId) as? Int ?? base.memorizationPlanId
+        selectedTranslation = saved.translationCode
+        activeMode = saved.activeMode
+        selectedTheme = saved.themeId
+        longVerseStrategy = saved.longVerseStrategy
+        topicSlug = saved.topicSlug
+        chapterBookId = saved.chapterBookId
+        chapterNumber = saved.chapterNumber
+        memorizationPlanId = saved.memorizationPlanId
+        showTranslationCode = saved.showTranslationCode
+        showProgress = saved.showProgress
 
-        if defaults.object(forKey: AppGroupSettings.Keys.showTranslationCode) == nil {
-            showTranslationCode = base.showTranslationCode
-        } else {
-            showTranslationCode = defaults.bool(forKey: AppGroupSettings.Keys.showTranslationCode)
-        }
+        let savedFavorites = Favorite.saved(in: defaults)
+        favorites = Self.migrated(savedFavorites, database: database)
+        memorizationPlan = MemorizationPlan.saved(in: defaults)
 
-        if defaults.object(forKey: AppGroupSettings.Keys.showProgress) == nil {
-            showProgress = base.showProgress
-        } else {
-            showProgress = defaults.bool(forKey: AppGroupSettings.Keys.showProgress)
-        }
-
-        favorites = SettingsStore.loadFavorites(defaults: defaults)
-        memorizationPlan = SettingsStore.loadMemorizationPlan(defaults: defaults)
+        // Favorites and the plan are written only when they change: writing back what was just
+        // read would replace favorites a newer or damaged format couldn't decode with nothing.
         persistDefaults()
+        if favorites != savedFavorites {
+            saveFavorites()
+        }
+        defaults.removeObject(forKey: Self.legacyRecoveryVersionKey)
         if let key = Self.planStartKey(for: activeMode), defaults.object(forKey: key) == nil {
             startPlan(for: activeMode)
+        }
+    }
+
+    /// Where builds before 14 September 2026 kept the last Recovery Version verse. LSM's
+    /// terms forbid storing any of its text, so it is removed at launch.
+    private static let legacyRecoveryVersionKey = "rvCachedVerse"
+
+    /// Favorites as this version keeps them. Earlier builds saved Recovery Version favorites
+    /// with their text: each becomes the King James text of the same verse, or is dropped when
+    /// that verse can't be found. They also saved the database's abbreviated reference, such
+    /// as "1Kgs 2:2", which becomes the full one.
+    static func migrated(_ favorites: [Favorite], database: ScriptureDatabase) -> [Favorite] {
+        favorites.compactMap { favorite in
+            let verse = database.verse(id: favorite.verseId)
+            guard favorite.translationCode == "RV" else {
+                guard let verse, verse.displayReference != favorite.verseRef else { return favorite }
+                return Favorite(
+                    id: favorite.id, verseId: favorite.verseId, verseRef: verse.displayReference, text: favorite.text,
+                    translationCode: favorite.translationCode, addedAt: favorite.addedAt
+                )
+            }
+            guard let kjv = verse, kjv.translationCode == "KJV" else { return nil }
+            return Favorite(
+                id: favorite.id, verseId: kjv.id, verseRef: kjv.displayReference, text: kjv.text,
+                translationCode: kjv.translationCode, addedAt: favorite.addedAt
+            )
         }
     }
 
@@ -175,16 +199,12 @@ final class SettingsStore: ObservableObject {
         reloadWidgetTimelines()
     }
 
+    /// Saves `verse` with its own text and translation. While a live translation is selected
+    /// the verses shown are its KJV reference text, so that is what is saved.
     func addFavorite(verse: Verse) {
         guard favorites.contains(where: { $0.verseId == verse.id }) == false else { return }
         favorites.append(
-            Favorite(
-                verseId: verse.id,
-                verseRef: verse.verseRef,
-                text: verse.text,
-                // A live translation's local verses are the KJV reference text.
-                translationCode: VerseSelectionService.referenceTranslationCode(for: selectedTranslation)
-            )
+            Favorite(verseId: verse.id, verseRef: verse.displayReference, text: verse.text, translationCode: verse.translationCode)
         )
     }
 
@@ -198,8 +218,20 @@ final class SettingsStore: ObservableObject {
     }
 
     func removeFavorites(at offsets: IndexSet) {
-        for index in offsets.sorted(by: >) {
-            favorites.remove(at: index)
+        favorites.remove(atOffsets: offsets)
+    }
+
+    /// Favorites mode shows favorites in this order unless Shuffle is on.
+    func moveFavorites(from offsets: IndexSet, to destination: Int) {
+        favorites.move(fromOffsets: offsets, toOffset: destination)
+    }
+
+    /// Removes `verse` from favorites, or saves it with its own text and translation.
+    func toggleFavorite(_ verse: Verse) {
+        if let favorite = favorites.first(where: { $0.verseId == verse.id }) {
+            removeFavorite(favorite)
+        } else {
+            addFavorite(verse: verse)
         }
     }
 
@@ -231,8 +263,6 @@ final class SettingsStore: ObservableObject {
         defaults.set(memorizationPlanId, forKey: AppGroupSettings.Keys.memorizationPlanId)
         defaults.set(showTranslationCode, forKey: AppGroupSettings.Keys.showTranslationCode)
         defaults.set(showProgress, forKey: AppGroupSettings.Keys.showProgress)
-        saveFavorites()
-        saveMemorizationPlan()
     }
 
     private func saveFavorites() {
@@ -253,13 +283,4 @@ final class SettingsStore: ObservableObject {
         WidgetCenter.shared.reloadAllTimelines()
     }
 
-    private static func loadFavorites(defaults: UserDefaults) -> [Favorite] {
-        guard let data = defaults.data(forKey: AppGroupSettings.Keys.favorites) else { return [] }
-        return (try? JSONDecoder().decode([Favorite].self, from: data)) ?? []
-    }
-
-    private static func loadMemorizationPlan(defaults: UserDefaults) -> MemorizationPlan? {
-        guard let data = defaults.data(forKey: AppGroupSettings.Keys.memorizationPlan) else { return nil }
-        return try? JSONDecoder().decode(MemorizationPlan.self, from: data)
-    }
 }

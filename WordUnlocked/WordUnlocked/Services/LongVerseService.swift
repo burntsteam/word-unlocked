@@ -54,10 +54,11 @@ enum LongVerseService {
         return segments
     }
 
+    /// Each word's first letter, skipping opening quotation marks and other punctuation.
     static func firstLetters(from text: String) -> String {
         text
             .split(separator: " ")
-            .compactMap { word in word.first.map(String.init) }
+            .compactMap { word in word.first(where: \.isLetter).map(String.init) }
             .joined(separator: " ")
             .uppercased()
     }

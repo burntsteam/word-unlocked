@@ -7,10 +7,8 @@ import Foundation
 // attribution LSM requires beside the verse.
 @MainActor
 final class RVBibleService: ObservableObject {
-    static let shared = RVBibleService(
-        appId: Bundle.main.infoDictionary?["LSMAppId"] as? String ?? "",
-        token: Bundle.main.infoDictionary?["LSMToken"] as? String ?? ""
-    )
+    // LSM_APP_ID and LSM_TOKEN come from Config/Secrets.xcconfig through the generated LiveAPIKeys.
+    static let shared = RVBibleService(appId: LiveAPIKeys.lsmAppID, token: LiveAPIKeys.lsmToken)
 
     /// LSM's attribution statement as the API returned it on 2026-09-14, for a response that
     /// doesn't carry one. LSM may change it, so a verse shows the one from its own response.
@@ -36,7 +34,7 @@ final class RVBibleService: ObservableObject {
     var isConfigured: Bool { !token.isEmpty }
 
     // Takes its credentials and session so tests can run it unconfigured or against a stubbed network.
-    init(appId: String, token: String, session: URLSession = .shared) {
+    init(appId: String, token: String, session: URLSession = LiveAPISession.shared) {
         self.appId = appId
         self.token = token
         self.session = session

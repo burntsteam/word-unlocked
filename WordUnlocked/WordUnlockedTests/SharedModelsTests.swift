@@ -68,3 +68,17 @@ struct SharedModelsTests {
         }
     }
 }
+
+@Suite("VerseReference")
+struct VerseReferenceTests {
+
+    @Test func referencesUseTheBooksFullNameAndPsalmForOnePsalm() {
+        #expect(VerseReference.display(bookName: "1 Kings", chapter: 2, verse: 2, fallback: "1Kgs 2:2") == "1 Kings 2:2")
+        #expect(VerseReference.display(bookName: "Psalms", chapter: 23, verse: 1, fallback: "Ps 23:1") == "Psalm 23:1")
+    }
+
+    @Test func aVerseWithoutItsPlaceFallsBackToTheSavedReference() {
+        #expect(VerseReference.display(bookName: "", chapter: 3, verse: 16, fallback: "John 3:16") == "John 3:16")
+        #expect(VerseReference.display(bookName: "John", chapter: 0, verse: 0, fallback: "John 3:16") == "John 3:16")
+    }
+}

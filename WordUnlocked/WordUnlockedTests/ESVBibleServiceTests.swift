@@ -9,7 +9,7 @@ import Foundation
 // end is the exception, and runs only when asked for (see liveAPITestsEnabled).
 //
 // Tests build their own instances instead of using .shared: this suite runs inside the app
-// (TEST_HOST), whose Info.plist carries the real ESV key.
+// (TEST_HOST), whose LiveAPIKeys carry the real ESV key.
 @Suite("ESVBibleService", .serialized)
 @MainActor
 struct ESVBibleServiceTests {
@@ -176,9 +176,78 @@ struct ESVBibleServiceTests {
         }
     }
 
+    @Test func aFailedSecureConnectionDoesNotStartThe48HourWait() async {
+        await withScratchStore { defaults in
+            // As on a captive Wi-Fi portal: the request is never sent.
+            StubURLProtocol.stub(host: "api.esv.org") { _ in throw URLError(.serverCertificateUntrusted) }
+            let service = ESVBibleService(apiKey: "test-key", defaults: defaults, session: StubURLProtocol.session())
+
+            await service.update(with: [john316], now: Date())
+
+            #expect(service.lastFetchDate == nil)
+        }
+    }
+
+    @Test func onlyFailuresBeforeTheRequestIsSentLeaveTheWaitUnstarted() {
+        for code in [URLError.Code.notConnectedToInternet, .secureConnectionFailed, .serverCertificateHasBadDate, .appTransportSecurityRequiresSecureConnection] {
+            #expect(ESVBibleService.failedBeforeReachingServer(URLError(code)), "\(code)")
+        }
+        // Crossway may already have answered these.
+        for code in [URLError.Code.timedOut, .networkConnectionLost, .cancelled, .badServerResponse] {
+            #expect(!ESVBibleService.failedBeforeReachingServer(URLError(code)), "\(code)")
+        }
+    }
+
+    @Test func theWaitStartsBeforeTheRequestGoesOut() async {
+        await withScratchStore { defaults in
+            StubURLProtocol.stub(host: "api.esv.org") { request in
+                // Answered only when the download's time was already recorded.
+                let recorded = defaults.object(forKey: AppGroupSettings.Keys.esvLastFetchDate) != nil
+                return (response(to: request, status: recorded ? 200 : 500), esvResponse(answering: request))
+            }
+            let service = ESVBibleService(apiKey: "test-key", defaults: defaults, session: StubURLProtocol.session())
+
+            await service.update(with: [john316], now: Date())
+
+            #expect(service.error == nil)
+            #expect(service.cachedVerse(for: "John 3:16") != nil)
+        }
+    }
+
+    @Test func aDownloadFinishesWhenTheScreenThatStartedItGoesAway() async {
+        await withScratchStore { defaults in
+            StubURLProtocol.stub(host: "api.esv.org") { request in
+                Thread.sleep(forTimeInterval: 0.5)
+                return (response(to: request), esvResponse(answering: request))
+            }
+            let service = ESVBibleService(apiKey: "test-key", defaults: defaults, session: StubURLProtocol.session())
+            var settings = WidgetSettings.defaultSettings
+            settings.translationCode = "ESV"
+            let now = Date()
+
+            // As when someone leaves Today while the download is on its way.
+            let caller = Task { await service.refreshIfDue(settings: settings, favorites: [], now: now) }
+            try? await Task.sleep(for: .milliseconds(200))
+            caller.cancel()
+            await caller.value
+
+            #expect(service.error == nil)
+            #expect(service.lastFetchDate == now)
+            #expect(!service.verses.isEmpty)
+            #expect(StubURLProtocol.requestCount(host: "api.esv.org") == 1)
+        }
+    }
+
+    @Test func liveRequestsGoThroughASessionThatCachesNothing() {
+        let configuration = LiveAPISession.shared.configuration
+
+        #expect(configuration.urlCache == nil)
+        #expect(configuration.requestCachePolicy == .reloadIgnoringLocalCacheData)
+    }
+
     @Test(.enabled(if: liveAPITestsEnabled))
     func liveDownloadReturnsTheESVTextOfJohn316AndPsalm23() async throws {
-        let key = try #require(Bundle.main.infoDictionary?["ESVApiKey"] as? String)
+        let key = LiveAPIKeys.esvAPIKey
         try #require(!key.isEmpty)
         let database = ScriptureDatabase.shared
         let john = try #require(database.verse(verseRef: "John 3:16", translationCode: "KJV"))
@@ -262,6 +331,15 @@ private func verse(_ bookId: Int, _ chapter: Int, _ verse: Int, ref: String? = n
         bookId: bookId, bookName: "", chapter: chapter, verse: verse, verseRef: ref ?? "\(bookId) \(chapter):\(verse)",
         text: "", charCount: 0, wordCount: 0, fitCategory: "short", excerpt: "", segmentCount: 1
     )
+}
+
+/// An ESV API response with a passage for every verse id `request` asks for.
+private func esvResponse(answering request: URLRequest) -> Data {
+    let ids = request.url
+        .flatMap { URLComponents(url: $0, resolvingAgainstBaseURL: false) }?
+        .queryItems?.first { $0.name == "q" }?.value?
+        .split(separator: ",").compactMap { Int($0) } ?? []
+    return esvResponse(ids.map { ($0, $0, "Verse \($0)", "  [\($0 % 1_000)] Stub ESV verse \($0).\n\n") })
 }
 
 /// An ESV API response holding one passage per (first verse id, last verse id, canonical reference, text).
