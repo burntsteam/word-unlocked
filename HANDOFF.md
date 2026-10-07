@@ -357,9 +357,10 @@ Kept for the detail in it; see the 2026-09-22 update above for what is still ope
 - macOS has **no `timeout` command**; don't wrap network git calls with it.
 - Simulator point spaces used for taps: iPhone 17 Pro = 402×874, Pro Max = 440×956.
   Tab bar y≈839 (17 Pro); tabs at x≈62/127/201/275/340.
-- ~~DEBUG-only dead path in `RVBibleService.fetch`~~ — removed 2026-09-28 along with the
-  local `seed_verses_rv_testing.json` (moved to the Trash; LSM's terms forbid keeping RV
-  text). The `.gitignore` line for it stays.
+- ~~DEBUG-only dead path in `RVBibleService.fetch`~~ — removed 2026-09-28; nothing reads
+  the local `seed_verses_rv_testing.json` now. The file went to the Trash that day and
+  was restored 2026-10-06 at the user's request. It is RV text, so it stays local-only:
+  gitignored (`.gitignore:3`), not in the Xcode project, never bundled into the app.
 - **A failing `xcodebuild test` then sits for up to 10 minutes** running
   `simctl diagnose`. Pass `-collect-test-diagnostics never` to get the result at once.
 - **A Run Script's output is not compiled automatically**, even a `.swift` file listed
