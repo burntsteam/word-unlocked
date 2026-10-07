@@ -1,25 +1,25 @@
-# Graph Report - .  (2026-09-29)
+# Graph Report - .  (2026-10-07)
 
 ## Corpus Check
-- 101 files · ~128,554 words
+- 101 files · ~128,575 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 851 nodes · 1688 edges · 77 communities detected
+- 853 nodes · 1692 edges · 78 communities detected
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
-- Edge kinds: calls: 367 · method: 353 · MODIFIES: 299 · contains: 227 · inherits: 183 · ON_BRANCH: 88 · PARENT_OF: 86 · case_of: 81 · rationale_for: 4
+- Edge kinds: calls: 367 · method: 353 · MODIFIES: 299 · contains: 227 · inherits: 183 · ON_BRANCH: 90 · PARENT_OF: 88 · case_of: 81 · rationale_for: 4
 
 
 ## Input Scope
 - Requested: auto
 - Resolved: committed (source: default-auto)
 - Included files: 101 · Candidates: 132
-- Excluded: 0 untracked · 1750 ignored · 2 sensitive · 0 missing committed
+- Excluded: 0 untracked · 1754 ignored · 2 sensitive · 0 missing committed
 - Recommendation: Use --scope all or graphify.yaml inputs.corpus for a knowledge-base folder.
 
 ## Graph Freshness
-- Built from Git commit: `d68ec0b`
+- Built from Git commit: `d07a12d`
 - Compare this hash to `git rev-parse HEAD` before trusting freshness-sensitive graph output.
 ## God Nodes (most connected - your core abstractions)
 1. `VerseSelectionServiceTests` - 41 edges
@@ -84,7 +84,7 @@ Nodes (22): .excerptExactlyAtLimitIsUnchanged(), .excerptFarOverLimitBreaksOnWho
 Nodes (21): .addFavorite(), .apply(), .currentSettings(), .init(), .isFavorite(), .loadFavorites(), .loadMemorizationPlan(), .migrated(), .moveFavorites(), .persistDefaults(), .planStartKey(), .reloadWidgetTimelines(), .removeFavorite(), .removeFavorites(), .resetWidgetSettings(), .save(), .saveFavorites(), .saveMemorizationPlan(), .startPlan(), .toggleFavorite(), SettingsStore
 
 ### Community 12 - "Community 12"
-Nodes (20): 001201b chore(graphify): absorb post-commit hook output from the hardening batch, 1996503 chore(graphify): absorb post-commit hook output from the hardening batch, 1afb72b docs: record the hardening pass and the decisions it leaves open, 3a44839 Give Lock Screen widget views a container background, 6552c8d chore(graphify): absorb post-commit hook output from the ESV batch, 68a479b engram: rotation semantics; era day ordinality rolls over at UTC midnight, 701981f engram: test-host secrets gotcha; ESV enabled in ship status, 724315e engram: test-host secrets gotcha; ESV enabled in ship status, 824ec6d docs: record the implemented mode settings and the 5 PM day rollover, 82f5d22 docs: ship ESV - seven translations across listing, site, and screenshots, 9596b45 engram: verse-selection design; pbxproj resource-wiring gotcha, 98e0574 chore(graphify): absorb post-commit hook output from the ESV batch, ad994f4 docs: ship ESV - seven translations across listing, site, and screenshots, c47336c Bundle the privacy manifests and declare the App Group defaults reason, d68ec0b docs: align pages, listing and records with the audit fixes, e5e5323 Bundle the privacy manifests and declare the App Group defaults reason, f3814f9 docs: record the hardening pass and the decisions it leaves open, f498d4b chore(graphify): absorb post-commit hook output from the mode-settings batch, fefb492 engram: verse-selection design; pbxproj resource-wiring gotcha, main
+Nodes (17): 001201b chore(graphify): absorb post-commit hook output from the hardening batch, 1996503 chore(graphify): absorb post-commit hook output from the hardening batch, 1afb72b docs: record the hardening pass and the decisions it leaves open, 68a479b engram: rotation semantics; era day ordinality rolls over at UTC midnight, 724315e engram: test-host secrets gotcha; ESV enabled in ship status, 824ec6d docs: record the implemented mode settings and the 5 PM day rollover, 82f5d22 docs: ship ESV - seven translations across listing, site, and screenshots, 9596b45 engram: verse-selection design; pbxproj resource-wiring gotcha, 98e0574 chore(graphify): absorb post-commit hook output from the ESV batch, c47336c Bundle the privacy manifests and declare the App Group defaults reason, c8d4ba3 chore(graphify): absorb post-commit hook output, d07a12d docs: record the restored local Recovery Version test file, d68ec0b docs: align pages, listing and records with the audit fixes, f3814f9 docs: record the hardening pass and the decisions it leaves open, f498d4b chore(graphify): absorb post-commit hook output from the mode-settings batch, fefb492 engram: verse-selection design; pbxproj resource-wiring gotcha, main
 
 ### Community 13 - "Community 13"
 Nodes (16): ChapterRotationSpeed, Difficulty, String, Testament, WidgetKind, circular, daily, easy, everySixHours, everyTwelveHours, hard, inline, medium, new, old, rectangular
@@ -191,153 +191,156 @@ Nodes (5): 2879ff0 chore: declare export compliance and tidy repo hygiene, 3cc4c
 ### Community 47 - "Community 47"
 Nodes (5): 299e463 docs(marketing): correct the RV listing and trim over-limit keywords, 830b7f0 chore(graphify): refresh the graph and stop stray caches reaching git, b7adf6f chore: declare export compliance and tidy repo hygiene, e24446a chore(graphify): absorb post-commit hook output from the release batch, ea4ae89 docs: publish privacy, support, and landing pages
 
-### Community 48 - "Translation License Status"
+### Community 48 - "Community 48"
+Nodes (5): 3a44839 Give Lock Screen widget views a container background, 6552c8d chore(graphify): absorb post-commit hook output from the ESV batch, 701981f engram: test-host secrets gotcha; ESV enabled in ship status, ad994f4 docs: ship ESV - seven translations across listing, site, and screenshots, e5e5323 Bundle the privacy manifests and declare the App Group defaults reason
+
+### Community 49 - "Translation License Status"
 Nodes (5): LicenseStatus, ccBySA, comingSoon, licensed, publicDomain
 
-### Community 49 - "Community 49"
+### Community 50 - "Community 50"
 Nodes (5): RotationInterval, daily, everyEightHours, everySixHours, everyTwelveHours
 
-### Community 50 - "Favorites Mode View"
+### Community 51 - "Favorites Mode View"
 Nodes (5): .loadPreferences(), FavoritesRotationSpeed, daily, everySixHours, everyTwelveHours
 
-### Community 51 - "Onboarding Theme Selection"
+### Community 52 - "Onboarding Theme Selection"
 Nodes (5): .themeButton(), AutomaticThemeSwatch, OnboardingThemeView, OnboardingThemeView.swift, ThemeChoiceSwatch
 
-### Community 52 - "Long Verse Text Processing"
+### Community 53 - "Long Verse Text Processing"
 Nodes (5): .excerpt(), .firstLetters(), .fitCategory(), .segments(), LongVerseService
 
-### Community 53 - "Today Display Controller"
+### Community 54 - "Today Display Controller"
 Nodes (5): .computeCurrentVerse(), .init(), .refresh(), .toggleFavorite(), TodayView
 
-### Community 54 - "Save State Machine"
+### Community 55 - "Save State Machine"
 Nodes (5): SaveState, error, idle, saved, saving
 
-### Community 55 - "Widget Data Provider"
+### Community 56 - "Widget Data Provider"
 Nodes (5): .getSnapshot(), .getTimeline(), .placeholder(), TimelineProvider, VerseProvider
 
-### Community 56 - "Community 56"
+### Community 57 - "Community 57"
 Nodes (5): .leavesWordsAndImpossibleReferencesToWordSearch(), .readsReferencesTheWayPeopleWriteThem(), .searchReturnsTheVersesAReferenceNamesInOrder(), ReferenceParserTests, ReferenceParserTests.swift
 
-### Community 57 - "Memorization Mode View"
+### Community 58 - "Memorization Mode View"
 Nodes (4): .load(), .savePlan(), .search(), MemorizationModeView
 
-### Community 58 - "Topic Mode View"
+### Community 59 - "Topic Mode View"
 Nodes (4): TopicRotationSpeed, daily, everySixHours, everyTwelveHours
 
-### Community 59 - "Weekly Theme Controller"
+### Community 60 - "Weekly Theme Controller"
 Nodes (4): .load(), .loadPreview(), .start(), WeeklyThemeModeView
 
-### Community 60 - "Onboarding Mode Selection"
+### Community 61 - "Onboarding Mode Selection"
 Nodes (4): ModeChoiceCard, OnboardingModeCard, OnboardingModeView, OnboardingModeView.swift
 
-### Community 61 - "Onboarding Translation Selection"
+### Community 62 - "Onboarding Translation Selection"
 Nodes (4): OnboardingTranslationCard, OnboardingTranslationView, OnboardingTranslationView.swift, TranslationChoiceCard
 
-### Community 62 - "Widget Instructions View"
+### Community 63 - "Widget Instructions View"
 Nodes (4): OnboardingWidgetInstructionsView, OnboardingWidgetInstructionsView.swift, WidgetInstructionRow, WidgetInstructionStep
 
-### Community 63 - "Translation Selection View"
+### Community 64 - "Translation Selection View"
 Nodes (4): OnboardingTranslationCard, OnboardingTranslationView, OnboardingTranslationView.swift, TranslationChoiceCard
 
-### Community 64 - "Search and Favorite Actions"
+### Community 65 - "Search and Favorite Actions"
 Nodes (4): .performSearch(), .search(), .toggleFavorite(), SearchView
 
-### Community 65 - "Verse Detail Actions"
+### Community 66 - "Verse Detail Actions"
 Nodes (4): .memorize(), .toggleFavorite(), .useForMemorization(), VerseDetailSheet
 
-### Community 66 - "App Entry Point"
+### Community 67 - "App Entry Point"
 Nodes (3): .init(), App, WordUnlockedApp
 
-### Community 67 - "App Icon Generator"
+### Community 68 - "App Icon Generator"
 Nodes (3): generate-app-icon.swift, page(), rgb()
 
-### Community 68 - "Main Onboarding Flow"
+### Community 69 - "Main Onboarding Flow"
 Nodes (3): OnboardingProgressDots, OnboardingView, OnboardingView.swift
 
-### Community 69 - "Onboarding Progress Screen"
+### Community 70 - "Onboarding Progress Screen"
 Nodes (3): OnboardingProgressDots, OnboardingView, OnboardingView.swift
-
-### Community 70 - "Community 70"
-Nodes (3): .removeCachedResponses(), LiveAPISession, LiveAPISession.swift
 
 ### Community 71 - "Community 71"
-Nodes (3): .aVerseWithoutItsPlaceFallsBackToTheSavedReference(), .referencesUseTheBooksFullNameAndPsalmForOnePsalm(), VerseReferenceTests
+Nodes (3): .removeCachedResponses(), LiveAPISession, LiveAPISession.swift
 
 ### Community 72 - "Community 72"
-Nodes (3): TestDefaults.swift, emptyDefaults(), withScratchDefaults()
+Nodes (3): .aVerseWithoutItsPlaceFallsBackToTheSavedReference(), .referencesUseTheBooksFullNameAndPsalmForOnePsalm(), VerseReferenceTests
 
 ### Community 73 - "Community 73"
+Nodes (3): TestDefaults.swift, emptyDefaults(), withScratchDefaults()
+
+### Community 74 - "Community 74"
 Nodes (2): .savePreferences(), FavoritesModeView
 
-### Community 74 - "Verse Picker Interface"
+### Community 75 - "Verse Picker Interface"
 Nodes (2): .row(), WeeklyVersePicker
 
-### Community 75 - "Widget Entry View Implementation"
+### Community 76 - "Widget Entry View Implementation"
 Nodes (2): WidgetEntryView, WidgetEntryView.swift
 
-### Community 76 - "Community 76"
+### Community 77 - "Community 77"
 Nodes (1): Return the ESV text for a single-verse reference, or raise on hard failure.
 
 ## Knowledge Gaps
 - **88 isolated node(s):** `all`, `oldTestament`, `newTestament`, `psalmsAndProverbs`, `book` (+83 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
+- **Thin community `Community 77`** (1 nodes): `Return the ESV text for a single-verse reference, or raise on hard failure.`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions
