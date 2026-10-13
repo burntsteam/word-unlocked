@@ -1244,7 +1244,328 @@
         "widget_widgettimelineservice_widgettimelineservice_topicverse"
       ]
     },
-    "orphan:0": {
+    "orphan:app-group-settings-keys": {
+      "name": "App Group Settings Keys",
+      "members": [
+        "settings_appgroupsettings",
+        "settings_appgroupsettings_appgroupsettings",
+        "settings_appgroupsettings_keys"
+      ]
+    },
+    "orphan:bible-service-implementations": {
+      "name": "Bible Service Implementations",
+      "members": [
+        "commit:repo:github.com/burntsteam/word-unlocked@1166ef5316ef3c02ff9a4b01cac8537e373faa1c",
+        "commit:repo:github.com/burntsteam/word-unlocked@4d7d876e081c9a5e9a46d9870829591fa50ffc2d",
+        "commit:repo:github.com/burntsteam/word-unlocked@6130d8420201a8c02258fb5d268c3f01154d0fc3",
+        "commit:repo:github.com/burntsteam/word-unlocked@7b57407ca59b38702bb2db136020f0d17cc9bb82",
+        "commit:repo:github.com/burntsteam/word-unlocked@820767f2c39ddc73c77208081735b115bb6ca1e4",
+        "commit:repo:github.com/burntsteam/word-unlocked@826bf9cd593d05b03ac2c2e1f30306ac1fe8c328",
+        "commit:repo:github.com/burntsteam/word-unlocked@82f5d2269512d446ddd318aa8a8c4856c41d6af5",
+        "commit:repo:github.com/burntsteam/word-unlocked@8c91015d3bf62535706abc400a60a9b59375d979",
+        "commit:repo:github.com/burntsteam/word-unlocked@d9d693f091ccbd8d7b288277a41794787257a265",
+        "commit:repo:github.com/burntsteam/word-unlocked@f3814f9ea7f2a484c461baef9c5225a7d780439f",
+        "commit:repo:github.com/burntsteam/word-unlocked@fa283324fdf20d9aa77347db8caacf838512ab2b",
+        "decodable",
+        "services_esvbibleservice",
+        "services_esvbibleservice_esvresponse",
+        "services_esvbibleservice_passagemeta",
+        "services_rvbibleservice",
+        "services_rvbibleservice_lsmresponse",
+        "services_rvbibleservice_lsmverse",
+        "wordunlockedtests_esvbibleservicetests",
+        "wordunlockedtests_longverseservicetests",
+        "wordunlockedtests_sharedmodelstests"
+      ]
+    },
+    "orphan:chapter-end-behavior-modes": {
+      "name": "Chapter End Behavior Modes",
+      "members": [
+        "modes_chaptermodeview_chapterendbehavior",
+        "modes_chaptermodeview_chapterendbehavior_nextchapter",
+        "modes_chaptermodeview_chapterendbehavior_repeatchapter",
+        "modes_chaptermodeview_chapterendbehavior_stop"
+      ]
+    },
+    "orphan:chapter-reading-configuration": {
+      "name": "Chapter Reading Configuration",
+      "members": [
+        "models_book",
+        "models_book_testament",
+        "models_book_testament_new",
+        "models_book_testament_old",
+        "modes_chaptermodeview",
+        "modes_chaptermodeview_chapterendbehavior",
+        "modes_chaptermodeview_chapterendbehavior_nextchapter",
+        "modes_chaptermodeview_chapterendbehavior_repeatchapter",
+        "modes_chaptermodeview_chapterendbehavior_stop",
+        "modes_chaptermodeview_chaptermodeview",
+        "modes_chaptermodeview_chapterrotationspeed",
+        "modes_chaptermodeview_chapterrotationspeed_daily",
+        "modes_chaptermodeview_chapterrotationspeed_everysixhours",
+        "modes_chaptermodeview_chapterrotationspeed_everytwelvehours",
+        "string"
+      ]
+    },
+    "orphan:chapter-rotation-frequency-options": {
+      "name": "Chapter Rotation Frequency Options",
+      "members": [
+        "modes_chaptermodeview_chapterrotationspeed",
+        "modes_chaptermodeview_chapterrotationspeed_daily",
+        "modes_chaptermodeview_chapterrotationspeed_everysixhours",
+        "modes_chaptermodeview_chapterrotationspeed_everytwelvehours"
+      ]
+    },
+    "orphan:coding-key-definitions": {
+      "name": "Coding Key Definitions",
+      "members": [
+        "codingkey",
+        "theme_widgettheme_codingkeys",
+        "theme_widgettheme_codingkeys_accenthex",
+        "theme_widgettheme_codingkeys_backgroundhex",
+        "theme_widgettheme_codingkeys_fontdesign",
+        "theme_widgettheme_codingkeys_id",
+        "theme_widgettheme_codingkeys_name",
+        "theme_widgettheme_codingkeys_texthex"
+      ]
+    },
+    "orphan:core-scripture-models": {
+      "name": "Core Scripture Models",
+      "members": [
+        "commit:repo:github.com/burntsteam/word-unlocked@676cef021ba7105ac9730e58f3a99e07d5ee5fff",
+        "commit:repo:github.com/burntsteam/word-unlocked@6fe3b58d400bd56562389824e96dc50840bab50b",
+        "models_book",
+        "models_favorite",
+        "models_favorite_lossy",
+        "models_favorite_lossy_init",
+        "models_topic",
+        "models_translation",
+        "models_versesegment",
+        "models_weeklyplan",
+        "onboarding_onboardingwelcomeview",
+        "services_longverseservice",
+        "services_memorizationservice",
+        "services_themeservice",
+        "services_themeservice_themeservice",
+        "services_themeservice_themeservice_theme",
+        "services_translationservice",
+        "services_translationservice_translationservice",
+        "services_translationservice_translationservice_translation",
+        "tabs_lockscreenwidgetguideview",
+        "theme_themecolors",
+        "theme_themecolors_color",
+        "theme_themecolors_color_init",
+        "theme_widgettheme",
+        "timelineentry",
+        "widget",
+        "widgetbundle",
+        "wordunlocked_wordunlockedapp",
+        "wordunlockedwidget_circularwidgetview",
+        "wordunlockedwidget_homescreenwidgetview",
+        "wordunlockedwidget_inlinewidgetview",
+        "wordunlockedwidget_rectangularwidgetview",
+        "wordunlockedwidget_widgetentry",
+        "wordunlockedwidget_widgetentry_verseentry",
+        "wordunlockedwidget_wordunlockedwidget",
+        "wordunlockedwidget_wordunlockedwidget_wordunlockedwidget",
+        "wordunlockedwidget_wordunlockedwidgetbundle",
+        "wordunlockedwidget_wordunlockedwidgetbundle_wordunlockedwidgetbundle"
+      ]
+    },
+    "orphan:daily-verse-mode-view": {
+      "name": "Daily Verse Mode View",
+      "members": [
+        "modes_dailyversemodeview_dailyversemodeview_loadpreferences",
+        "modes_dailyversemodeview_dailyverseupdateinterval",
+        "modes_dailyversemodeview_dailyverseupdateinterval_daily",
+        "modes_dailyversemodeview_dailyverseupdateinterval_everyeighthours"
+      ]
+    },
+    "orphan:database-build-script": {
+      "name": "Database Build Script",
+      "members": [
+        "scripts_build_prebuilt_db",
+        "scripts_build_prebuilt_db_load",
+        "scripts_build_prebuilt_db_main"
+      ]
+    },
+    "orphan:esv-api-fetcher": {
+      "name": "ESV API fetcher",
+      "members": [
+        "scripts_fetch_esv_seed",
+        "scripts_fetch_esv_seed_fetch_text",
+        "scripts_fetch_esv_seed_load_json",
+        "scripts_fetch_esv_seed_main",
+        "scripts_fetch_esv_seed_rationale_86",
+        "scripts_fetch_esv_seed_resolve_api_key"
+      ]
+    },
+    "orphan:esv-bible-data-fetching": {
+      "name": "ESV Bible Data Fetching",
+      "members": [
+        "decodable",
+        "observableobject",
+        "services_esvbibleservice",
+        "services_esvbibleservice_esvbibleservice",
+        "services_esvbibleservice_esvbibleservice_applyingstore",
+        "services_esvbibleservice_esvbibleservice_cachedverse",
+        "services_esvbibleservice_esvbibleservice_fetch",
+        "services_esvbibleservice_esvbibleservice_init",
+        "services_esvbibleservice_esvbibleservice_store",
+        "services_esvbibleservice_esvresponse",
+        "services_rvbibleservice",
+        "services_rvbibleservice_lsmresponse",
+        "services_rvbibleservice_lsmverse",
+        "services_rvbibleservice_rvbibleservice",
+        "services_rvbibleservice_rvbibleservice_fetch",
+        "services_rvbibleservice_rvbibleservice_init"
+      ]
+    },
+    "orphan:ios-app-build-tools": {
+      "name": "iOS app build tools",
+      "members": [
+        "branch:repo:github.com/burntsteam/word-unlocked#main",
+        "commit:repo:github.com/burntsteam/word-unlocked@1524b077c20c8951ba016d670f32a07df0c6a3a9",
+        "commit:repo:github.com/burntsteam/word-unlocked@606b9f41b0f21537069c1b031d47626bcccd3c69",
+        "commit:repo:github.com/burntsteam/word-unlocked@676cef021ba7105ac9730e58f3a99e07d5ee5fff",
+        "scripts_build_prebuilt_db",
+        "scripts_build_prebuilt_db_load",
+        "scripts_build_prebuilt_db_main"
+      ]
+    },
+    "orphan:main-app-views": {
+      "name": "Main App Views",
+      "members": [
+        "wordunlocked_contentview",
+        "wordunlocked_contentview_contentview",
+        "wordunlocked_contentview_maintabview"
+      ]
+    },
+    "orphan:memorization-plan-configuration": {
+      "name": "Memorization Plan Configuration",
+      "members": [
+        "identifiable",
+        "models_memorizationplan",
+        "models_memorizationplan_memorizationplan",
+        "models_memorizationplan_memorizationplan_difficulty",
+        "models_memorizationplan_memorizationplan_phase",
+        "modes_chaptermodeview_chapterendbehavior",
+        "modes_chaptermodeview_chapterendbehavior_nextchapter",
+        "modes_chaptermodeview_chapterendbehavior_repeatchapter",
+        "modes_chaptermodeview_chapterendbehavior_stop",
+        "modes_topicmodeview_topicmodeoption",
+        "modes_weeklythememodeview_weeklypreview",
+        "modes_weeklythememodeview_weeklythemeplan",
+        "modes_weeklythememodeview_weeklyversepreview",
+        "tabs_wallpaperview_wallpaperbackground"
+      ]
+    },
+    "orphan:memorization-plan-logic": {
+      "name": "Memorization Plan Logic",
+      "members": [
+        "int",
+        "models_memorizationplan",
+        "models_memorizationplan_difficulty",
+        "models_memorizationplan_difficulty_easy",
+        "models_memorizationplan_difficulty_hard",
+        "models_memorizationplan_difficulty_medium",
+        "models_memorizationplan_memorizationplan",
+        "models_memorizationplan_memorizationplan_difficulty",
+        "models_memorizationplan_memorizationplan_init",
+        "models_memorizationplan_memorizationplan_phase",
+        "models_memorizationplan_memorizationplan_saved",
+        "models_memorizationplan_phase",
+        "models_memorizationplan_phase_firstletters",
+        "models_memorizationplan_phase_fullverse",
+        "models_memorizationplan_phase_partialblank",
+        "models_memorizationplan_phase_referenceonly",
+        "models_memorizationplan_phase_review"
+      ]
+    },
+    "orphan:modes-navigation-view": {
+      "name": "Modes Navigation View",
+      "members": [
+        "tabs_modesview_modesview",
+        "tabs_modesview_modesview_detailview"
+      ]
+    },
+    "orphan:onboarding-completion-screen": {
+      "name": "Onboarding Completion Screen",
+      "members": [
+        "onboarding_onboardingcompleteview",
+        "onboarding_onboardingcompleteview_onboardingcompleteview",
+        "onboarding_onboardingcompleteview_onboardingheader",
+        "onboarding_onboardingcompleteview_onboardingpagelayout"
+      ]
+    },
+    "orphan:primary-ui-components": {
+      "name": "Primary UI Components",
+      "members": [
+        "modes_chaptermodeview_chaptermodeview",
+        "modes_memorizationmodeview_versesearchrow",
+        "modes_topicmodeview_topicmodeview",
+        "onboarding_onboardingwelcomeview_onboardingwelcomeview",
+        "tabs_lockscreenwidgetguideview_lockscreenwidgetguideview",
+        "tabs_todayview_actionarea",
+        "tabs_todayview_chip",
+        "tabs_todayview_inforow",
+        "tabs_todayview_miniwidgetpreview",
+        "tabs_translationsview",
+        "tabs_translationsview_biblelicensesview",
+        "tabs_translationsview_esvtranslationrow",
+        "tabs_translationsview_licenserow",
+        "tabs_translationsview_rvtranslationrow",
+        "tabs_translationsview_translationrow",
+        "tabs_translationsview_translationsview",
+        "view",
+        "wordunlockedwidget_circularwidgetview_circularwidgetview",
+        "wordunlockedwidget_homescreenwidgetview_homescreenwidgetview",
+        "wordunlockedwidget_inlinewidgetview_inlinewidgetview",
+        "wordunlockedwidget_rectangularwidgetview_rectangularwidgetview",
+        "wordunlockedwidget_widgetentryview_widgetentryview"
+      ]
+    },
+    "orphan:scripture-database-models": {
+      "name": "Scripture Database Models",
+      "members": [
+        "commit:repo:github.com/burntsteam/word-unlocked@27d8d8a589936dea2c2a74cc5fd442838a9f40b4",
+        "commit:repo:github.com/burntsteam/word-unlocked@4ebcbf96be7a4d8af685430bed9155f08db75747",
+        "commit:repo:github.com/burntsteam/word-unlocked@701d0d85927cd6c8eae5f9fe884306396a5b1c44",
+        "commit:repo:github.com/burntsteam/word-unlocked@b13e9d794257dc5974df19f825a238ea86fd42c5",
+        "commit:repo:github.com/burntsteam/word-unlocked@fd8543d60da0bbd192aec1f041e4ebead04413b3",
+        "database_scripturedatabase",
+        "models_verse",
+        "modes_chaptermodeview",
+        "modes_dailyversemodeview",
+        "modes_favoritesmodeview",
+        "modes_memorizationmodeview",
+        "modes_topicmodeview",
+        "modes_weeklythememodeview",
+        "services_databaseservice",
+        "services_verseselectionservice",
+        "settings_appgroupsettings",
+        "settings_appgroupsettings_appgroupsettings",
+        "settings_appgroupsettings_keys",
+        "settings_settingsstore",
+        "tabs_searchview",
+        "widget_widgettimelineservice",
+        "wordunlockedtests_verseselectionservicetests",
+        "wordunlockedtests_verseselectionservicetests_iscurated",
+        "wordunlockedtests_verseselectionservicetests_makeverse",
+        "wordunlockedwidget_widgetprovider"
+      ]
+    },
+    "orphan:source-theme-properties": {
+      "name": "Source Theme Properties",
+      "members": [
+        "models_weeklyplan_source",
+        "models_weeklyplan_source_book",
+        "models_weeklyplan_source_chapter",
+        "models_weeklyplan_source_custom",
+        "models_weeklyplan_source_theme"
+      ]
+    },
+    "orphan:test-utilities-and-scripts": {
       "name": "Test Utilities and Scripts",
       "members": [
         "branch:repo:github.com/burntsteam/word-unlocked#main",
@@ -1306,33 +1627,7 @@
         "commit:repo:github.com/burntsteam/word-unlocked@ffb162b6fda0489c57ddec3232623d6baca5c308"
       ]
     },
-    "orphan:13": {
-      "name": "Bible Service Implementations",
-      "members": [
-        "commit:repo:github.com/burntsteam/word-unlocked@1166ef5316ef3c02ff9a4b01cac8537e373faa1c",
-        "commit:repo:github.com/burntsteam/word-unlocked@4d7d876e081c9a5e9a46d9870829591fa50ffc2d",
-        "commit:repo:github.com/burntsteam/word-unlocked@6130d8420201a8c02258fb5d268c3f01154d0fc3",
-        "commit:repo:github.com/burntsteam/word-unlocked@7b57407ca59b38702bb2db136020f0d17cc9bb82",
-        "commit:repo:github.com/burntsteam/word-unlocked@820767f2c39ddc73c77208081735b115bb6ca1e4",
-        "commit:repo:github.com/burntsteam/word-unlocked@826bf9cd593d05b03ac2c2e1f30306ac1fe8c328",
-        "commit:repo:github.com/burntsteam/word-unlocked@82f5d2269512d446ddd318aa8a8c4856c41d6af5",
-        "commit:repo:github.com/burntsteam/word-unlocked@8c91015d3bf62535706abc400a60a9b59375d979",
-        "commit:repo:github.com/burntsteam/word-unlocked@d9d693f091ccbd8d7b288277a41794787257a265",
-        "commit:repo:github.com/burntsteam/word-unlocked@f3814f9ea7f2a484c461baef9c5225a7d780439f",
-        "commit:repo:github.com/burntsteam/word-unlocked@fa283324fdf20d9aa77347db8caacf838512ab2b",
-        "decodable",
-        "services_esvbibleservice",
-        "services_esvbibleservice_esvresponse",
-        "services_esvbibleservice_passagemeta",
-        "services_rvbibleservice",
-        "services_rvbibleservice_lsmresponse",
-        "services_rvbibleservice_lsmverse",
-        "wordunlockedtests_esvbibleservicetests",
-        "wordunlockedtests_longverseservicetests",
-        "wordunlockedtests_sharedmodelstests"
-      ]
-    },
-    "orphan:15": {
+    "orphan:theme-and-status-types": {
       "name": "Theme and Status Types",
       "members": [
         "models_book_testament",
@@ -1356,48 +1651,64 @@
         "string"
       ]
     },
-    "orphan:16": {
-      "name": "Memorization Plan Logic",
+    "orphan:theme-color-definitions": {
+      "name": "Theme Color Definitions",
       "members": [
-        "int",
-        "models_memorizationplan",
-        "models_memorizationplan_difficulty",
-        "models_memorizationplan_difficulty_easy",
-        "models_memorizationplan_difficulty_hard",
-        "models_memorizationplan_difficulty_medium",
-        "models_memorizationplan_memorizationplan",
-        "models_memorizationplan_memorizationplan_difficulty",
-        "models_memorizationplan_memorizationplan_init",
-        "models_memorizationplan_memorizationplan_phase",
-        "models_memorizationplan_memorizationplan_saved",
-        "models_memorizationplan_phase",
-        "models_memorizationplan_phase_firstletters",
-        "models_memorizationplan_phase_fullverse",
-        "models_memorizationplan_phase_partialblank",
-        "models_memorizationplan_phase_referenceonly",
-        "models_memorizationplan_phase_review"
+        "theme_themecolors",
+        "theme_themecolors_color",
+        "theme_themecolors_color_init",
+        "theme_themecolors_themecolors"
       ]
     },
-    "orphan:17": {
-      "name": "Memorization Plan Configuration",
+    "orphan:theme-configuration-service": {
+      "name": "Theme Configuration Service",
       "members": [
-        "identifiable",
-        "models_memorizationplan",
-        "models_memorizationplan_memorizationplan",
-        "models_memorizationplan_memorizationplan_difficulty",
-        "models_memorizationplan_memorizationplan_phase",
-        "modes_chaptermodeview_chapterendbehavior",
-        "modes_chaptermodeview_chapterendbehavior_nextchapter",
-        "modes_chaptermodeview_chapterendbehavior_repeatchapter",
-        "modes_chaptermodeview_chapterendbehavior_stop",
-        "modes_topicmodeview_topicmodeoption",
-        "modes_weeklythememodeview_weeklypreview",
-        "modes_weeklythememodeview_weeklythemeplan",
-        "modes_weeklythememodeview_weeklyversepreview",
-        "tabs_wallpaperview_wallpaperbackground"
+        "services_themeservice",
+        "services_themeservice_themeservice",
+        "services_themeservice_themeservice_theme"
       ]
     },
-    "orphan:18": {
+    "orphan:today-s-verse-display": {
+      "name": "Today's Verse Display",
+      "members": [
+        "tabs_todayview",
+        "tabs_todayview_actionarea",
+        "tabs_todayview_chip",
+        "tabs_todayview_inforow",
+        "tabs_todayview_lockscreenwidgetpreview",
+        "tabs_todayview_miniwidgetpreview",
+        "tabs_todayview_todayview",
+        "tabs_todayview_todayview_computecurrentverse",
+        "tabs_todayview_todayview_init",
+        "tabs_todayview_todayview_refresh",
+        "tabs_todayview_todayview_togglefavorite"
+      ]
+    },
+    "orphan:translation-lookup-service": {
+      "name": "Translation Lookup Service",
+      "members": [
+        "services_translationservice",
+        "services_translationservice_translationservice",
+        "services_translationservice_translationservice_translation"
+      ]
+    },
+    "orphan:verse-selection-tests": {
+      "name": "Verse Selection Tests",
+      "members": [
+        "wordunlockedtests_verseselectionservicetests",
+        "wordunlockedtests_verseselectionservicetests_makeverse",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_pickreturnsnilforanemptyarray",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_pickreturnstheelementatstableindex",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_pickstaysconsistentwithstableindexacrossmanydates",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexisdeterministicforthesameinputs",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexstaysinboundsfordaycomponentacrossextremedates",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexstaysinboundsforweekofyearcomponentacrossextremedates",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexwithzerocountreturnszeroinsteadofcrashing",
+        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexyieldsdifferentvaluesfordifferentdays"
+      ]
+    },
+    "orphan:wallpaper-export-workflow": {
       "name": "Wallpaper Export Workflow",
       "members": [
         "tabs_wallpaperview",
@@ -1415,44 +1726,7 @@
         "tabs_wallpaperview_wallpaperexportview_steprow"
       ]
     },
-    "orphan:19": {
-      "name": "Today's Verse Display",
-      "members": [
-        "tabs_todayview",
-        "tabs_todayview_actionarea",
-        "tabs_todayview_chip",
-        "tabs_todayview_inforow",
-        "tabs_todayview_lockscreenwidgetpreview",
-        "tabs_todayview_miniwidgetpreview",
-        "tabs_todayview_todayview",
-        "tabs_todayview_todayview_computecurrentverse",
-        "tabs_todayview_todayview_init",
-        "tabs_todayview_todayview_refresh",
-        "tabs_todayview_todayview_togglefavorite"
-      ]
-    },
-    "orphan:33": {
-      "name": "ESV API fetcher",
-      "members": [
-        "scripts_fetch_esv_seed",
-        "scripts_fetch_esv_seed_fetch_text",
-        "scripts_fetch_esv_seed_load_json",
-        "scripts_fetch_esv_seed_main",
-        "scripts_fetch_esv_seed_rationale_86",
-        "scripts_fetch_esv_seed_resolve_api_key"
-      ]
-    },
-    "orphan:37": {
-      "name": "Source Theme Properties",
-      "members": [
-        "models_weeklyplan_source",
-        "models_weeklyplan_source_book",
-        "models_weeklyplan_source_chapter",
-        "models_weeklyplan_source_custom",
-        "models_weeklyplan_source_theme"
-      ]
-    },
-    "orphan:39": {
+    "orphan:weekly-theme-preview-view": {
       "name": "Weekly Theme Preview View",
       "members": [
         "modes_weeklythememodeview",
@@ -1461,46 +1735,23 @@
         "modes_weeklythememodeview_weeklyversepreview"
       ]
     },
-    "orphan:4": {
-      "name": "iOS app build tools",
+    "orphan:widget-bundle-entry": {
+      "name": "Widget Bundle Entry",
       "members": [
-        "branch:repo:github.com/burntsteam/word-unlocked#main",
-        "commit:repo:github.com/burntsteam/word-unlocked@1524b077c20c8951ba016d670f32a07df0c6a3a9",
-        "commit:repo:github.com/burntsteam/word-unlocked@606b9f41b0f21537069c1b031d47626bcccd3c69",
-        "commit:repo:github.com/burntsteam/word-unlocked@676cef021ba7105ac9730e58f3a99e07d5ee5fff",
-        "scripts_build_prebuilt_db",
-        "scripts_build_prebuilt_db_load",
-        "scripts_build_prebuilt_db_main"
+        "widgetbundle",
+        "wordunlockedwidget_wordunlockedwidgetbundle",
+        "wordunlockedwidget_wordunlockedwidgetbundle_wordunlockedwidgetbundle"
       ]
     },
-    "orphan:42": {
-      "name": "Widget Layout Types",
+    "orphan:widget-display-component": {
+      "name": "Widget Display Component",
       "members": [
-        "models_widgetsettings_widgetkind",
-        "models_widgetsettings_widgetkind_circular",
-        "models_widgetsettings_widgetkind_inline",
-        "models_widgetsettings_widgetkind_rectangular"
+        "widget",
+        "wordunlockedwidget_wordunlockedwidget",
+        "wordunlockedwidget_wordunlockedwidget_wordunlockedwidget"
       ]
     },
-    "orphan:44": {
-      "name": "Chapter End Behavior Modes",
-      "members": [
-        "modes_chaptermodeview_chapterendbehavior",
-        "modes_chaptermodeview_chapterendbehavior_nextchapter",
-        "modes_chaptermodeview_chapterendbehavior_repeatchapter",
-        "modes_chaptermodeview_chapterendbehavior_stop"
-      ]
-    },
-    "orphan:46": {
-      "name": "Onboarding Completion Screen",
-      "members": [
-        "onboarding_onboardingcompleteview",
-        "onboarding_onboardingcompleteview_onboardingcompleteview",
-        "onboarding_onboardingcompleteview_onboardingheader",
-        "onboarding_onboardingcompleteview_onboardingpagelayout"
-      ]
-    },
-    "orphan:48": {
+    "orphan:widget-entry-view-logic": {
       "name": "Widget Entry View Logic",
       "members": [
         "commit:repo:github.com/burntsteam/word-unlocked@724315eb51a23525487371b6f044360fe25dcbf6",
@@ -1509,181 +1760,16 @@
         "commit:repo:github.com/burntsteam/word-unlocked@c47336c0f97ee907d02c021ed3ff1916d5b9e521"
       ]
     },
-    "orphan:49": {
-      "name": "Chapter Rotation Frequency Options",
+    "orphan:widget-layout-types": {
+      "name": "Widget Layout Types",
       "members": [
-        "modes_chaptermodeview_chapterrotationspeed",
-        "modes_chaptermodeview_chapterrotationspeed_daily",
-        "modes_chaptermodeview_chapterrotationspeed_everysixhours",
-        "modes_chaptermodeview_chapterrotationspeed_everytwelvehours"
+        "models_widgetsettings_widgetkind",
+        "models_widgetsettings_widgetkind_circular",
+        "models_widgetsettings_widgetkind_inline",
+        "models_widgetsettings_widgetkind_rectangular"
       ]
     },
-    "orphan:5": {
-      "name": "Core Scripture Models",
-      "members": [
-        "commit:repo:github.com/burntsteam/word-unlocked@676cef021ba7105ac9730e58f3a99e07d5ee5fff",
-        "commit:repo:github.com/burntsteam/word-unlocked@6fe3b58d400bd56562389824e96dc50840bab50b",
-        "models_book",
-        "models_favorite",
-        "models_favorite_lossy",
-        "models_favorite_lossy_init",
-        "models_topic",
-        "models_translation",
-        "models_versesegment",
-        "models_weeklyplan",
-        "onboarding_onboardingwelcomeview",
-        "services_longverseservice",
-        "services_memorizationservice",
-        "services_themeservice",
-        "services_themeservice_themeservice",
-        "services_themeservice_themeservice_theme",
-        "services_translationservice",
-        "services_translationservice_translationservice",
-        "services_translationservice_translationservice_translation",
-        "tabs_lockscreenwidgetguideview",
-        "theme_themecolors",
-        "theme_themecolors_color",
-        "theme_themecolors_color_init",
-        "theme_widgettheme",
-        "timelineentry",
-        "widget",
-        "widgetbundle",
-        "wordunlocked_wordunlockedapp",
-        "wordunlockedwidget_circularwidgetview",
-        "wordunlockedwidget_homescreenwidgetview",
-        "wordunlockedwidget_inlinewidgetview",
-        "wordunlockedwidget_rectangularwidgetview",
-        "wordunlockedwidget_widgetentry",
-        "wordunlockedwidget_widgetentry_verseentry",
-        "wordunlockedwidget_wordunlockedwidget",
-        "wordunlockedwidget_wordunlockedwidget_wordunlockedwidget",
-        "wordunlockedwidget_wordunlockedwidgetbundle",
-        "wordunlockedwidget_wordunlockedwidgetbundle_wordunlockedwidgetbundle"
-      ]
-    },
-    "orphan:50": {
-      "name": "Daily Verse Mode View",
-      "members": [
-        "modes_dailyversemodeview_dailyversemodeview_loadpreferences",
-        "modes_dailyversemodeview_dailyverseupdateinterval",
-        "modes_dailyversemodeview_dailyverseupdateinterval_daily",
-        "modes_dailyversemodeview_dailyverseupdateinterval_everyeighthours"
-      ]
-    },
-    "orphan:53": {
-      "name": "Theme Color Definitions",
-      "members": [
-        "theme_themecolors",
-        "theme_themecolors_color",
-        "theme_themecolors_color_init",
-        "theme_themecolors_themecolors"
-      ]
-    },
-    "orphan:54": {
-      "name": "App Group Settings Keys",
-      "members": [
-        "settings_appgroupsettings",
-        "settings_appgroupsettings_appgroupsettings",
-        "settings_appgroupsettings_keys"
-      ]
-    },
-    "orphan:59": {
-      "name": "Database Build Script",
-      "members": [
-        "scripts_build_prebuilt_db",
-        "scripts_build_prebuilt_db_load",
-        "scripts_build_prebuilt_db_main"
-      ]
-    },
-    "orphan:61": {
-      "name": "Main App Views",
-      "members": [
-        "wordunlocked_contentview",
-        "wordunlocked_contentview_contentview",
-        "wordunlocked_contentview_maintabview"
-      ]
-    },
-    "orphan:63": {
-      "name": "Modes Navigation View",
-      "members": [
-        "tabs_modesview_modesview",
-        "tabs_modesview_modesview_detailview"
-      ]
-    },
-    "orphan:65": {
-      "name": "Widget Bundle Entry",
-      "members": [
-        "widgetbundle",
-        "wordunlockedwidget_wordunlockedwidgetbundle",
-        "wordunlockedwidget_wordunlockedwidgetbundle_wordunlockedwidgetbundle"
-      ]
-    },
-    "orphan:66": {
-      "name": "Widget Display Component",
-      "members": [
-        "widget",
-        "wordunlockedwidget_wordunlockedwidget",
-        "wordunlockedwidget_wordunlockedwidget_wordunlockedwidget"
-      ]
-    },
-    "orphan:7": {
-      "name": "Scripture Database Models",
-      "members": [
-        "commit:repo:github.com/burntsteam/word-unlocked@27d8d8a589936dea2c2a74cc5fd442838a9f40b4",
-        "commit:repo:github.com/burntsteam/word-unlocked@4ebcbf96be7a4d8af685430bed9155f08db75747",
-        "commit:repo:github.com/burntsteam/word-unlocked@701d0d85927cd6c8eae5f9fe884306396a5b1c44",
-        "commit:repo:github.com/burntsteam/word-unlocked@b13e9d794257dc5974df19f825a238ea86fd42c5",
-        "commit:repo:github.com/burntsteam/word-unlocked@fd8543d60da0bbd192aec1f041e4ebead04413b3",
-        "database_scripturedatabase",
-        "models_verse",
-        "modes_chaptermodeview",
-        "modes_dailyversemodeview",
-        "modes_favoritesmodeview",
-        "modes_memorizationmodeview",
-        "modes_topicmodeview",
-        "modes_weeklythememodeview",
-        "services_databaseservice",
-        "services_verseselectionservice",
-        "settings_appgroupsettings",
-        "settings_appgroupsettings_appgroupsettings",
-        "settings_appgroupsettings_keys",
-        "settings_settingsstore",
-        "tabs_searchview",
-        "widget_widgettimelineservice",
-        "wordunlockedtests_verseselectionservicetests",
-        "wordunlockedtests_verseselectionservicetests_iscurated",
-        "wordunlockedtests_verseselectionservicetests_makeverse",
-        "wordunlockedwidget_widgetprovider"
-      ]
-    },
-    "orphan:9": {
-      "name": "Primary UI Components",
-      "members": [
-        "modes_chaptermodeview_chaptermodeview",
-        "modes_memorizationmodeview_versesearchrow",
-        "modes_topicmodeview_topicmodeview",
-        "onboarding_onboardingwelcomeview_onboardingwelcomeview",
-        "tabs_lockscreenwidgetguideview_lockscreenwidgetguideview",
-        "tabs_todayview_actionarea",
-        "tabs_todayview_chip",
-        "tabs_todayview_inforow",
-        "tabs_todayview_miniwidgetpreview",
-        "tabs_translationsview",
-        "tabs_translationsview_biblelicensesview",
-        "tabs_translationsview_esvtranslationrow",
-        "tabs_translationsview_licenserow",
-        "tabs_translationsview_rvtranslationrow",
-        "tabs_translationsview_translationrow",
-        "tabs_translationsview_translationsview",
-        "view",
-        "wordunlockedwidget_circularwidgetview_circularwidgetview",
-        "wordunlockedwidget_homescreenwidgetview_homescreenwidgetview",
-        "wordunlockedwidget_inlinewidgetview_inlinewidgetview",
-        "wordunlockedwidget_rectangularwidgetview_rectangularwidgetview",
-        "wordunlockedwidget_widgetentryview_widgetentryview"
-      ]
-    },
-    "orphan:orphan:14": {
+    "orphan:widget-settings-model": {
       "name": "Widget Settings Model",
       "members": [
         "caseiterable",
@@ -1698,98 +1784,12 @@
         "models_widgetsettings_widgetsettings_widgetkind"
       ]
     },
-    "orphan:orphan:16": {
-      "name": "Chapter Reading Configuration",
-      "members": [
-        "models_book",
-        "models_book_testament",
-        "models_book_testament_new",
-        "models_book_testament_old",
-        "modes_chaptermodeview",
-        "modes_chaptermodeview_chapterendbehavior",
-        "modes_chaptermodeview_chapterendbehavior_nextchapter",
-        "modes_chaptermodeview_chapterendbehavior_repeatchapter",
-        "modes_chaptermodeview_chapterendbehavior_stop",
-        "modes_chaptermodeview_chaptermodeview",
-        "modes_chaptermodeview_chapterrotationspeed",
-        "modes_chaptermodeview_chapterrotationspeed_daily",
-        "modes_chaptermodeview_chapterrotationspeed_everysixhours",
-        "modes_chaptermodeview_chapterrotationspeed_everytwelvehours",
-        "string"
-      ]
-    },
-    "orphan:orphan:17": {
-      "name": "Coding Key Definitions",
-      "members": [
-        "codingkey",
-        "theme_widgettheme_codingkeys",
-        "theme_widgettheme_codingkeys_accenthex",
-        "theme_widgettheme_codingkeys_backgroundhex",
-        "theme_widgettheme_codingkeys_fontdesign",
-        "theme_widgettheme_codingkeys_id",
-        "theme_widgettheme_codingkeys_name",
-        "theme_widgettheme_codingkeys_texthex"
-      ]
-    },
-    "orphan:orphan:52": {
-      "name": "Theme Configuration Service",
-      "members": [
-        "services_themeservice",
-        "services_themeservice_themeservice",
-        "services_themeservice_themeservice_theme"
-      ]
-    },
-    "orphan:orphan:63": {
-      "name": "Translation Lookup Service",
-      "members": [
-        "services_translationservice",
-        "services_translationservice_translationservice",
-        "services_translationservice_translationservice_translation"
-      ]
-    },
-    "orphan:orphan:64": {
+    "orphan:widget-timeline-entries": {
       "name": "Widget Timeline Entries",
       "members": [
         "timelineentry",
         "wordunlockedwidget_widgetentry",
         "wordunlockedwidget_widgetentry_verseentry"
-      ]
-    },
-    "orphan:orphan:7": {
-      "name": "ESV Bible Data Fetching",
-      "members": [
-        "decodable",
-        "observableobject",
-        "services_esvbibleservice",
-        "services_esvbibleservice_esvbibleservice",
-        "services_esvbibleservice_esvbibleservice_applyingstore",
-        "services_esvbibleservice_esvbibleservice_cachedverse",
-        "services_esvbibleservice_esvbibleservice_fetch",
-        "services_esvbibleservice_esvbibleservice_init",
-        "services_esvbibleservice_esvbibleservice_store",
-        "services_esvbibleservice_esvresponse",
-        "services_rvbibleservice",
-        "services_rvbibleservice_lsmresponse",
-        "services_rvbibleservice_lsmverse",
-        "services_rvbibleservice_rvbibleservice",
-        "services_rvbibleservice_rvbibleservice_fetch",
-        "services_rvbibleservice_rvbibleservice_init"
-      ]
-    },
-    "orphan:orphan:orphan:14": {
-      "name": "Verse Selection Tests",
-      "members": [
-        "wordunlockedtests_verseselectionservicetests",
-        "wordunlockedtests_verseselectionservicetests_makeverse",
-        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests",
-        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_pickreturnsnilforanemptyarray",
-        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_pickreturnstheelementatstableindex",
-        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_pickstaysconsistentwithstableindexacrossmanydates",
-        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexisdeterministicforthesameinputs",
-        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexstaysinboundsfordaycomponentacrossextremedates",
-        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexstaysinboundsforweekofyearcomponentacrossextremedates",
-        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexwithzerocountreturnszeroinsteadofcrashing",
-        "wordunlockedtests_verseselectionservicetests_verseselectionservicetests_stableindexyieldsdifferentvaluesfordifferentdays"
       ]
     }
   }

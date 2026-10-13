@@ -346,17 +346,17 @@ Nodes (1): Return the ESV text for a single-verse reference, or raise on hard fa
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `VerseSelectionService` connect `BSB import pipeline` to `LSV import pipeline`?**
+- **Why does `VerseSelectionService` connect `Verse Selection Strategies` to `Community 0`?**
   _High betweenness centrality (0.084) - this node is a cross-community bridge._
-- **Why does `ScriptureDatabase` connect `iOS app build tools` to `LSV import pipeline`?**
+- **Why does `ScriptureDatabase` connect `Database Context Methods` to `Community 0`?**
   _High betweenness centrality (0.082) - this node is a cross-community bridge._
-- **Why does `VerseSelectionServiceTests` connect `ASV import pipeline` to `LSV import pipeline`?**
+- **Why does `VerseSelectionServiceTests` connect `Verse Index Stability Logic` to `Community 0`?**
   _High betweenness centrality (0.069) - this node is a cross-community bridge._
 - **What connects `all`, `oldTestament`, `newTestament` to the rest of the system?**
   _88 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `LSV import pipeline` be split into smaller, more focused modules?**
+- **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.05899122807017544 - nodes in this community are weakly interconnected._
-- **Should `ASV import pipeline` be split into smaller, more focused modules?**
+- **Should `Verse Index Stability Logic` be split into smaller, more focused modules?**
   _Cohesion score 0.06763285024154589 - nodes in this community are weakly interconnected._
-- **Should `KJV import pipeline` be split into smaller, more focused modules?**
+- **Should `ESV Service Logic` be split into smaller, more focused modules?**
   _Cohesion score 0.0753045404208195 - nodes in this community are weakly interconnected._
