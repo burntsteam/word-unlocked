@@ -39,6 +39,36 @@ struct ReferenceParserTests {
         }
     }
 
+    @Test func textTooLongToBeAReferenceIsLeftToWordSearchWithoutRunningThePattern() {
+        let padded = "a" + String(repeating: " ", count: 32_000) + "!"
+        let start = Date()
+
+        #expect(ReferenceParser.parse(padded, books: books) == nil)
+        #expect(Date().timeIntervalSince(start) < 1)
+        #expect(ReferenceParser.parse("Psalm 23" + String(repeating: " ", count: 40), books: books) != nil)
+    }
+
+    @Test func searchTreatsPastedTextAsWordsAndNeverAsSQL() {
+        let search = { (query: String) in DatabaseService.shared.search(query: query, translationCode: "KJV") }
+
+        // The bundled text has curly apostrophes, and either kind finds them.
+        #expect(search("lord's").isEmpty == false)
+        #expect(search("lord’s").map(\.id) == search("lord's").map(\.id))
+        #expect(search("' OR '1'='1").isEmpty)
+        #expect(search("x'; DROP TABLE verses; --").isEmpty)
+        #expect(search("shepherd\u{0}' OR '1'='1").isEmpty)
+        // % and _ are letters here, not wildcards.
+        #expect(search("%").isEmpty)
+        #expect(search("_").isEmpty)
+        #expect(search("my shepherd").isEmpty == false)
+    }
+
+    @Test func searchRefusesTextLongerThanAnyVerse() {
+        let longest = String(repeating: "a", count: DatabaseService.maxSearchLength + 1)
+
+        #expect(DatabaseService.shared.search(query: longest, translationCode: "KJV").isEmpty)
+    }
+
     @Test func searchReturnsTheVersesAReferenceNamesInOrder() {
         let psalm = DatabaseService.shared.search(query: "Psalm 23", translationCode: "KJV")
         #expect(psalm.map(\.verse) == Array(1...6))

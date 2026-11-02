@@ -27,6 +27,8 @@ final class ScriptureDatabase {
     private var database: OpaquePointer?
     private let lock = NSLock()
     private let currentDataVersion = 4
+    /// Tells SQLite to copy a bound value, since Swift's copy of it lasts only for the call.
+    private static let transient = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
 
     private init() {
         databaseURL = AppGroupSettings.databaseURL
@@ -274,15 +276,15 @@ final class ScriptureDatabase {
     /// case-insensitive for ASCII, which covers the bundled English translations.
     func searchVerses(containing text: String, translationCode: String, limit: Int) -> [SharedVerseRecord] {
         lock.lock(); defer { lock.unlock() }
-        let pattern = quoted("%\(likeEscaped(text))%")
         return queryVerses(
             """
             SELECT \(Self.verseColumns) FROM verses v
-            WHERE v.translation_code = \(quoted(translationCode))
-              AND (v.verse_ref LIKE \(pattern) ESCAPE '\\' OR v.text LIKE \(pattern) ESCAPE '\\')
+            WHERE v.translation_code = ?1
+              AND (v.verse_ref LIKE ?2 ESCAPE '\\' OR v.text LIKE ?2 ESCAPE '\\')
             ORDER BY v.id
             LIMIT \(max(limit, 0));
-            """
+            """,
+            bindings: [translationCode, "%\(likeEscaped(text))%"]
         )
     }
 
@@ -468,9 +470,9 @@ final class ScriptureDatabase {
     }
 
 
-    private func queryVerses(_ sql: String) -> [SharedVerseRecord] {
+    private func queryVerses(_ sql: String, bindings: [String] = []) -> [SharedVerseRecord] {
         var records: [SharedVerseRecord] = []
-        query(sql) { statement in
+        query(sql, bindings: bindings) { statement in
             records.append(
                 SharedVerseRecord(
                     id: intColumn(statement, 0),
@@ -518,7 +520,8 @@ final class ScriptureDatabase {
         return intColumn(statement, 0)
     }
 
-    private func query(_ sql: String, row: (OpaquePointer?) -> Void) {
+    /// Runs `sql`, with `bindings` as its numbered parameters: ?1, ?2 and so on.
+    private func query(_ sql: String, bindings: [String] = [], row: (OpaquePointer?) -> Void) {
         guard let database = connection() else { return }
         var statement: OpaquePointer?
         defer {
@@ -528,6 +531,10 @@ final class ScriptureDatabase {
         }
 
         guard sqlite3_prepare_v2(database, sql, -1, &statement, nil) == SQLITE_OK else { return }
+        for (index, value) in bindings.enumerated() {
+            // The byte count keeps a pasted NUL character from cutting the value short.
+            guard sqlite3_bind_text(statement, Int32(index + 1), value, Int32(value.utf8.count), Self.transient) == SQLITE_OK else { return }
+        }
         while sqlite3_step(statement) == SQLITE_ROW {
             row(statement)
         }

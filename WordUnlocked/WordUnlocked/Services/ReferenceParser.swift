@@ -9,10 +9,15 @@ struct VerseQuery: Equatable {
 }
 
 enum ReferenceParser {
+    static let maxReferenceLength = 64
+
     /// `text` read as a book, a chapter, and optionally a verse or a range of verses, or nil
     /// when it isn't one. A book alone is left to word search, since "Mark" or "Job" may be
     /// a word the person is looking for.
     static func parse(_ text: String, books: [SharedBookRecord]) -> VerseQuery? {
+        // No reference is this long, and the pattern's cost grows with the square of a run of
+        // spaces: 32,000 pasted spaces held it for 25 seconds.
+        guard text.count <= maxReferenceLength else { return nil }
         let lowered = text.lowercased()
         let range = NSRange(lowered.startIndex..., in: lowered)
         guard let match = pattern.firstMatch(in: lowered, range: range),

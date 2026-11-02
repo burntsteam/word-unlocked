@@ -3,6 +3,9 @@ import Foundation
 final class DatabaseService {
     static let shared = DatabaseService()
 
+    /// Longer than any verse (the longest has 542 characters), so longer text can't match one.
+    static let maxSearchLength = 1_000
+
     private let database = ScriptureDatabase.shared
     private let bookRecords: [SharedBookRecord]
 
@@ -29,12 +32,16 @@ final class DatabaseService {
     /// A reference such as "Psalm 23" or "John 3:16" returns those verses in order; anything
     /// else searches references and text for the words.
     func search(query: String, translationCode: String, limit: Int = 50) -> [Verse] {
+        guard query.count <= Self.maxSearchLength else { return [] }
         if let reference = ReferenceParser.parse(query, books: bookRecords) {
             return database.verses(bookId: reference.bookId, chapter: reference.chapter, translationCode: translationCode)
                 .filter { reference.verses?.contains($0.verse) ?? true }
                 .map(Verse.init(record:))
         }
-        return database.searchVerses(containing: query, translationCode: translationCode, limit: limit).map(Verse.init(record:))
+        // The bundled text uses only curly apostrophes, and a straight one is what a pasted
+        // query, or a keyboard with Smart Punctuation off, brings.
+        let words = query.replacingOccurrences(of: "'", with: "’")
+        return database.searchVerses(containing: words, translationCode: translationCode, limit: limit).map(Verse.init(record:))
     }
 
     private func translation(from record: SharedTranslationRecord) -> Translation {

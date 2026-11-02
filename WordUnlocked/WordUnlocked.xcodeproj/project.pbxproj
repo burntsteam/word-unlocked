@@ -24,6 +24,8 @@
 		BFSTFILE0000000000000002 /* WidgetTimelineServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE0000000000000002 /* WidgetTimelineServiceTests.swift */; };
 		BFSTFILE0000000000000003 /* ReferenceParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE0000000000000003 /* ReferenceParserTests.swift */; };
 		BFSTFILE0000000000000004 /* SettingsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE0000000000000004 /* SettingsStoreTests.swift */; };
+		BFSTFILE0000000000000006 /* LiveAPISessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE0000000000000006 /* LiveAPISessionTests.swift */; };
+		BFSTFILE0000000000000007 /* AppBundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE0000000000000007 /* AppBundleTests.swift */; };
 		BFSTFILE0000000000000005 /* MemorizationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TESTFILE0000000000000005 /* MemorizationServiceTests.swift */; };
 		3B8112C28434CA4EBA244B2E /* ESVBibleServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF76D99129DEF1E81AA0B3EE /* ESVBibleServiceTests.swift */; };
 		BFRVSTESTS00000000000001 /* RVBibleServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AARVSTESTS00000000000001 /* RVBibleServiceTests.swift */; };
@@ -218,6 +220,8 @@
 		TESTFILE0000000000000002 /* WidgetTimelineServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WidgetTimelineServiceTests.swift; sourceTree = "<group>"; };
 		TESTFILE0000000000000003 /* ReferenceParserTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReferenceParserTests.swift; sourceTree = "<group>"; };
 		TESTFILE0000000000000004 /* SettingsStoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsStoreTests.swift; sourceTree = "<group>"; };
+		TESTFILE0000000000000006 /* LiveAPISessionTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LiveAPISessionTests.swift; sourceTree = "<group>"; };
+		TESTFILE0000000000000007 /* AppBundleTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppBundleTests.swift; sourceTree = "<group>"; };
 		TESTFILE0000000000000005 /* MemorizationServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MemorizationServiceTests.swift; sourceTree = "<group>"; };
 		RC00000000000000000000004 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Secrets.xcconfig; path = Config/Secrets.xcconfig; sourceTree = "<group>"; };
 		RC00000000000000000000005 /* RVBibleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVBibleService.swift; sourceTree = "<group>"; };
@@ -470,6 +474,8 @@
 				TESTFILE0000000000000002 /* WidgetTimelineServiceTests.swift */,
 				TESTFILE0000000000000003 /* ReferenceParserTests.swift */,
 				TESTFILE0000000000000004 /* SettingsStoreTests.swift */,
+				TESTFILE0000000000000006 /* LiveAPISessionTests.swift */,
+				TESTFILE0000000000000007 /* AppBundleTests.swift */,
 				TESTFILE0000000000000005 /* MemorizationServiceTests.swift */,
 			);
 			name = WordUnlockedTests;
@@ -745,6 +751,8 @@
 				BFSTFILE0000000000000002 /* WidgetTimelineServiceTests.swift in Sources */,
 				BFSTFILE0000000000000003 /* ReferenceParserTests.swift in Sources */,
 				BFSTFILE0000000000000004 /* SettingsStoreTests.swift in Sources */,
+				BFSTFILE0000000000000006 /* LiveAPISessionTests.swift in Sources */,
+				BFSTFILE0000000000000007 /* AppBundleTests.swift in Sources */,
 				BFSTFILE0000000000000005 /* MemorizationServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
